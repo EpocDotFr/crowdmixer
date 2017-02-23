@@ -4,9 +4,14 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import ArrowType
 from flask_babel import Babel, _, lazy_gettext as __
 from werkzeug.exceptions import HTTPException
+from tinytag import TinyTag
+from glob import glob
+from datetime import timedelta
+from time import time
 import logging
 import sys
 import arrow
+import os
 
 
 # -----------------------------------------------------------
@@ -23,6 +28,14 @@ app.config['WTF_I18N_ENABLED'] = True
 app.config['LANGUAGES'] = {
     'en': 'English'
 }
+
+app.config['SUPPORTED_AUDIO_FORMATS'] = [
+    'mp3', 'mp4', 'm4a',
+    'ogg', 'oga', 'opus',
+    'flac',
+    'wma',
+    'wav'
+]
 
 app.jinja_env.globals.update(arrow=arrow)
 
@@ -104,10 +117,69 @@ def create_database():
 
 
 @app.cli.command()
-def index(force):
+def index():
     """Index all songs in the configured directories."""
-    pass
+    Song.query.delete()
+    db.session.commit()
 
+    music_dirs = app.config['MUSIC_DIRS']
+    supported_audio_formats = app.config['SUPPORTED_AUDIO_FORMATS']
+
+    app.logger.info('{} directories configured'.format(len(music_dirs)))
+
+    songs = []
+
+    start = time()
+
+    for music_dir in music_dirs:
+        app.logger.info('Scanning ' + music_dir)
+
+        if not os.path.isdir(music_dir):
+            app.logger.warning(music_dir + ' isn\'t a directory or doesn\'t exists')
+            continue
+
+        for audio_format in supported_audio_formats:
+            songs.extend(glob(os.path.join(music_dir, '**', '*.' + audio_format), recursive=True))
+
+        for songs_chunk in list(chunks(songs, 100)):
+            for song in songs_chunk:
+                song_tags = TinyTag.get(song)
+
+                if song_tags.artist and not song_tags.albumartist or song_tags.artist and song_tags.albumartist:
+                    artist = song_tags.artist
+                elif song_tags.albumartist and not song_tags.artist:
+                    artist = song_tags.albumartist
+                else:
+                    artist = None
+
+                if not artist and not song_tags.title:
+                    title = os.path.splitext(os.path.basename(song))[0]
+                else:
+                    title = song_tags.title
+
+                if not song_tags.album:
+                    album = None
+                else:
+                    album = song_tags.album
+
+                song_object = Song(
+                    title=title,
+                    artist=artist,
+                    album=album,
+                    path=song
+                )
+
+                app.logger.info('{} - {} ({})'.format(artist, title, album))
+
+                db.session.add(song_object)
+
+            db.session.commit()
+
+    end = time()
+
+    duration = end - start
+
+    app.logger.info('Duration: {}'.format(timedelta(seconds=duration)))
 
 # -----------------------------------------------------------
 # Hooks
@@ -164,3 +236,12 @@ def http_error_handler(error, without_code=False):
         return make_response(body, error)
     else:
         return make_response(body)
+
+
+# -----------------------------------------------------------
+# Utils
+
+
+def chunks(l, n):
+    for i in range(0, len(l), n):
+        yield l[i:i + n]

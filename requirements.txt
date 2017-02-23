@@ -6,3 +6,4 @@ Flask-Babel
 arrow
 SQLAlchemy
 sqlalchemy-utils
+tinytag
