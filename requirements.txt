@@ -1,0 +1,7 @@
+flask
+Flask-HTTPAuth
+Flask-SQLAlchemy
+Flask-WTF
+arrow
+SQLAlchemy
+sqlalchemy-utils

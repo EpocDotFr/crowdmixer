@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="{{ g.CURRENT_LOCALE }}">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex,nofollow,noarchive"/>
+
+    <title>{% block meta_title %}{% endblock %}{% if self.meta_title() | trim %} • {% endif %}CrowdMixer</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/knacss.min.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
+
+    {% block jsfiles %} {% endblock %}
+
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
+</head>
+<body class="man pan">    
+    <div class="pas center page">
+        <header>
+            <a href="{{ url_for('home') }}" class="bigger">Crowd<span class="mixer">Mixer</span></a>
+        </header>
+
+        {% with flash_messages = get_flashed_messages(with_categories=true) %}
+          {% if flash_messages %}
+            {% for category, message in flash_messages %}
+              <p class="alert {{ category }} pas">{{ message }}</p>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        {% block content %} {% endblock %}
+
+        <footer class="txtmuted txtcenter small">© 2017 <a href="https://epoc.fr">Maxime "Epoc" G.</a> • <a href="https://github.com/EpocDotFr/crowdmixer">{{ _('Source code on GitHub') }}</a> • {{ _('Licensed under the %(license)s', license='<a href="https://github.com/EpocDotFr/crowdmixer/blob/master/LICENSE.md">DBAD</a>'|safe) }}</footer>
+    </div>
+</body>
+</html>

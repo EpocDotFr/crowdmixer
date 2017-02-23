@@ -1,0 +1,7 @@
+{% extends 'layout.html' %}
+
+{% block meta_title %}{{ _('Server error') }}{% endblock %}
+
+{% block content %}
+    <p class="alert error pas">{{ _('A server error occured! Please retry. If the error persists, please report an issue <a href="https://github.com/EpocDotFr/crowdmixer/issues">here</a>.') }}</p>
+{% endblock %}
