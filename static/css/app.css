@@ -115,6 +115,10 @@ form textarea {
 /************************************************************************
  * Header */
 
+header {
+    border-bottom: 0.1rem solid #DDD;
+}
+
 header a {
     text-decoration: none;
     color: inherit;
@@ -131,6 +135,10 @@ header .mixer {
 
 /************************************************************************
  * Footer */
+
+footer {
+    border-top: 0.1rem solid #DDD;
+}
 
 footer a,
 footer a:visited {

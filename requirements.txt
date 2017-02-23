@@ -2,6 +2,7 @@ flask
 Flask-HTTPAuth
 Flask-SQLAlchemy
 Flask-WTF
+Flask-Babel
 arrow
 SQLAlchemy
 sqlalchemy-utils
