@@ -44,7 +44,7 @@ button,
 .btn,
 .btn:visited {
     border-radius: 0.5rem;
-    background-color: #DDD;
+    background-color: #EEE;
     border: 0.1rem solid #AAA;
     padding: 0.5rem 1rem;
     text-decoration: none;
@@ -53,8 +53,20 @@ button,
 
 button:hover, .btn:hover,
 button:focus, .btn:focus {
-    background-color: #CCC;
+    background-color: #DDD;
     outline: none;
+}
+
+button.small,
+.btn.small {
+    padding: 0.1rem 0.6rem;
+}
+
+button.green,
+.btn.green {
+    background-color: #32932B;
+    border-color: #265F1E;
+    color: #fff;
 }
 
 /************************************************************************
@@ -110,6 +122,13 @@ form textarea {
 .alert.info {
     background-color: #E6F1FF;
     border-color: #ABBFFF;
+}
+
+/************************************************************************
+ * Song */
+
+.song {
+    border-top: 0.1rem solid #DDD;
 }
 
 /************************************************************************

@@ -63,7 +63,9 @@ for handler in app.logger.handlers:
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    songs = Song.query.all() # TODO TEMP
+
+    return render_template('home.html', songs=songs)
 
 
 # -----------------------------------------------------------

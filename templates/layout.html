@@ -19,8 +19,8 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 </head>
 <body class="man pan">    
-    <div class="pas center page">
-        <header>
+    <div class="center page">
+        <header class="pas mbs">
             <a href="{{ url_for('home') }}" class="bigger">Crowd<span class="mixer">Mixer</span></a>
         </header>
 
@@ -34,7 +34,7 @@
 
         {% block content %} {% endblock %}
 
-        <footer class="txtmuted txtcenter small mts pts pbs">© 2017 <a href="https://epoc.fr">Maxime "Epoc" G.</a> • <a href="https://github.com/EpocDotFr/crowdmixer">{{ _('Source code on GitHub') }}</a> • {{ _('Licensed under the %(license)s', license='<a href="https://github.com/EpocDotFr/crowdmixer/blob/master/LICENSE.md">DBAD</a>'|safe) }}</footer>
+        <footer class="txtmuted txtcenter small pts pbs">© 2017 <a href="https://epoc.fr">Maxime "Epoc" G.</a> • <a href="https://github.com/EpocDotFr/crowdmixer">{{ _('Source code on GitHub') }}</a> • {{ _('Licensed under the %(license)s', license='<a href="https://github.com/EpocDotFr/crowdmixer/blob/master/LICENSE.md">DBAD</a>'|safe) }}</footer>
     </div>
 </body>
 </html>
