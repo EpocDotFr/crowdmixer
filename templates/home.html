@@ -1,5 +1,11 @@
 {% extends 'layout.html' %}
 
 {% block content %}
-    
+    <form method="get" action="{{ url_for('home') }}" class="pts">
+        <input type="search" name="q" placeholder="{{ _('Type a title, an artist or an album') }}" required autocomplete="off" value="{{ request.args.q }}">
+    </form>
+
+    <p><strong>{% if not request.args.q %}Available songs{% else %}Search results{% endif %}</strong></p>
+
+    {% include 'songs.html' %}
 {% endblock %}
