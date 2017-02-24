@@ -44,25 +44,41 @@ class Clementine(AudioPlayer):
         subprocess.run(cli, check=True)
 
 
-class Vlc(AudioPlayer):
-    name = 'VLC'
+class Foobar2000(AudioPlayer):
+    name = 'foobar2000'
 
     def queue(self, file):
         cli = [
-            'vlc_path', # TODO Autodetect with psutil?
+            'foobar2000_path', # TODO Autodetect with psutil?
+            '/immediate',
+            '/add',
             file
         ]
 
         subprocess.run(cli, check=True)
 
 
-class Winamp(AudioPlayer):
-    name = 'Winamp'
+class MediaMonkey(AudioPlayer):
+    name = 'MediaMonkey'
 
     def queue(self, file):
         cli = [
-            'winamp_path', # TODO Autodetect with psutil?
-            '/ADD',
+            'mediamonkey_path', # TODO Autodetect with psutil?
+            '/NoSplash',
+            '/Add',
+            file
+        ]
+
+        subprocess.run(cli, check=True)
+
+
+class MusicBee(AudioPlayer):
+    name = 'MusicBee'
+
+    def queue(self, file):
+        cli = [
+            'musicbee_path', # TODO Autodetect with psutil?
+            '/QueueLast',
             file
         ]
 
@@ -83,13 +99,25 @@ class Rhythmbox(AudioPlayer):
         subprocess.run(cli, check=True)
 
 
-class MusicBee(AudioPlayer):
-    name = 'MusicBee'
+class Vlc(AudioPlayer):
+    name = 'VLC'
 
     def queue(self, file):
         cli = [
-            'musicbee_path', # TODO Autodetect with psutil?
-            '/QueueLast',
+            'vlc_path', # TODO Autodetect with psutil?
+            file
+        ]
+
+        subprocess.run(cli, check=True)
+
+
+class Winamp(AudioPlayer):
+    name = 'Winamp'
+
+    def queue(self, file):
+        cli = [
+            'winamp_path', # TODO Autodetect with psutil?
+            '/ADD',
             file
         ]
 
