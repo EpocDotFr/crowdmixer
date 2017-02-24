@@ -23,7 +23,7 @@ class Aimp(AudioPlayer):
 
     def queue(self, file):
         cli = [
-            'aimp_exec_path', # TODO Autodetect with psutil?
+            'aimp_path', # TODO Autodetect with psutil?
             '/FILE',
             file
         ]
@@ -36,7 +36,7 @@ class Clementine(AudioPlayer):
 
     def queue(self, file):
         cli = [
-            'clementine_exec_path', # TODO Autodetect with psutil?
+            'clementine_path', # TODO Autodetect with psutil?
             '--append',
             file
         ]
@@ -49,7 +49,47 @@ class Vlc(AudioPlayer):
 
     def queue(self, file):
         cli = [
-            'vlc_exec_path', # TODO Autodetect with psutil?
+            'vlc_path', # TODO Autodetect with psutil?
+            file
+        ]
+
+        subprocess.run(cli, check=True)
+
+
+class Winamp(AudioPlayer):
+    name = 'Winamp'
+
+    def queue(self, file):
+        cli = [
+            'winamp_path', # TODO Autodetect with psutil?
+            '/ADD',
+            file
+        ]
+
+        subprocess.run(cli, check=True)
+
+
+class Rhythmbox(AudioPlayer):
+    name = 'Rhythmbox'
+
+    def queue(self, file):
+        cli = [
+            'rhythmbox_client_path', # TODO Autodetect with psutil?
+            '--no-start',
+            '--enqueue',
+            file
+        ]
+
+        subprocess.run(cli, check=True)
+
+
+class MusicBee(AudioPlayer):
+    name = 'MusicBee'
+
+    def queue(self, file):
+        cli = [
+            'musicbee_path', # TODO Autodetect with psutil?
+            '/QueueLast',
             file
         ]
 
