@@ -1,7 +1,14 @@
 import subprocess
 
 __all__ = [
-    'Aimp'
+    'Aimp',
+    'Clementine',
+    'Foobar2000',
+    'MediaMonkey',
+    'MusicBee',
+    'Rhythmbox',
+    'Vlc',
+    'Winamp'
 ]
 
 
