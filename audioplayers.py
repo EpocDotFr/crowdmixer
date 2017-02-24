@@ -1,3 +1,5 @@
+import subprocess
+
 __all__ = [
     'Aimp'
 ]
@@ -20,8 +22,35 @@ class Aimp(AudioPlayer):
     name = 'AIMP'
 
     def queue(self, file):
-        import pyaimp
+        cli = [
+            'aimp_exec_path', # TODO Autodetect with psutil?
+            '/FILE',
+            file
+        ]
 
-        client = pyaimp.Client()
+        subprocess.run(cli, check=True)
 
-        client.add_files_to_playlist(file)
+
+class Clementine(AudioPlayer):
+    name = 'Clementine'
+
+    def queue(self, file):
+        cli = [
+            'clementine_exec_path', # TODO Autodetect with psutil?
+            '--append',
+            file
+        ]
+
+        subprocess.run(cli, check=True)
+
+
+class Vlc(AudioPlayer):
+    name = 'VLC'
+
+    def queue(self, file):
+        cli = [
+            'vlc_exec_path', # TODO Autodetect with psutil?
+            file
+        ]
+
+        subprocess.run(cli, check=True)

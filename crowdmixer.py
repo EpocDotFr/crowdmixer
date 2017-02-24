@@ -144,6 +144,8 @@ def index():
         for audio_format in supported_audio_formats:
             songs.extend(glob(os.path.join(music_dir, '**', '*.' + audio_format), recursive=True))
 
+    app.logger.info('{} supported audio files detected'.format(len(songs)))
+
     for songs_chunk in list(utils.chunks(songs, 100)):
         for song in songs_chunk:
             song_tags = TinyTag.get(song)
