@@ -5,7 +5,7 @@
         <input type="search" name="q" placeholder="{{ _('Type a title, an artist or an album') }}" required autocomplete="off" value="{{ request.args.q }}">
     </form>
 
-    <p class="mas"><strong>{% if not request.args.q %}Available songs{% else %}Search results{% endif %}</strong></p>
+    <p class="pas bggrey btg"><strong>{% if not request.args.q %}Available songs{% else %}Search results{% endif %}</strong></p>
 
     {% include 'songs.html' %}
 {% endblock %}

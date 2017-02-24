@@ -22,6 +22,26 @@ textarea {
     max-width: 1024px;
 }
 
+.bggrey {
+    background-color: #F3F3F3;
+}
+
+.btg {
+    border-top: 0.1rem solid #DDD;
+}
+
+.brg {
+    border-right: 0.1rem solid #DDD;
+}
+
+.bbg {
+    border-bottom: 0.1rem solid #DDD;
+}
+
+.blg {
+    border-left: 0.1rem solid #DDD;
+}
+
 /************************************************************************
  * Links */
 
@@ -127,16 +147,12 @@ form textarea {
 /************************************************************************
  * Song */
 
-.song {
-    border-top: 0.1rem solid #DDD;
+.song:last-child {
+    padding-bottom: 0;
 }
 
 /************************************************************************
  * Header */
-
-header {
-    border-bottom: 0.1rem solid #DDD;
-}
 
 header a {
     text-decoration: none;
@@ -155,11 +171,17 @@ header .mixer {
 /************************************************************************
  * Footer */
 
-footer {
-    border-top: 0.1rem solid #DDD;
-}
-
 footer a,
 footer a:visited {
     color: inherit;
+}
+
+/************************************************************************
+ * Breakpoints */
+
+@media (max-width: 767px) {
+    .page {
+        border-left: none;
+        border-right: none;
+    }
 }
