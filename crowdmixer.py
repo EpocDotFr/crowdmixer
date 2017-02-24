@@ -12,6 +12,7 @@ import logging
 import sys
 import arrow
 import os
+import utils
 
 
 # -----------------------------------------------------------
@@ -143,45 +144,46 @@ def index():
         for audio_format in supported_audio_formats:
             songs.extend(glob(os.path.join(music_dir, '**', '*.' + audio_format), recursive=True))
 
-        for songs_chunk in list(chunks(songs, 100)):
-            for song in songs_chunk:
-                song_tags = TinyTag.get(song)
+    for songs_chunk in list(utils.chunks(songs, 100)):
+        for song in songs_chunk:
+            song_tags = TinyTag.get(song)
 
-                if song_tags.artist and not song_tags.albumartist or song_tags.artist and song_tags.albumartist:
-                    artist = song_tags.artist
-                elif song_tags.albumartist and not song_tags.artist:
-                    artist = song_tags.albumartist
-                else:
-                    artist = None
+            if song_tags.artist and not song_tags.albumartist or song_tags.artist and song_tags.albumartist:
+                artist = song_tags.artist
+            elif song_tags.albumartist and not song_tags.artist:
+                artist = song_tags.albumartist
+            else:
+                artist = None
 
-                if not artist and not song_tags.title:
-                    title = os.path.splitext(os.path.basename(song))[0]
-                else:
-                    title = song_tags.title
+            if not artist and not song_tags.title:
+                title = os.path.splitext(os.path.basename(song))[0]
+            else:
+                title = song_tags.title
 
-                if not song_tags.album:
-                    album = None
-                else:
-                    album = song_tags.album
+            if not song_tags.album:
+                album = None
+            else:
+                album = song_tags.album
 
-                song_object = Song(
-                    title=title,
-                    artist=artist,
-                    album=album,
-                    path=song
-                )
+            song_object = Song(
+                title=title,
+                artist=artist,
+                album=album,
+                path=song
+            )
 
-                app.logger.info('{} - {} ({})'.format(artist, title, album))
+            app.logger.info('{} - {} ({})'.format(artist, title, album))
 
-                db.session.add(song_object)
+            db.session.add(song_object)
 
-            db.session.commit()
+        db.session.commit()
 
     end = time()
 
     duration = end - start
 
     app.logger.info('Duration: {}'.format(timedelta(seconds=duration)))
+
 
 # -----------------------------------------------------------
 # Hooks
@@ -238,12 +240,3 @@ def http_error_handler(error, without_code=False):
         return make_response(body, error)
     else:
         return make_response(body)
-
-
-# -----------------------------------------------------------
-# Utils
-
-
-def chunks(l, n):
-    for i in range(0, len(l), n):
-        yield l[i:i + n]
