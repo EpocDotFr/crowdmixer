@@ -4,17 +4,21 @@ Let the crowd make its own mix without hassling you.
 
 ## Supported audio players
 
-| Name | Windows | Linux | Mac OS | Remote?<sup>1</sup> |
-|------|---------|-------|------|-----------------------|
-| [AIMP](https://www.aimp.ru/) | :white_check_mark: | :x: | :x: | :x: |
-| [Clementine](https://www.clementine-player.org/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x:<sup>2</sup> |
-| [foobar2000](http://www.foobar2000.org/) | :white_check_mark: | :x: | :x: | :x: |
-| [MediaMonkey](http://www.mediamonkey.com/) | :white_check_mark: | :x: | :x: | :x: |
-| [MusicBee](http://getmusicbee.com/) | :white_check_mark: | :x: | :x: | :x: |
-| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | :x: | :white_check_mark: | :x: | :x: |
-| [VLC](http://www.videolan.org/vlc/) | :white_check_mark: | :white_check_mark: | :white_check_mark: | :x:<sup>2</sup> |
-| [Winamp](http://www.winamp.com/) | :white_check_mark: | :x: | :white_check_mark: | :x: |
+CrowdMixer requires to be ran on the same computer that is running your prefered audio player. Some audio players - which
+may or may not be listed below - support being controlled remotely, but CrowdMixer doesn't support this feature yet.
 
-<sup>1</sup> Can this audio player be used if CrowdMixer is running on another computer?
+The method used to control an audio player is choosed regarding two criteria:
 
-<sup>2</sup> This audio player support being controlled remotely without any plugin (see <sup>1</sup>) but CrowdMixer doesn't support this feature for now.
+  - Simplicity of implementation (e.g CLI is easier than TCP, HTTP is easier than TCP, etc)
+  - Cross-platformness (e.g CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc)
+
+| Name | Windows | Linux | Mac OS | Method used |
+|------|---------|-------|--------|-------------|
+| [AIMP](https://www.aimp.ru/) | ✅ | ❌ | ❌ | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) |
+| [Clementine](https://www.clementine-player.org/) | ✅ | ✅ | ✅ | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) |
+| [foobar2000](http://www.foobar2000.org/) | ✅ | ❌ | ❌ | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) |
+| [MediaMonkey](http://www.mediamonkey.com/) | ✅ | ❌ | ❌ | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) |
+| [MusicBee](http://getmusicbee.com/) | ✅ | ❌ | ❌ | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) |
+| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ❌ | ✅ | ❌ | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) |
+| [VLC](http://www.videolan.org/vlc/) | ✅ | ✅ | ✅ | [CLI](https://wiki.videolan.org/Command_line/) |
+| [Winamp](http://www.winamp.com/) | ✅ | ❌ | ✅ | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) |
