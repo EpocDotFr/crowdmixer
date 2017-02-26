@@ -9,8 +9,8 @@ may or may not be listed below - support being controlled remotely, but CrowdMix
 
 The method used to control an audio player is choosed regarding two criteria:
 
-  - Simplicity of implementation (e.g CLI is easier than TCP, HTTP is easier than TCP, etc)
-  - Cross-platformness (e.g CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc)
+  - Simplicity of implementation (e.g CLI is easier than TCP, HTTP is easier than TCP, etc).
+  - Cross-platformness (e.g CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc). This criteria depends of course of the operating system availability of the audio player.
 
 | Name | Windows | Linux | Mac OS | Method used |
 |------|---------|-------|--------|-------------|
