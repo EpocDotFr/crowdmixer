@@ -2,6 +2,7 @@ from flask import Flask, render_template, make_response, g, request
 from flask_httpauth import HTTPBasicAuth
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import ArrowType
+from sqlalchemy import or_
 from flask_babel import Babel, _, lazy_gettext as __
 from werkzeug.exceptions import HTTPException
 from tinytag import TinyTag
@@ -64,7 +65,7 @@ for handler in app.logger.handlers:
 
 @app.route('/')
 def home():
-    songs = Song.query.all() # TODO TEMP
+    songs = Song.query.find(request.args.get('q'))
 
     return render_template('home.html', songs=songs)
 
@@ -75,7 +76,14 @@ def home():
 
 class Song(db.Model):
     class SongQuery(db.Query):
-        pass
+        def find(self, search_term=None):
+            q = self.order_by(Song.title.asc())
+            q = q.order_by(Song.artist.asc())
+
+            if search_term:
+                q = q.filter(or_(Song.title.like('%' + search_term + '%'), Song.artist.like('%' + search_term + '%'), Song.album.like('%' + search_term + '%')))
+
+            return q.all()
 
     __tablename__ = 'songs'
     query_class = SongQuery
