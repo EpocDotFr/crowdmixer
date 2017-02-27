@@ -1,14 +1,17 @@
-from flask import Flask, render_template, make_response, g, request
+from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for
 from flask_httpauth import HTTPBasicAuth
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import ArrowType
 from sqlalchemy import or_
 from flask_babel import Babel, _, lazy_gettext as __
+from flask_wtf import FlaskForm
 from werkzeug.exceptions import HTTPException
 from tinytag import TinyTag
 from glob import glob
 from datetime import timedelta
 from time import time
+from wtforms import SelectField
+import wtforms.validators as validators
 import logging
 import sys
 import arrow
@@ -70,6 +73,26 @@ def home():
     return render_template('home.html', songs=songs)
 
 
+@app.route('/submit/<song_id>')
+def submit(song_id):
+    song = Song.query.get(song_id)
+
+    if not song:
+        flash(_('This song doesn\'t exist.'), 'error')
+    else:
+        flash(_('Song successfully submitted!'), 'success')
+
+    return redirect(url_for('home'))
+
+
+@app.route('/admin')
+@auth.login_required
+def admin():
+    form = ConfigurationForm()
+
+    return render_template('admin.html', form=form)
+
+
 # -----------------------------------------------------------
 # Models
 
@@ -114,7 +137,10 @@ class Song(db.Model):
 # -----------------------------------------------------------
 # Forms
 
-# TODO
+
+class ConfigurationForm(FlaskForm):
+    audio_player = SelectField(__('Audio player'), [validators.DataRequired()], choices=utils.get_available_audio_players())
+
 
 # -----------------------------------------------------------
 # CLI commands
