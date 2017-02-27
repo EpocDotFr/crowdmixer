@@ -2,6 +2,7 @@ import subprocess
 
 __all__ = [
     'Aimp',
+    'Audacious',
     'Clementine',
     'Foobar2000',
     'MediaMonkey',
@@ -14,6 +15,9 @@ __all__ = [
 
 class AudioPlayer:
     name = None
+
+    def _run_process(self, cli):
+        subprocess.run(cli, check=True)
 
     def get_name(self):
         if not self.name:
@@ -35,7 +39,20 @@ class Aimp(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
+
+
+class Audacious(AudioPlayer):
+    name = 'Audacious'
+
+    def queue(self, file):
+        cli = [
+            'audacious_path', # TODO Autodetect with psutil?
+            '--enqueue',
+            file
+        ]
+
+        self._run_process(cli)
 
 
 class Clementine(AudioPlayer):
@@ -48,7 +65,7 @@ class Clementine(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
 
 
 class Foobar2000(AudioPlayer):
@@ -62,7 +79,7 @@ class Foobar2000(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
 
 
 class MediaMonkey(AudioPlayer):
@@ -76,7 +93,7 @@ class MediaMonkey(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
 
 
 class MusicBee(AudioPlayer):
@@ -89,7 +106,7 @@ class MusicBee(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
 
 
 class Rhythmbox(AudioPlayer):
@@ -103,7 +120,7 @@ class Rhythmbox(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
 
 
 class Vlc(AudioPlayer):
@@ -115,7 +132,7 @@ class Vlc(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)
 
 
 class Winamp(AudioPlayer):
@@ -128,4 +145,4 @@ class Winamp(AudioPlayer):
             file
         ]
 
-        subprocess.run(cli, check=True)
+        self._run_process(cli)

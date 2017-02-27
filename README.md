@@ -16,6 +16,7 @@ The method used to control an audio player is choosed regarding three criteria:
 | Name | Windows | Linux | Mac OS | Method used |
 |------|---------|-------|--------|-------------|
 | [AIMP](https://www.aimp.ru/) | ✅ | ❌ | ❌ | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) |
+| [Audacious](http://audacious-media-player.org/) | ✅ | ✅ | ❌ | [CLI](https://www.mankier.com/1/audacious) |
 | [Clementine](https://www.clementine-player.org/) | ✅ | ✅ | ✅ | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) |
 | [foobar2000](http://www.foobar2000.org/) | ✅ | ❌ | ❌ | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) |
 | [MediaMonkey](http://www.mediamonkey.com/) | ✅ | ❌ | ❌ | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) |
