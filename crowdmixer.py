@@ -81,16 +81,20 @@ def submit(song_id):
         flash(_('This song doesn\'t exist.'), 'error')
     else:
         flash(_('Song successfully submitted!'), 'success')
+        # TODO
 
     return redirect(url_for('home'))
 
 
-@app.route('/admin')
+@app.route('/config', methods=['GET', 'POST'])
 @auth.login_required
-def admin():
+def config():
     form = ConfigurationForm()
 
-    return render_template('admin.html', form=form)
+    if form.validate_on_submit():
+        pass
+
+    return render_template('config.html', form=form)
 
 
 # -----------------------------------------------------------
@@ -139,7 +143,7 @@ class Song(db.Model):
 
 
 class ConfigurationForm(FlaskForm):
-    audio_player = SelectField(__('Audio player'), [validators.DataRequired()], choices=utils.get_available_audio_players())
+    audio_player = SelectField(__('Audio player to use'), [validators.DataRequired()], choices=[('', '')] + utils.get_available_audio_players())
 
 
 # -----------------------------------------------------------

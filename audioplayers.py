@@ -7,6 +7,7 @@ __all__ = [
     'Foobar2000',
     'MediaMonkey',
     'MusicBee',
+    'Mpd',
     'Rhythmbox',
     'Vlc',
     'Winamp'

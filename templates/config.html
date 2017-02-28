@@ -1,0 +1,24 @@
+{% extends 'layout.html' %}
+
+{% block meta_title %}{{ _('Configuration') }}{% endblock %}
+
+{% block content %}
+    <h1 class="pas man">{{ _('Configuration') }}</h1>
+
+    <form method="post" action="{{ url_for('config') }}" class="pas">
+        {{ form.csrf_token }}
+
+        <div class="grid has-gutter pbs">
+            <div class="one-fifth">
+                {{ form.audio_player.label }}
+            </div>
+            <div>
+                {{ form.audio_player(required='') }}
+            </div>
+        </div>
+
+        <p class="txtcenter">
+            <a href="{{ url_for('home') }}" class="btn"><i class="fa fa-arrow-left"></i> {{ _('Back') }}</a> <button type="submit"><i class="fa fa-save"></i> {{ _('Save') }}</button>
+        </p>
+    </form>
+{% endblock %}

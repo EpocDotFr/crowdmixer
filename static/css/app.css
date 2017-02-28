@@ -43,12 +43,23 @@ textarea {
 }
 
 /************************************************************************
+ * Headings */
+
+h1 {
+    font-size: 1.8rem;
+}
+
+h2 {
+    font-size: 1.6rem;
+}
+
+/************************************************************************
  * Links */
 
 a,
 a:visited {
     text-decoration: underline;
-    color: inherit;
+    color: #32932B;
 }
 
 a:hover,
@@ -69,12 +80,14 @@ button,
     padding: 0.5rem 1rem;
     text-decoration: none;
     cursor: pointer;
+    color: #32932B;
 }
 
 button:hover, .btn:hover,
 button:focus, .btn:focus {
     background-color: #DDD;
     outline: none;
+    color: #333;
 }
 
 button.small,
@@ -183,5 +196,6 @@ footer a:visited {
     .page {
         border-left: none;
         border-right: none;
+        border-bottom: none;
     }
 }
