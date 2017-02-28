@@ -2,16 +2,29 @@
 
 Let the crowd make its own mix without hassling you.
 
+## Supported audio file formats
+
+CrowdMixer maintain its own music library database. The following audio file formats are supported by the CrowdMixer music
+indexer:
+
+  - `.mp3`, `.m4a`
+  - `.ogg`, `.oga`, `.opus`
+  - `.flac`
+  - `.wma`
+  - `.wav`
+
 ## Supported audio players
 
-CrowdMixer requires to be ran on the same computer that is running your prefered audio player. Some audio players - which
-may or may not be listed below - support being controlled remotely, but CrowdMixer doesn't support this feature yet.
+CrowdMixer requires to be ran on the same computer that is running your prefered audio player.
 
-The method used to control an audio player is choosed regarding three criteria:
+Some audio players - which may or may not be listed below - support being controlled remotely, but CrowdMixer doesn't
+support this feature yet.
 
-  - **Simplicity of implementation:** CLI is easier than TCP, HTTP is easier than TCP, etc.
-  - **Cross-platformness:** CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc. This criteria depends of course of the operating system availability of the audio player.
-  - **As native as possible**: Doesn't require installation of a third-party software.
+The method used to control an audio player from CrowdMixer is choosed regarding three criteria:
+
+  1. **Simplicity of implementation:** CLI is easier than everything, HTTP is easier than raw TCP, etc.
+  2. **Cross-platformness:** CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc. This criteria depends of course of the operating system availability of the audio player.
+  3. **As native as possible**: Doesn't require installation of a third-party software like a plugin, etc.
 
 | Name | Windows | Linux | Mac OS | Method used |
 |------|---------|-------|--------|-------------|

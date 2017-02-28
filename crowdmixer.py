@@ -35,7 +35,7 @@ app.config['LANGUAGES'] = {
 }
 
 app.config['SUPPORTED_AUDIO_FORMATS'] = [
-    'mp3', 'mp4', 'm4a',
+    'mp3', 'm4a',
     'ogg', 'oga', 'opus',
     'flac',
     'wma',
