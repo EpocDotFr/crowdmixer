@@ -117,6 +117,21 @@ class MusicBee(AudioPlayer):
         self._run_process(cli)
 
 
+class Mpd(AudioPlayer):
+    @staticmethod
+    def name():
+        return 'Music Player Daemon'
+
+    def queue(self, file):
+        cli = [
+            'mpc_path', # TODO Autodetect with psutil?
+            'add',
+            file
+        ]
+
+        self._run_process(cli)
+
+
 class Rhythmbox(AudioPlayer):
     @staticmethod
     def name():

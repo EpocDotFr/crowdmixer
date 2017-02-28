@@ -34,6 +34,7 @@ The method used to control an audio player from CrowdMixer is choosed regarding 
 | [foobar2000](http://www.foobar2000.org/) | ✅ | ❌ | ❌ | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) |
 | [MediaMonkey](http://www.mediamonkey.com/) | ✅ | ❌ | ❌ | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) |
 | [MusicBee](http://getmusicbee.com/) | ✅ | ❌ | ❌ | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) |
+| [Music Player Daemon](https://www.musicpd.org/) | ❌ | ✅ | ❌ | [CLI](https://linux.die.net/man/1/mpc) |
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ❌ | ✅ | ❌ | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) |
 | [VLC](http://www.videolan.org/vlc/) | ✅ | ✅ | ✅ | [CLI](https://wiki.videolan.org/VLC_command-line_help/) |
 | [Winamp](http://www.winamp.com/) | ✅ | ❌ | ✅ | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) |
