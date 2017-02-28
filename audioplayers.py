@@ -10,7 +10,8 @@ __all__ = [
     'Mpd',
     'Rhythmbox',
     'Vlc',
-    'Winamp'
+    'Winamp',
+    'Xmms2'
 ]
 
 
@@ -172,6 +173,22 @@ class Winamp(AudioPlayer):
         cli = [
             'winamp_path', # TODO Autodetect with psutil?
             '/ADD',
+            file
+        ]
+
+        self._run_process(cli)
+
+
+class Xmms2(AudioPlayer):
+    @staticmethod
+    def name():
+        return 'XMMS2'
+
+    def queue(self, file):
+        cli = [
+            'xmms2_path', # TODO Autodetect with psutil?
+            'add',
+            '--file',
             file
         ]
 

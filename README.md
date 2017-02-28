@@ -38,3 +38,4 @@ The method used to control an audio player from CrowdMixer is choosed regarding 
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ❌ | ✅ | ❌ | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) |
 | [VLC](http://www.videolan.org/vlc/) | ✅ | ✅ | ✅ | [CLI](https://wiki.videolan.org/VLC_command-line_help/) |
 | [Winamp](http://www.winamp.com/) | ✅ | ❌ | ✅ | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) |
+| [XMMS2](https://xmms2.org/) | ❌ | ✅ | ❌ | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) |
