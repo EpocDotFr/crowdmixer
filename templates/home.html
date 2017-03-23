@@ -5,7 +5,28 @@
         <input type="search" name="q" placeholder="{{ _('Type a title, an artist or an album') }}" required autocomplete="off" value="{{ request.args.q }}">
     </form>
 
-    <h2 class="pas man bggrey btg">{% if not request.args.q %}<i class="fa fa-music"></i> {{ _('Available songs') }}{% else %}<i class="fa fa-search"></i> {{ _('Search results') }}{% endif %} ({{ songs|length }})</h2>
+    {% if now_playing %}
+        <h2 class="pas man bggrey btg"><i class="fa fa-play-circle"></i> {{ _('Now playing') }}</h2>
 
-    {% include 'songs.html' %}
+        <div class="song btg pas">
+            <div>{{ now_playing.title }}</div>
+            <div class="txtmuted">{% if not now_playing.artist %}{{ _('Unknown artist') }}{% else %}{{ now_playing.artist }}{% endif %}</div>
+        </div>
+    {% endif %}
+
+    <h2 class="pas man bggrey btg">{% if not request.args.q %}<i class="fa fa-book"></i> {{ _('Available songs') }}{% else %}<i class="fa fa-search"></i> {{ _('Search results') }}{% endif %} ({{ songs|length }})</h2>
+
+    {% if songs %}
+        <div class="songs">
+            {% for song in songs %}
+                <div class="song btg pas">
+                    <div>{{ song.title }}</div>
+                    <div class="txtmuted">{% if not song.artist %}{{ _('Unknown artist') }}{% else %}{{ song.artist }}{% endif %}</div>
+                    <div class="txtright"><a href="{{ url_for('submit', song_id=song.id) }}" class="btn small green">{{ _('Vote') }}</a></div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="alert error pas mas">{{ _('No song to display.') }}</p>
+    {% endif %}
 {% endblock %}

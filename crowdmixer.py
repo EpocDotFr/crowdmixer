@@ -71,7 +71,21 @@ for handler in app.logger.handlers:
 def home():
     songs = Song.query.search(request.args.get('q'))
 
-    return render_template('home.html', songs=songs)
+    now_playing = None
+
+    if audioplayers.Aimp.is_now_playing_supported(): # TODO
+        try:
+            # audio_player = audioplayers.Aimp() # TODO
+            # now_playing = audio_player.get_now_playing()
+            now_playing = { # TODO
+                'artist': 'Paradise Lost',
+                'title': 'Another Day',
+                'album': 'One Second'
+            }
+        except Exception as e:
+            flash(_('Error while getting the now playing song: {}'.format(e)), 'error')
+
+    return render_template('home.html', songs=songs, now_playing=now_playing)
 
 
 @app.route('/submit/<song_id>')

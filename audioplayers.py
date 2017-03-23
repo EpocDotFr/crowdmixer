@@ -213,7 +213,7 @@ class Vlc(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        status_response = requests.get('http://127.0.0.1:8080/requests/status.json')
+        status_response = requests.get('http://127.0.0.1:8080/requests/status.json') # TODO
 
         status_response.raise_for_status()
 

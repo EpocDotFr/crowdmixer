@@ -160,14 +160,15 @@ form textarea {
 /************************************************************************
  * Song */
 
-.song:last-child {
+.songs > .song:last-child {
     padding-bottom: 0;
 }
 
 /************************************************************************
  * Header */
 
-header a {
+header a,
+header a:visited {
     text-decoration: none;
     color: inherit;
 }
