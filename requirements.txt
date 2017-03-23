@@ -7,3 +7,5 @@ arrow
 SQLAlchemy
 sqlalchemy-utils
 tinytag
+pyaimp
+requests

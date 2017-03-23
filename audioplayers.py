@@ -1,4 +1,6 @@
 import subprocess
+import pyaimp
+import requests
 
 __all__ = [
     'Aimp',
@@ -16,11 +18,18 @@ __all__ = [
 
 
 class AudioPlayer:
-    def _run_process(self, cli):
-        subprocess.run(cli, check=True)
+    def _run_process(self, args):
+        subprocess.run(args, check=True)
 
     @staticmethod
     def name():
+        raise NotImplementedError('Must be implemented')
+
+    @staticmethod
+    def is_now_playing_supported():
+        raise NotImplementedError('Must be implemented')
+
+    def get_now_playing(self):
         raise NotImplementedError('Must be implemented')
 
     def queue(self, file):
@@ -28,18 +37,28 @@ class AudioPlayer:
 
 
 class Aimp(AudioPlayer):
+    def __init__(self):
+        self.client = pyaimp.Client()
+
     @staticmethod
     def name():
         return 'AIMP'
 
-    def queue(self, file):
-        cli = [
-            'aimp_path', # TODO Autodetect with psutil?
-            '/FILE',
-            file
-        ]
+    @staticmethod
+    def is_now_playing_supported():
+        return True
 
-        self._run_process(cli)
+    def get_now_playing(self):
+        current_track_info = self.client.get_current_track_info()
+
+        return {
+            'artist': current_track_info['artist'],
+            'title': current_track_info['title'],
+            'album': current_track_info['album']
+        }
+
+    def queue(self, file):
+        self.client.add_to_active_playlist(file)
 
 
 class Audacious(AudioPlayer):
@@ -47,14 +66,18 @@ class Audacious(AudioPlayer):
     def name():
         return 'Audacious'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
     def queue(self, file):
-        cli = [
+        args = [
             'audacious_path', # TODO Autodetect with psutil?
             '--enqueue',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Clementine(AudioPlayer):
@@ -62,14 +85,21 @@ class Clementine(AudioPlayer):
     def name():
         return 'Clementine'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return True
+
+    def get_now_playing(self):
+        pass # TODO
+
     def queue(self, file):
-        cli = [
+        args = [
             'clementine_path', # TODO Autodetect with psutil?
             '--append',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Foobar2000(AudioPlayer):
@@ -77,15 +107,19 @@ class Foobar2000(AudioPlayer):
     def name():
         return 'foobar2000'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
     def queue(self, file):
-        cli = [
+        args = [
             'foobar2000_path', # TODO Autodetect with psutil?
             '/immediate',
             '/add',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class MediaMonkey(AudioPlayer):
@@ -93,15 +127,19 @@ class MediaMonkey(AudioPlayer):
     def name():
         return 'MediaMonkey'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
     def queue(self, file):
-        cli = [
+        args = [
             'mediamonkey_path', # TODO Autodetect with psutil?
             '/NoSplash',
             '/Add',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class MusicBee(AudioPlayer):
@@ -109,14 +147,18 @@ class MusicBee(AudioPlayer):
     def name():
         return 'MusicBee'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
     def queue(self, file):
-        cli = [
+        args = [
             'musicbee_path', # TODO Autodetect with psutil?
             '/QueueLast',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Mpd(AudioPlayer):
@@ -124,14 +166,21 @@ class Mpd(AudioPlayer):
     def name():
         return 'Music Player Daemon'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return True
+
+    def get_now_playing(self):
+        pass # TODO
+
     def queue(self, file):
-        cli = [
+        args = [
             'mpc_path', # TODO Autodetect with psutil?
             'add',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Rhythmbox(AudioPlayer):
@@ -139,15 +188,19 @@ class Rhythmbox(AudioPlayer):
     def name():
         return 'Rhythmbox'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
     def queue(self, file):
-        cli = [
+        args = [
             'rhythmbox_client_path', # TODO Autodetect with psutil?
             '--no-start',
             '--enqueue',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Vlc(AudioPlayer):
@@ -155,13 +208,30 @@ class Vlc(AudioPlayer):
     def name():
         return 'VLC'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return True
+
+    def get_now_playing(self):
+        status_response = requests.get('http://127.0.0.1:8080/requests/status.json')
+
+        status_response.raise_for_status()
+
+        status = status_response.json()
+
+        return {
+            'artist': status['information']['category']['artist'],
+            'title': status['information']['category']['title'],
+            'album': status['information']['category']['album']
+        }
+
     def queue(self, file):
-        cli = [
+        args = [
             'vlc_path', # TODO Autodetect with psutil?
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Winamp(AudioPlayer):
@@ -169,14 +239,18 @@ class Winamp(AudioPlayer):
     def name():
         return 'Winamp'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
     def queue(self, file):
-        cli = [
+        args = [
             'winamp_path', # TODO Autodetect with psutil?
             '/ADD',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)
 
 
 class Xmms2(AudioPlayer):
@@ -184,12 +258,19 @@ class Xmms2(AudioPlayer):
     def name():
         return 'XMMS2'
 
+    @staticmethod
+    def is_now_playing_supported():
+        return True
+
+    def get_now_playing(self):
+        pass # TODO
+
     def queue(self, file):
-        cli = [
+        args = [
             'xmms2_path', # TODO Autodetect with psutil?
             'add',
             '--file',
             file
         ]
 
-        self._run_process(cli)
+        self._run_process(args)

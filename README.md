@@ -19,9 +19,10 @@ CrowdMixer requires to be ran on the same computer that is running your prefered
 
 The method used to control and retrieve information of an audio player from CrowdMixer is choosed regarding three criteria:
 
-  1. **Simplicity of implementation:** CLI is easier than everything, HTTP is easier than raw TCP, etc.
-  2. **Cross-platformness:** CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc. This criteria depends of course of the operating system availability of the audio player.
-  3. **As native as possible**: Doesn't require installation of a third-party software like a plugin, an external tool, etc.
+  1. **Simplicity of implementation**: CLI is easier than everything, HTTP is easier than raw TCP, etc.
+  2. **Cross-platformness**: CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc. This criteria depends of course of the operating system availability of the audio player.
+  3. **As native as possible**: Doesn't require installation of a third-party software like a plugin, an external tool, etc. other than one needed by CrowdMixer internally.
+  4. **As fast as possible**: CLI is faster than everything, HTTP is slower than raw TCP, etc.
 
 | Name | Method used to add a song | Method used to get the currently playing song |
 |------|---------------------------|-----------------------------------------------|

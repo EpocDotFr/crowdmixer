@@ -17,6 +17,7 @@ import sys
 import arrow
 import os
 import utils
+import audioplayers
 
 
 # -----------------------------------------------------------
@@ -68,7 +69,7 @@ for handler in app.logger.handlers:
 
 @app.route('/')
 def home():
-    songs = Song.query.find(request.args.get('q'))
+    songs = Song.query.search(request.args.get('q'))
 
     return render_template('home.html', songs=songs)
 
@@ -79,9 +80,19 @@ def submit(song_id):
 
     if not song:
         flash(_('This song doesn\'t exist.'), 'error')
+    elif not os.path.isfile(song.path):
+        flash(_('This song file doesn\'t seem to exist no more. Please choose another one.'), 'error')
+
+        db.session.delete(song)
+        db.session.commit()
     else:
-        flash(_('Song successfully submitted!'), 'success')
-        # TODO
+        try:
+            audio_player = audioplayers.Aimp() # TODO
+            audio_player.queue(song.path)
+
+            flash(_('Song successfully queued!'), 'success') # TODO
+        except Exception as e:
+            flash(_('Error while queuing this song: {}'.format(e)), 'error') # TODO
 
     return redirect(url_for('home'))
 
@@ -103,7 +114,7 @@ def config():
 
 class Song(db.Model):
     class SongQuery(db.Query):
-        def find(self, search_term=None):
+        def search(self, search_term=None):
             q = self.order_by(Song.title.asc())
             q = q.order_by(Song.artist.asc())
 

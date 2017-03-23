@@ -21,7 +21,7 @@
 <body class="man pan">    
     <div class="center page blg brg bbg">
         <header class="pas mbs bggrey bbg big">
-            <a href="{{ url_for('home') }}">Crowd<span class="mixer">Mixer</span></a>
+            <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}"> Crowd<span class="mixer">Mixer</span></a>
         </header>
 
         {% with flash_messages = get_flashed_messages(with_categories=true) %}
