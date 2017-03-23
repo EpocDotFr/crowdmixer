@@ -19,7 +19,7 @@ Let the crowd make its own mix without hassling you.
   2. `pip install -r requirements.txt`
   3. `export FLASK_APP=crowdmixer.py` (Windows users: `set FLASK_APP=crowdmixer.py`)
   4. `flask create_database` (WARNING: don't re-run this command unless you want to start from scratch, it will wipe out all the data)
-  5. `flask clean` to index your songs (don't forget to set the `MUSIC_DIRS` configuration parameter before, read below)
+  5. `flask index` (this will index your songs, don't forget to set the `MUSIC_DIRS` configuration parameter before, read below)
 
 ## Configuration
 
