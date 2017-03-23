@@ -5,3 +5,4 @@ USERS = {'username': 'password'}
 FORCE_LANGUAGE = None
 DEFAULT_LANGUAGE = 'en'
 MUSIC_DIRS = []
+NOW_PLAYING_CACHE_TIME = 60

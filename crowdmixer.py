@@ -18,6 +18,7 @@ import arrow
 import os
 import utils
 import audioplayers
+import diskcache
 
 
 # -----------------------------------------------------------
@@ -48,6 +49,7 @@ app.jinja_env.globals.update(arrow=arrow)
 db = SQLAlchemy(app)
 babel = Babel(app)
 auth = HTTPBasicAuth()
+cache = diskcache.Cache('storage/cache')
 
 # Default Python logger
 logging.basicConfig(
@@ -82,6 +84,10 @@ def home():
                 'title': 'Another Day',
                 'album': 'One Second'
             }
+
+            print(cache.get('now_playing', expire_time=True))
+
+            cache.set('now_playing', now_playing, expire=app.config['NOW_PLAYING_CACHE_TIME']) # TODO Only set if cache is expired
         except Exception as e:
             flash(_('Error while getting the now playing song: {}'.format(e)), 'error')
 
@@ -282,6 +288,11 @@ def get_app_locale():
         return app.config['DEFAULT_LANGUAGE']
     else:
         return g.CURRENT_LOCALE
+
+
+@app.teardown_appcontext
+def close_cache(error):
+    cache.close()
 
 
 # -----------------------------------------------------------
