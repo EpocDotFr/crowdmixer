@@ -77,17 +77,19 @@ def home():
 
     if audioplayers.Aimp.is_now_playing_supported(): # TODO
         try:
-            # audio_player = audioplayers.Aimp() # TODO
-            # now_playing = audio_player.get_now_playing()
-            now_playing = { # TODO
-                'artist': 'Paradise Lost',
-                'title': 'Another Day',
-                'album': 'One Second'
-            }
+            now_playing = cache.get('now_playing')
 
-            print(cache.get('now_playing', expire_time=True))
+            if not now_playing:
+                print('Pas de cache')
+                # audio_player = audioplayers.Aimp() # TODO
+                # now_playing = audio_player.get_now_playing()
+                now_playing = { # TODO
+                    'artist': 'Paradise Lost',
+                    'title': 'Another Day',
+                    'album': 'One Second'
+                }
 
-            cache.set('now_playing', now_playing, expire=app.config['NOW_PLAYING_CACHE_TIME']) # TODO Only set if cache is expired
+                cache.set('now_playing', now_playing, expire=app.config['NOW_PLAYING_CACHE_TIME'])
         except Exception as e:
             flash(_('Error while getting the now playing song: {}'.format(e)), 'error')
 
