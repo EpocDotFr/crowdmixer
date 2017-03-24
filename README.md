@@ -17,9 +17,10 @@ Let the crowd make its own mix without hassling you.
 
   1. Clone this repo somewhere
   2. `pip install -r requirements.txt`
-  3. `export FLASK_APP=crowdmixer.py` (Windows users: `set FLASK_APP=crowdmixer.py`)
-  4. `flask create_database` (WARNING: don't re-run this command unless you want to start from scratch, it will wipe out all the data)
-  5. `flask index` (this will index your songs, don't forget to set the `MUSIC_DIRS` configuration parameter before, read below)
+  3. **IMPORTANT:** Other dependencies are needed regarding the audio player you'll use. Please refer to the table in the **Supported audio players** section below and install them accordingly before continuing
+  4. `export FLASK_APP=crowdmixer.py` (Windows users: `set FLASK_APP=crowdmixer.py`)
+  5. `flask create_database` (WARNING: don't re-run this command unless you want to start from scratch, it will wipe out all the data)
+  6. `flask index` (this will index your songs, don't forget to set the `MUSIC_DIRS` configuration parameter before, read below)
 
 ## Configuration
 
@@ -92,19 +93,19 @@ CrowdMixer requires to be ran on the same computer that is running your prefered
 
 The following methods are used to control and retrieve information of an audio player from CrowdMixer:
 
-| Name | Method used to add a song | Method used to get the currently playing song | Configuration value |
-|------|---------------------------|-----------------------------------------------|---------------------|
-| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` |
-| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` |
-| [Clementine](https://www.clementine-player.org/) | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | `Clementine` |
-| [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ | `Foobar2000` |
-| [MediaMonkey](http://www.mediamonkey.com/) | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) | ❌ | `MediaMonkey` |
-| [MusicBee](http://getmusicbee.com/) | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) | ❌ | `MusicBee` |
-| [Music Player Daemon](https://www.musicpd.org/) | [CLI](https://linux.die.net/man/1/mpc) | [CLI](https://linux.die.net/man/1/mpc) | `Mpd` |
-| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ | `Rhythmbox` |
-| [VLC](http://www.videolan.org/vlc/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` |
-| [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | ❌ | `Winamp` |
-| [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | `Xmms2` |
+| Name | Method used to add a song | Method used to get the currently playing song | Configuration value | Additional PyPI dependencies |
+|------|---------------------------|-----------------------------------------------|---------------------|------------------------------|
+| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` | `pypiwin32` `pyaimp` |
+| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` |  |
+| [Clementine](https://www.clementine-player.org/) | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | `Clementine` | `protobuf==2.*` |
+| [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ | `Foobar2000` |  |
+| [MediaMonkey](http://www.mediamonkey.com/) | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) | ❌ | `MediaMonkey` |  |
+| [MusicBee](http://getmusicbee.com/) | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) | ❌ | `MusicBee` |  |
+| [Music Player Daemon](https://www.musicpd.org/) | [CLI](https://linux.die.net/man/1/mpc) | [CLI](https://linux.die.net/man/1/mpc) | `Mpd` |  |
+| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ | `Rhythmbox` |  |
+| [VLC](http://www.videolan.org/vlc/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` | `requests` |
+| [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | ❌ | `Winamp` |  |
+| [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | `Xmms2` |  |
 
 ## End words
 

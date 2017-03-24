@@ -6,6 +6,3 @@ arrow
 SQLAlchemy
 sqlalchemy-utils
 tinytag
-pyaimp
-requests
-protobuf==2.*
