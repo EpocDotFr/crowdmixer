@@ -26,7 +26,6 @@ app.config.from_pyfile('config.py')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///storage/data/db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['WTF_I18N_ENABLED'] = True
 
 app.config['LANGUAGES'] = {
     'en': 'English'

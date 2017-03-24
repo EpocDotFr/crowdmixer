@@ -33,11 +33,17 @@ Available configuration parameters are:
 
 More informations on the three above can be found [here](http://flask.pocoo.org/docs/0.12/config/#builtin-configuration-values).
 
-  - `USERS` The credentials required to access the app. You can specify multiple ones. **It is highly recommended to serve CrowdMixer through HTTPS** because it uses [HTTP basic auth](https://en.wikipedia.org/wiki/Basic_access_authentication)
   - `FORCE_LANGUAGE` Force the lang to be one of the supported ones (defaults to `None`: auto-detection from the `Accept-Language` HTTP header). See in the features section above for a list of available lang keys
   - `DEFAULT_LANGUAGE` Default language if it cannot be determined automatically. Not taken into account if `FORCE_LANGUAGE` is defined. See in the features section above for a list of available lang keys
   - `MUSIC_DIRS` A list of directories absolute paths containing songs (read below for a list of supported formats)
   - `NOW_PLAYING_CACHE_TIME` Number of seconds the "Now playing" information will be stored in the cache
+  - `MODE` Submit mode that should be used. Can be either `Immediate` (song queuing is immediate) or `Vote` (song is queued when a votes threshold is reached)
+  - `VOTES_THRESHOLD` If `MODE` is equal to `Vote`: number of votes required to actually queue a song in the playlist
+  - `BLOCK_TIME` Define the number of seconds a song that have just been queued is unavailable to submit
+  - `REQUEST_LIMIT` Define the minimum number of seconds a user have to wait between each submit
+  - `SHOW_CURRENT_PLAYING` Enable or disable the display of the currently playing song (support may vary following the audio player used, more information in the **Supported audio players** section below)
+  - `PLAYER_TO_USE` The audio player to use. Can be one of the ones in the table below, in the **Supported audio players** section
+  - `PLAYERS` Self-explanatory audio players-specific configuration values
 
 I'll let you search yourself about how to configure a web server along uWSGI.
 
@@ -91,19 +97,19 @@ The method used to control and retrieve information of an audio player from Crow
   3. **As native as possible**: Doesn't require installation of a third-party software like a plugin, an external tool, etc. other than one needed by CrowdMixer internally.
   4. **As fast as possible**: CLI is faster than everything, HTTP is slower than raw TCP, etc.
 
-| Name | Method used to add a song | Method used to get the currently playing song |
-|------|---------------------------|-----------------------------------------------|
-| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) |
-| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ |
-| [Clementine](https://www.clementine-player.org/) | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) |
-| [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ |
-| [MediaMonkey](http://www.mediamonkey.com/) | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) | ❌ |
-| [MusicBee](http://getmusicbee.com/) | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) | ❌ |
-| [Music Player Daemon](https://www.musicpd.org/) | [CLI](https://linux.die.net/man/1/mpc) | [CLI](https://linux.die.net/man/1/mpc) |
-| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ |
-| [VLC](http://www.videolan.org/vlc/) | [CLI](https://wiki.videolan.org/VLC_command-line_help/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) |
-| [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | ❌ |
-| [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) |
+| Name | Method used to add a song | Method used to get the currently playing song | Configuration value |
+|------|---------------------------|-----------------------------------------------|---------------------|
+| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` |
+| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` |
+| [Clementine](https://www.clementine-player.org/) | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | `Clementine` |
+| [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ | `Foobar2000` |
+| [MediaMonkey](http://www.mediamonkey.com/) | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) | ❌ | `MediaMonkey` |
+| [MusicBee](http://getmusicbee.com/) | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) | ❌ | `MusicBee` |
+| [Music Player Daemon](https://www.musicpd.org/) | [CLI](https://linux.die.net/man/1/mpc) | [CLI](https://linux.die.net/man/1/mpc) | `Mpd` |
+| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ | `Rhythmbox` |
+| [VLC](http://www.videolan.org/vlc/) | [CLI](https://wiki.videolan.org/VLC_command-line_help/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` |
+| [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | ❌ | `Winamp` |
+| [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | `Xmms2` |
 
 ## End words
 
