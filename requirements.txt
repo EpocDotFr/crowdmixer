@@ -1,10 +1,11 @@
 flask
 Flask-SQLAlchemy
 Flask-Babel
+Flask-Cache
 arrow
 SQLAlchemy
 sqlalchemy-utils
 tinytag
 pyaimp
 requests
-diskcache
+protobuf==2.*

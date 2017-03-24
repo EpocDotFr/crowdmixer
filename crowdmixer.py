@@ -1,5 +1,6 @@
 from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
+from flask_cache import Cache
 from sqlalchemy_utils import ArrowType
 from sqlalchemy import or_
 from flask_babel import Babel, _
@@ -12,9 +13,7 @@ import logging
 import sys
 import arrow
 import os
-import utils
 import audioplayers
-import diskcache
 
 
 # -----------------------------------------------------------
@@ -39,11 +38,14 @@ app.config['SUPPORTED_AUDIO_FORMATS'] = [
     'wav'
 ]
 
+app.config['CACHE_TYPE'] = 'filesystem'
+app.config['CACHE_DIR'] = 'storage/cache'
+
 app.jinja_env.globals.update(arrow=arrow)
 
 db = SQLAlchemy(app)
 babel = Babel(app)
-cache = diskcache.Cache('storage/cache')
+cache = Cache(app)
 
 # Default Python logger
 logging.basicConfig(
@@ -65,24 +67,13 @@ for handler in app.logger.handlers:
 
 @app.route('/')
 def home():
-    songs = Song.query.search(request.args.get('q'))
+    songs = Song.query.search(search_term=request.args.get('q'), order_by_votes=app.config['MODE'] == 'Vote')
 
     now_playing = None
 
-    if audioplayers.Aimp.is_now_playing_supported(): # TODO
+    if app.config['SHOW_CURRENT_PLAYING'] and get_current_audio_player_class().is_now_playing_supported():
         try:
-            now_playing = cache.get('now_playing')
-
-            if not now_playing:
-                # audio_player = audioplayers.Aimp() # TODO
-                # now_playing = audio_player.get_now_playing()
-                now_playing = { # TODO
-                    'artist': 'Paradise Lost',
-                    'title': 'Another Day',
-                    'album': 'One Second'
-                }
-
-                cache.set('now_playing', now_playing, expire=app.config['NOW_PLAYING_CACHE_TIME'])
+            now_playing = get_now_playing_song()
         except Exception as e:
             flash(_('Error while getting the now playing song: {}'.format(e)), 'error')
 
@@ -102,7 +93,7 @@ def submit(song_id):
         db.session.commit()
     else:
         try:
-            audio_player = audioplayers.Aimp() # TODO
+            audio_player = get_current_audio_player_instance()
             audio_player.queue(song.path)
 
             flash(_('Song successfully queued!'), 'success') # TODO
@@ -118,8 +109,13 @@ def submit(song_id):
 
 class Song(db.Model):
     class SongQuery(db.Query):
-        def search(self, search_term=None):
-            q = self.order_by(Song.title.asc())
+        def search(self, search_term=None, order_by_votes=False):
+            q = self
+
+            if order_by_votes:
+                q = q.order_by(Song.votes.desc())
+
+            q = q.order_by(Song.title.asc())
             q = q.order_by(Song.artist.asc())
 
             if search_term:
@@ -191,7 +187,7 @@ def index():
 
     app.logger.info('{} supported audio files detected'.format(len(songs)))
 
-    for songs_chunk in list(utils.chunks(songs, 100)):
+    for songs_chunk in list(chunks(songs, 100)):
         for song in songs_chunk:
             song_tags = TinyTag.get(song)
 
@@ -253,11 +249,6 @@ def get_app_locale():
         return g.CURRENT_LOCALE
 
 
-@app.teardown_appcontext
-def close_cache(error):
-    cache.close()
-
-
 # -----------------------------------------------------------
 # HTTP errors handler
 
@@ -279,3 +270,42 @@ def http_error_handler(error, without_code=False):
         return make_response(body, error)
     else:
         return make_response(body)
+
+
+# -----------------------------------------------------------
+# Helpers
+
+
+def chunks(l, n):
+    for i in range(0, len(l), n):
+        yield l[i:i + n]
+
+
+def get_current_audio_player_class():
+    name = app.config['PLAYER_TO_USE']
+
+    if name not in audioplayers.__all__:
+        raise ValueError('{} isn\'t a valid audio player name'.format(name))
+
+    return getattr(audioplayers, name)
+
+
+def get_current_audio_player_instance():
+    name = app.config['PLAYER_TO_USE']
+
+    if name not in audioplayers.__all__:
+        raise ValueError('{} isn\'t a valid audio player name'.format(name))
+
+    config = {}
+
+    if name in app.config['PLAYERS']:
+        config = app.config['PLAYERS'][name]
+
+    return getattr(audioplayers, name)(config)
+
+
+@cache.cached(timeout=app.config['NOW_PLAYING_CACHE_TIME'])
+def get_now_playing_song():
+    audio_player = get_current_audio_player_instance()
+
+    return audio_player.get_now_playing()

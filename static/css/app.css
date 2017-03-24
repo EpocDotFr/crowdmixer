@@ -77,7 +77,7 @@ button,
     border-radius: 0.5rem;
     background-color: #EEE;
     border: 0.1rem solid #AAA;
-    padding: 0.5rem 1rem;
+    padding: 0.1rem 0.6rem;
     text-decoration: none;
     cursor: pointer;
     color: #32932B;
@@ -88,11 +88,6 @@ button:focus, .btn:focus {
     background-color: #DDD;
     outline: none;
     color: #333;
-}
-
-button.small,
-.btn.small {
-    padding: 0.1rem 0.6rem;
 }
 
 button.green,

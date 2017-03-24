@@ -90,12 +90,7 @@ indexer:
 
 CrowdMixer requires to be ran on the same computer that is running your prefered audio player.
 
-The method used to control and retrieve information of an audio player from CrowdMixer is choosed regarding three criteria:
-
-  1. **Simplicity of implementation**: CLI is easier than everything, HTTP is easier than raw TCP, etc.
-  2. **Cross-platformness**: CLI is fully cross-platform, dbus is only supported on Linux-based operating systems, etc. This criteria depends of course of the operating system availability of the audio player.
-  3. **As native as possible**: Doesn't require installation of a third-party software like a plugin, an external tool, etc. other than one needed by CrowdMixer internally.
-  4. **As fast as possible**: CLI is faster than everything, HTTP is slower than raw TCP, etc.
+The following methods are used to control and retrieve information of an audio player from CrowdMixer:
 
 | Name | Method used to add a song | Method used to get the currently playing song | Configuration value |
 |------|---------------------------|-----------------------------------------------|---------------------|
@@ -107,7 +102,7 @@ The method used to control and retrieve information of an audio player from Crow
 | [MusicBee](http://getmusicbee.com/) | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) | ❌ | `MusicBee` |
 | [Music Player Daemon](https://www.musicpd.org/) | [CLI](https://linux.die.net/man/1/mpc) | [CLI](https://linux.die.net/man/1/mpc) | `Mpd` |
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ | `Rhythmbox` |
-| [VLC](http://www.videolan.org/vlc/) | [CLI](https://wiki.videolan.org/VLC_command-line_help/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` |
+| [VLC](http://www.videolan.org/vlc/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` |
 | [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | ❌ | `Winamp` |
 | [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | `Xmms2` |
 

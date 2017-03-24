@@ -9,7 +9,7 @@
         <h2 class="pas man bggrey btg"><i class="fa fa-play-circle"></i> {{ _('Now playing') }}</h2>
 
         <div class="song btg pas">
-            <div>{{ now_playing.title }}</div>
+            <div>{% if not now_playing.title and not now_playing.artist %}{{ now_playing.filename }}{% else %}{{ now_playing.title }}{% endif %}</div>
             <small class="txtmuted">{% if not now_playing.artist %}{{ _('Unknown artist') }}{% else %}{{ now_playing.artist }}{% endif %}</small>
         </div>
     {% endif %}
@@ -22,7 +22,7 @@
                 <div class="song btg pas">
                     <div>{{ song.title }}</div>
                     <small class="txtmuted">{% if not song.artist %}{{ _('Unknown artist') }}{% else %}{{ song.artist }}{% endif %}</small>
-                    <div class="txtright"><a href="{{ url_for('submit', song_id=song.id) }}" class="btn small green">{{ _('Vote') }}</a></div>
+                    <div class="txtright"><a href="{{ url_for('submit', song_id=song.id) }}" class="btn green">{% if config['MODE'] == 'Immediate' %}{{ _('Queue') }}{% elif config['MODE'] == 'Vote' %}{{ _('Vote') }}{% endif %}</a></div>
                 </div>
             {% endfor %}
         </div>

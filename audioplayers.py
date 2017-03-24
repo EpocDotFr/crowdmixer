@@ -1,6 +1,7 @@
 import subprocess
 import pyaimp
 import requests
+import os
 
 __all__ = [
     'Aimp',
@@ -18,6 +19,9 @@ __all__ = [
 
 
 class AudioPlayer:
+    def __init__(self, config={}):
+        self.config = config
+
     def _run_process(self, args):
         subprocess.run(args, check=True)
 
@@ -37,7 +41,9 @@ class AudioPlayer:
 
 
 class Aimp(AudioPlayer):
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
+        super(Vlc, self).__init__(*args, **kwargs)
+
         self.client = pyaimp.Client()
 
     @staticmethod
@@ -54,7 +60,8 @@ class Aimp(AudioPlayer):
         return {
             'artist': current_track_info['artist'],
             'title': current_track_info['title'],
-            'album': current_track_info['album']
+            'album': current_track_info['album'],
+            'filename': os.path.splitext(os.path.basename(current_track_info['filename']))[0]
         }
 
     def queue(self, file):
@@ -81,6 +88,11 @@ class Audacious(AudioPlayer):
 
 
 class Clementine(AudioPlayer):
+    def __init__(self, *args, **kwargs):
+        super(Vlc, self).__init__(*args, **kwargs)
+
+        # TODO
+
     @staticmethod
     def name():
         return 'Clementine'
@@ -204,6 +216,20 @@ class Rhythmbox(AudioPlayer):
 
 
 class Vlc(AudioPlayer):
+    def __init__(self, *args, **kwargs):
+        super(Vlc, self).__init__(*args, **kwargs)
+
+        self.endpoint = 'http://{}:{}/requests/'.format(self.config['ip'], self.config['port'])
+
+    def _query(self, method, resource, frmt, params=None):
+        url = self.endpoint + resource + '.' + frmt
+
+        response = requests.request(method, url, auth=(self.config['username'], self.config['password']), params=params)
+
+        response.raise_for_status()
+
+        return response.json()
+
     @staticmethod
     def name():
         return 'VLC'
@@ -213,25 +239,24 @@ class Vlc(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        status_response = requests.get('http://127.0.0.1:8080/requests/status.json') # TODO
+        status = self._query('GET', 'status', 'json')
 
-        status_response.raise_for_status()
-
-        status = status_response.json()
+        status = status['information']['category']['meta']
 
         return {
-            'artist': status['information']['category']['artist'],
-            'title': status['information']['category']['title'],
-            'album': status['information']['category']['album']
+            'artist': status['artist'] if 'artist' in status else None,
+            'title': status['title'] if 'title' in status else None,
+            'album': status['album'] if 'album' in status else None,
+            'filename': os.path.splitext(os.path.basename(status['filename']))[0] if 'filename' in status else None
         }
 
     def queue(self, file):
-        args = [
-            'vlc_path', # TODO Autodetect with psutil?
-            file
-        ]
+        params = {
+            'command': 'in_enqueue',
+            'input': file
+        }
 
-        self._run_process(args)
+        self._query('GET', 'status', 'json', params=params)
 
 
 class Winamp(AudioPlayer):
