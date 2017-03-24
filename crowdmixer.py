@@ -1,17 +1,13 @@
 from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for
-from flask_httpauth import HTTPBasicAuth
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy_utils import ArrowType
 from sqlalchemy import or_
-from flask_babel import Babel, _, lazy_gettext as __
-from flask_wtf import FlaskForm
+from flask_babel import Babel, _
 from werkzeug.exceptions import HTTPException
 from tinytag import TinyTag
 from glob import glob
 from datetime import timedelta
 from time import time
-from wtforms import SelectField
-import wtforms.validators as validators
 import logging
 import sys
 import arrow
@@ -48,7 +44,6 @@ app.jinja_env.globals.update(arrow=arrow)
 
 db = SQLAlchemy(app)
 babel = Babel(app)
-auth = HTTPBasicAuth()
 cache = diskcache.Cache('storage/cache')
 
 # Default Python logger
@@ -80,7 +75,6 @@ def home():
             now_playing = cache.get('now_playing')
 
             if not now_playing:
-                print('Pas de cache')
                 # audio_player = audioplayers.Aimp() # TODO
                 # now_playing = audio_player.get_now_playing()
                 now_playing = { # TODO
@@ -117,17 +111,6 @@ def submit(song_id):
             flash(_('Error while queuing this song: {}'.format(e)), 'error') # TODO
 
     return redirect(url_for('home'))
-
-
-@app.route('/config', methods=['GET', 'POST'])
-@auth.login_required
-def config():
-    form = ConfigurationForm()
-
-    if form.validate_on_submit():
-        pass
-
-    return render_template('config.html', form=form)
 
 
 # -----------------------------------------------------------
@@ -169,14 +152,6 @@ class Song(db.Model):
 
     def __repr__(self):
         return '<Song> #{} : {}'.format(self.id, self.title)
-
-
-# -----------------------------------------------------------
-# Forms
-
-
-class ConfigurationForm(FlaskForm):
-    audio_player = SelectField(__('Audio player to use'), [validators.DataRequired()], choices=[('', '')] + utils.get_available_audio_players())
 
 
 # -----------------------------------------------------------
@@ -269,19 +244,6 @@ def set_locale():
             g.CURRENT_LOCALE = app.config['FORCE_LANGUAGE']
         else:
             g.CURRENT_LOCALE = request.accept_languages.best_match(app.config['LANGUAGES'].keys(), default=app.config['DEFAULT_LANGUAGE'])
-
-
-@auth.get_password
-def get_password(username):
-    if username in app.config['USERS']:
-        return app.config['USERS'].get(username)
-
-    return None
-
-
-@auth.error_handler
-def auth_error():
-    return http_error_handler(403, without_code=True)
 
 
 @babel.localeselector
