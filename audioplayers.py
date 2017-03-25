@@ -148,12 +148,12 @@ class Clementine(AudioPlayer):
                 msg = clementine_protobuf.Message()
                 msg.ParseFromString(data)
 
+                logging.info('Got message {} from Clementine'.format(msg.type))
+
                 if msg.type == clementine_protobuf.CURRENT_METAINFO:
                     self.socket.close()
 
                     return msg
-                else:
-                    logging.warning('Ignored Clementine message: {}'.format(msg.type))
             except Exception as e:
                 logging.error(e)
 
@@ -169,6 +169,7 @@ class Clementine(AudioPlayer):
         self.socket.connect((self.config['ip'], self.config['port']))
 
         msg = clementine_protobuf.Message()
+        msg.type = clementine_protobuf.CONNECT
         msg.request_connect.auth_code = self.config['auth_code'] if self.config['auth_code'] else 0
         msg.request_connect.send_playlist_songs = False
         msg.request_connect.downloader = False
