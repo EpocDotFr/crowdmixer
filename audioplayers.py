@@ -51,7 +51,7 @@ class AudioPlayer:
 
 class Aimp(AudioPlayer):
     def __init__(self, *args, **kwargs):
-        super(Vlc, self).__init__(*args, **kwargs)
+        super(Aimp, self).__init__(*args, **kwargs)
 
         self.client = pyaimp.Client()
 
@@ -64,6 +64,9 @@ class Aimp(AudioPlayer):
         return True
 
     def get_now_playing(self):
+        if self.client.get_playback_state() != pyaimp.PlayBackState.Playing:
+            return None
+
         current_track_info = self.client.get_current_track_info()
 
         return {
@@ -98,7 +101,7 @@ class Audacious(AudioPlayer):
 
 class Clementine(AudioPlayer):
     def __init__(self, *args, **kwargs):
-        super(Vlc, self).__init__(*args, **kwargs)
+        super(Clementine, self).__init__(*args, **kwargs)
 
         # TODO
 
@@ -249,6 +252,9 @@ class Vlc(AudioPlayer):
 
     def get_now_playing(self):
         status = self._query('GET', 'status', 'json')
+
+        if status['state'] != 'playing':
+            return None
 
         status = status['information']['category']['meta']
 
