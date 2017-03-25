@@ -14,7 +14,8 @@ PLAYER_TO_USE = 'Vlc'
 PLAYERS = {
     'Clementine': {
         'ip': '127.0.0.1',
-        'port': 5500
+        'port': 5500,
+        'auth_code': None
     },
     'Vlc': {
         'ip': '127.0.0.1',

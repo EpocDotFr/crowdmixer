@@ -1,5 +1,9 @@
 import subprocess
 import os
+import socket
+import clementine_protobuf
+import struct
+import logging
 
 # Optional modules/packages
 try:
@@ -103,7 +107,55 @@ class Clementine(AudioPlayer):
     def __init__(self, *args, **kwargs):
         super(Clementine, self).__init__(*args, **kwargs)
 
-        # TODO
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+    def _send_message(self, msg):
+        if self.socket is not None:
+            msg.version = 21
+            serialized = msg.SerializeToString()
+            data = struct.pack('>I', len(serialized)) + serialized
+
+            try:
+                self.socket.send(data)
+            except Exception as e:
+                logging.error(e)
+        else:
+            logging.error('Socket is closed')
+
+    def _get_response(self):
+        while True:
+            chunk = self.socket.recv(4)
+
+            if not chunk:
+                break
+
+            (msg_length, ) = struct.unpack(">I", chunk)
+
+            data = bytes()
+
+            while len(data) < msg_length:
+                chunk = self.socket.recv(min(4096, msg_length - len(data)))
+
+                if not chunk:
+                    break
+
+                data += chunk
+
+            if not chunk:
+                break
+
+            try:
+                msg = clementine_protobuf.Message()
+                msg.ParseFromString(data)
+
+                if msg.type == clementine_protobuf.CURRENT_METAINFO:
+                    self.socket.close()
+
+                    return msg
+                else:
+                    logging.warning('Ignored Clementine message: {}'.format(msg.type))
+            except Exception as e:
+                logging.error(e)
 
     @staticmethod
     def name():
@@ -114,7 +166,23 @@ class Clementine(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        pass # TODO
+        self.socket.connect((self.config['ip'], self.config['port']))
+
+        msg = clementine_protobuf.Message()
+        msg.request_connect.auth_code = self.config['auth_code'] if self.config['auth_code'] else 0
+        msg.request_connect.send_playlist_songs = False
+        msg.request_connect.downloader = False
+
+        self._send_message(msg)
+
+        msg = self._get_response()
+
+        return {
+            'artist': msg.response_current_metadata.song_metadata.artist,
+            'title': msg.response_current_metadata.song_metadata.title,
+            'album': msg.response_current_metadata.song_metadata.album,
+            'filename': os.path.splitext(os.path.basename(msg.response_current_metadata.song_metadata.filename))[0]
+        }
 
     def queue(self, file):
         args = [

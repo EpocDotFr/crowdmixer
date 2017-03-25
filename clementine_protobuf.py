@@ -19,6 +19,7 @@ _sym_db = _symbol_database.Default()
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='remotecontrolmessages.proto',
   package='pb.remote',
+  syntax='proto2',
   serialized_pb=_b('\n\x1bremotecontrolmessages.proto\x12\tpb.remote\"\xd3\x04\n\x0cSongMetadata\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05index\x18\x02 \x01(\x05\x12\r\n\x05title\x18\x03 \x01(\t\x12\r\n\x05\x61lbum\x18\x04 \x01(\t\x12\x0e\n\x06\x61rtist\x18\x05 \x01(\t\x12\x13\n\x0b\x61lbumartist\x18\x06 \x01(\t\x12\r\n\x05track\x18\x07 \x01(\x05\x12\x0c\n\x04\x64isc\x18\x08 \x01(\x05\x12\x13\n\x0bpretty_year\x18\t \x01(\t\x12\r\n\x05genre\x18\n \x01(\t\x12\x11\n\tplaycount\x18\x0b \x01(\x05\x12\x15\n\rpretty_length\x18\x0c \x01(\t\x12\x0b\n\x03\x61rt\x18\r \x01(\x0c\x12\x0e\n\x06length\x18\x0e \x01(\x05\x12\x10\n\x08is_local\x18\x0f \x01(\x08\x12\x10\n\x08\x66ilename\x18\x10 \x01(\t\x12\x11\n\tfile_size\x18\x11 \x01(\x05\x12\x0e\n\x06rating\x18\x12 \x01(\x02\x12\x0b\n\x03url\x18\x13 \x01(\t\x12\x15\n\rart_automatic\x18\x14 \x01(\t\x12\x12\n\nart_manual\x18\x15 \x01(\t\x12*\n\x04type\x18\x16 \x01(\x0e\x32\x1c.pb.remote.SongMetadata.Type\"\xb1\x01\n\x04Type\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x07\n\x03\x41SF\x10\x01\x12\x08\n\x04\x46LAC\x10\x02\x12\x07\n\x03MP4\x10\x03\x12\x07\n\x03MPC\x10\x04\x12\x08\n\x04MPEG\x10\x05\x12\x0b\n\x07OGGFLAC\x10\x06\x12\x0c\n\x08OGGSPEEX\x10\x07\x12\r\n\tOGGVORBIS\x10\x08\x12\x08\n\x04\x41IFF\x10\t\x12\x07\n\x03WAV\x10\n\x12\r\n\tTRUEAUDIO\x10\x0b\x12\x08\n\x04\x43\x44\x44\x41\x10\x0c\x12\x0b\n\x07OGGOPUS\x10\r\x12\n\n\x06STREAM\x10\x63\"X\n\x08Playlist\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04name\x18\x02 \x01(\t\x12\x12\n\nitem_count\x18\x03 \x01(\x05\x12\x0e\n\x06\x61\x63tive\x18\x04 \x01(\x08\x12\x0e\n\x06\x63losed\x18\x05 \x01(\x08\"*\n\x10RequestPlaylists\x12\x16\n\x0einclude_closed\x18\x01 \x01(\x08\"\"\n\x14RequestPlaylistSongs\x12\n\n\x02id\x18\x01 \x01(\x05\"<\n\x11RequestChangeSong\x12\x13\n\x0bplaylist_id\x18\x01 \x01(\x05\x12\x12\n\nsong_index\x18\x02 \x01(\x05\"\"\n\x10RequestSetVolume\x12\x0e\n\x06volume\x18\x01 \x01(\x05\"4\n\x06Repeat\x12*\n\x0brepeat_mode\x18\x01 \x01(\x0e\x32\x15.pb.remote.RepeatMode\"7\n\x07Shuffle\x12,\n\x0cshuffle_mode\x18\x01 \x01(\x0e\x32\x16.pb.remote.ShuffleMode\"P\n\x16ResponseClementineInfo\x12\x0f\n\x07version\x18\x01 \x01(\t\x12%\n\x05state\x18\x02 \x01(\x0e\x32\x16.pb.remote.EngineState\"I\n\x17ResponseCurrentMetadata\x12.\n\rsong_metadata\x18\x01 \x01(\x0b\x32\x17.pb.remote.SongMetadata\":\n\x11ResponsePlaylists\x12%\n\x08playlist\x18\x01 \x03(\x0b\x32\x13.pb.remote.Playlist\"p\n\x15ResponsePlaylistSongs\x12/\n\x12requested_playlist\x18\x01 \x01(\x0b\x32\x13.pb.remote.Playlist\x12&\n\x05songs\x18\x02 \x03(\x0b\x32\x17.pb.remote.SongMetadata\"C\n\x1aResponseEngineStateChanged\x12%\n\x05state\x18\x01 \x01(\x0e\x32\x16.pb.remote.EngineState\"/\n\x1bResponseUpdateTrackPosition\x12\x10\n\x08position\x18\x01 \x01(\x05\"T\n\x0eRequestConnect\x12\x11\n\tauth_code\x18\x01 \x01(\x05\x12\x1b\n\x13send_playlist_songs\x18\x02 \x01(\x08\x12\x12\n\ndownloader\x18\x03 \x01(\x08\"L\n\x12ResponseDisconnect\x12\x36\n\x11reason_disconnect\x18\x01 \x01(\x0e\x32\x1b.pb.remote.ReasonDisconnect\"#\n\x15ResponseActiveChanged\x12\n\n\x02id\x18\x01 \x01(\x05\"+\n\x17RequestSetTrackPosition\x12\x10\n\x08position\x18\x01 \x01(\x05\"\xa5\x01\n\x11RequestInsertUrls\x12\x13\n\x0bplaylist_id\x18\x01 \x01(\x05\x12\x0c\n\x04urls\x18\x02 \x03(\t\x12\x14\n\x08position\x18\x03 \x01(\x05:\x02-1\x12\x17\n\x08play_now\x18\x04 \x01(\x08:\x05\x66\x61lse\x12\x16\n\x07\x65nqueue\x18\x05 \x01(\x08:\x05\x66\x61lse\x12&\n\x05songs\x18\x06 \x03(\x0b\x32\x17.pb.remote.SongMetadata\"8\n\x12RequestRemoveSongs\x12\x13\n\x0bplaylist_id\x18\x01 \x01(\x05\x12\r\n\x05songs\x18\x02 \x03(\x05\"*\n\x13RequestOpenPlaylist\x12\x13\n\x0bplaylist_id\x18\x01 \x01(\x05\"+\n\x14RequestClosePlaylist\x12\x13\n\x0bplaylist_id\x18\x01 \x01(\x05\"2\n\x0eResponseLyrics\x12 \n\x06lyrics\x18\x01 \x03(\x0b\x32\x10.pb.remote.Lyric\"3\n\x05Lyric\x12\n\n\x02id\x18\x01 \x01(\t\x12\r\n\x05title\x18\x02 \x01(\t\x12\x0f\n\x07\x63ontent\x18\x03 \x01(\t\"i\n\x14RequestDownloadSongs\x12.\n\rdownload_item\x18\x01 \x01(\x0e\x32\x17.pb.remote.DownloadItem\x12\x13\n\x0bplaylist_id\x18\x02 \x01(\x05\x12\x0c\n\x04urls\x18\x03 \x03(\t\"\xca\x01\n\x15ResponseSongFileChunk\x12\x14\n\x0c\x63hunk_number\x18\x01 \x01(\x05\x12\x13\n\x0b\x63hunk_count\x18\x02 \x01(\x05\x12\x13\n\x0b\x66ile_number\x18\x03 \x01(\x05\x12\x12\n\nfile_count\x18\x04 \x01(\x05\x12.\n\rsong_metadata\x18\x06 \x01(\x0b\x32\x17.pb.remote.SongMetadata\x12\x0c\n\x04\x64\x61ta\x18\x07 \x01(\x0c\x12\x0c\n\x04size\x18\x08 \x01(\x05\x12\x11\n\tfile_hash\x18\t \x01(\x0c\"p\n\x14ResponseLibraryChunk\x12\x14\n\x0c\x63hunk_number\x18\x01 \x01(\x05\x12\x13\n\x0b\x63hunk_count\x18\x02 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x03 \x01(\x0c\x12\x0c\n\x04size\x18\x04 \x01(\x05\x12\x11\n\tfile_hash\x18\x05 \x01(\x0c\"%\n\x11ResponseSongOffer\x12\x10\n\x08\x61\x63\x63\x65pted\x18\x01 \x01(\x08\"!\n\x0fRequestRateSong\x12\x0e\n\x06rating\x18\x01 \x01(\x02\"C\n\x19ResponseDownloadTotalSize\x12\x12\n\ntotal_size\x18\x01 \x01(\x05\x12\x12\n\nfile_count\x18\x02 \x01(\x05\"$\n\x13RequestGlobalSearch\x12\r\n\x05query\x18\x01 \x01(\t\"\x98\x01\n\x14ResponseGlobalSearch\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05query\x18\x02 \x01(\t\x12\x17\n\x0fsearch_provider\x18\x03 \x01(\t\x12.\n\rsong_metadata\x18\x04 \x03(\x0b\x32\x17.pb.remote.SongMetadata\x12\x1c\n\x14search_provider_icon\x18\x05 \x01(\x0c\"<\n\x18ResponseTranscoderStatus\x12\x11\n\tprocessed\x18\x01 \x01(\x05\x12\r\n\x05total\x18\x02 \x01(\x05\"f\n\x1aResponseGlobalSearchStatus\x12\n\n\x02id\x18\x01 \x01(\x05\x12\r\n\x05query\x18\x02 \x01(\t\x12-\n\x06status\x18\x03 \x01(\x0e\x32\x1d.pb.remote.GlobalSearchStatus\"\xe7\x0f\n\x07Message\x12\x13\n\x07version\x18\x01 \x01(\x05:\x02\x32\x31\x12)\n\x04type\x18\x02 \x01(\x0e\x32\x12.pb.remote.MsgType:\x07UNKNOWN\x12\x32\n\x0frequest_connect\x18\x15 \x01(\x0b\x32\x19.pb.remote.RequestConnect\x12\x36\n\x11request_playlists\x18\x1b \x01(\x0b\x32\x1b.pb.remote.RequestPlaylists\x12?\n\x16request_playlist_songs\x18\n \x01(\x0b\x32\x1f.pb.remote.RequestPlaylistSongs\x12\x39\n\x13request_change_song\x18\x0b \x01(\x0b\x32\x1c.pb.remote.RequestChangeSong\x12\x37\n\x12request_set_volume\x18\x0c \x01(\x0b\x32\x1b.pb.remote.RequestSetVolume\x12\x46\n\x1arequest_set_track_position\x18\x17 \x01(\x0b\x32\".pb.remote.RequestSetTrackPosition\x12\x39\n\x13request_insert_urls\x18\x19 \x01(\x0b\x32\x1c.pb.remote.RequestInsertUrls\x12;\n\x14request_remove_songs\x18\x1a \x01(\x0b\x32\x1d.pb.remote.RequestRemoveSongs\x12=\n\x15request_open_playlist\x18\x1c \x01(\x0b\x32\x1e.pb.remote.RequestOpenPlaylist\x12?\n\x16request_close_playlist\x18\x1d \x01(\x0b\x32\x1f.pb.remote.RequestClosePlaylist\x12?\n\x16request_download_songs\x18\x1f \x01(\x0b\x32\x1f.pb.remote.RequestDownloadSongs\x12\x35\n\x11request_rate_song\x18# \x01(\x0b\x32\x1a.pb.remote.RequestRateSong\x12=\n\x15request_global_search\x18% \x01(\x0b\x32\x1e.pb.remote.RequestGlobalSearch\x12!\n\x06repeat\x18\r \x01(\x0b\x32\x11.pb.remote.Repeat\x12#\n\x07shuffle\x18\x0e \x01(\x0b\x32\x12.pb.remote.Shuffle\x12\x43\n\x18response_clementine_info\x18\x0f \x01(\x0b\x32!.pb.remote.ResponseClementineInfo\x12\x45\n\x19response_current_metadata\x18\x10 \x01(\x0b\x32\".pb.remote.ResponseCurrentMetadata\x12\x38\n\x12response_playlists\x18\x11 \x01(\x0b\x32\x1c.pb.remote.ResponsePlaylists\x12\x41\n\x17response_playlist_songs\x18\x12 \x01(\x0b\x32 .pb.remote.ResponsePlaylistSongs\x12L\n\x1dresponse_engine_state_changed\x18\x13 \x01(\x0b\x32%.pb.remote.ResponseEngineStateChanged\x12N\n\x1eresponse_update_track_position\x18\x14 \x01(\x0b\x32&.pb.remote.ResponseUpdateTrackPosition\x12:\n\x13response_disconnect\x18\x16 \x01(\x0b\x32\x1d.pb.remote.ResponseDisconnect\x12\x41\n\x17response_active_changed\x18\x18 \x01(\x0b\x32 .pb.remote.ResponseActiveChanged\x12\x32\n\x0fresponse_lyrics\x18\x1e \x01(\x0b\x32\x19.pb.remote.ResponseLyrics\x12\x42\n\x18response_song_file_chunk\x18  \x01(\x0b\x32 .pb.remote.ResponseSongFileChunk\x12\x39\n\x13response_song_offer\x18! \x01(\x0b\x32\x1c.pb.remote.ResponseSongOffer\x12?\n\x16response_library_chunk\x18\" \x01(\x0b\x32\x1f.pb.remote.ResponseLibraryChunk\x12J\n\x1cresponse_download_total_size\x18$ \x01(\x0b\x32$.pb.remote.ResponseDownloadTotalSize\x12?\n\x16response_global_search\x18& \x01(\x0b\x32\x1f.pb.remote.ResponseGlobalSearch\x12G\n\x1aresponse_transcoder_status\x18\' \x01(\x0b\x32#.pb.remote.ResponseTranscoderStatus\x12L\n\x1dresponse_global_search_status\x18( \x01(\x0b\x32%.pb.remote.ResponseGlobalSearchStatus*\xe6\x06\n\x07MsgType\x12\x0b\n\x07UNKNOWN\x10\x00\x12\x0b\n\x07\x43ONNECT\x10\x01\x12\x15\n\x11REQUEST_PLAYLISTS\x10\x03\x12\x1a\n\x16REQUEST_PLAYLIST_SONGS\x10\x04\x12\x0f\n\x0b\x43HANGE_SONG\x10\x05\x12\x0e\n\nSET_VOLUME\x10\x06\x12\x16\n\x12SET_TRACK_POSITION\x10\x07\x12\x0f\n\x0bINSERT_URLS\x10\x08\x12\x10\n\x0cREMOVE_SONGS\x10\t\x12\x11\n\rOPEN_PLAYLIST\x10\n\x12\x12\n\x0e\x43LOSE_PLAYLIST\x10\x0b\x12\x0e\n\nGET_LYRICS\x10\x0e\x12\x12\n\x0e\x44OWNLOAD_SONGS\x10\x0f\x12\x17\n\x13SONG_OFFER_RESPONSE\x10\x10\x12\x08\n\x04LOVE\x10\x0c\x12\x07\n\x03\x42\x41N\x10\r\x12\x0e\n\nSTOP_AFTER\x10\x11\x12\x0f\n\x0bGET_LIBRARY\x10\x12\x12\r\n\tRATE_SONG\x10\x13\x12\x11\n\rGLOBAL_SEARCH\x10\x64\x12\x0e\n\nDISCONNECT\x10\x02\x12\x08\n\x04PLAY\x10\x14\x12\r\n\tPLAYPAUSE\x10\x15\x12\t\n\x05PAUSE\x10\x16\x12\x08\n\x04STOP\x10\x17\x12\x08\n\x04NEXT\x10\x18\x12\x0c\n\x08PREVIOUS\x10\x19\x12\x14\n\x10SHUFFLE_PLAYLIST\x10\x1a\x12\n\n\x06REPEAT\x10\x1b\x12\x0b\n\x07SHUFFLE\x10\x1c\x12\x08\n\x04INFO\x10(\x12\x14\n\x10\x43URRENT_METAINFO\x10)\x12\r\n\tPLAYLISTS\x10*\x12\x12\n\x0ePLAYLIST_SONGS\x10+\x12\x18\n\x14\x45NGINE_STATE_CHANGED\x10,\x12\x0e\n\nKEEP_ALIVE\x10-\x12\x19\n\x15UPDATE_TRACK_POSITION\x10.\x12\x1b\n\x17\x41\x43TIVE_PLAYLIST_CHANGED\x10/\x12\x1c\n\x18\x46IRST_DATA_SENT_COMPLETE\x10\x30\x12\n\n\x06LYRICS\x10\x31\x12\x13\n\x0fSONG_FILE_CHUNK\x10\x32\x12\x18\n\x14\x44OWNLOAD_QUEUE_EMPTY\x10\x33\x12\x11\n\rLIBRARY_CHUNK\x10\x34\x12\x17\n\x13\x44OWNLOAD_TOTAL_SIZE\x10\x35\x12\x18\n\x14GLOBAL_SEARCH_RESULT\x10\x36\x12\x15\n\x11TRANSCODING_FILES\x10\x37\x12\x18\n\x14GLOBAL_SEARCH_STATUS\x10\x38*;\n\x0b\x45ngineState\x12\t\n\x05\x45mpty\x10\x00\x12\x08\n\x04Idle\x10\x01\x12\x0b\n\x07Playing\x10\x02\x12\n\n\x06Paused\x10\x03*U\n\nRepeatMode\x12\x0e\n\nRepeat_Off\x10\x00\x12\x10\n\x0cRepeat_Track\x10\x01\x12\x10\n\x0cRepeat_Album\x10\x02\x12\x13\n\x0fRepeat_Playlist\x10\x03*\\\n\x0bShuffleMode\x12\x0f\n\x0bShuffle_Off\x10\x00\x12\x0f\n\x0bShuffle_All\x10\x01\x12\x17\n\x13Shuffle_InsideAlbum\x10\x02\x12\x12\n\x0eShuffle_Albums\x10\x03*k\n\x10ReasonDisconnect\x12\x13\n\x0fServer_Shutdown\x10\x01\x12\x13\n\x0fWrong_Auth_Code\x10\x02\x12\x15\n\x11Not_Authenticated\x10\x03\x12\x16\n\x12\x44ownload_Forbidden\x10\x04*G\n\x0c\x44ownloadItem\x12\x0f\n\x0b\x43urrentItem\x10\x01\x12\r\n\tItemAlbum\x10\x02\x12\r\n\tAPlaylist\x10\x03\x12\x08\n\x04Urls\x10\x04*G\n\x12GlobalSearchStatus\x12\x17\n\x13GlobalSearchStarted\x10\x01\x12\x18\n\x14GlobalSearchFinished\x10\x02\x42G\n%de.qspool.clementineremote.backend.pbB\x1e\x43lementineRemoteProtocolBuffer')
 )
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
@@ -679,7 +680,7 @@ _SONGMETADATA = _descriptor.Descriptor(
     _descriptor.FieldDescriptor(
       name='rating', full_name='pb.remote.SongMetadata.rating', index=17,
       number=18, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=0,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -720,6 +721,7 @@ _SONGMETADATA = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -778,6 +780,7 @@ _PLAYLIST = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -808,6 +811,7 @@ _REQUESTPLAYLISTS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -838,6 +842,7 @@ _REQUESTPLAYLISTSONGS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -875,6 +880,7 @@ _REQUESTCHANGESONG = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -905,6 +911,7 @@ _REQUESTSETVOLUME = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -935,6 +942,7 @@ _REPEAT = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -965,6 +973,7 @@ _SHUFFLE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1002,6 +1011,7 @@ _RESPONSECLEMENTINEINFO = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1032,6 +1042,7 @@ _RESPONSECURRENTMETADATA = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1062,6 +1073,7 @@ _RESPONSEPLAYLISTS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1099,6 +1111,7 @@ _RESPONSEPLAYLISTSONGS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1129,6 +1142,7 @@ _RESPONSEENGINESTATECHANGED = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1159,6 +1173,7 @@ _RESPONSEUPDATETRACKPOSITION = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1203,6 +1218,7 @@ _REQUESTCONNECT = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1233,6 +1249,7 @@ _RESPONSEDISCONNECT = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1263,6 +1280,7 @@ _RESPONSEACTIVECHANGED = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1293,6 +1311,7 @@ _REQUESTSETTRACKPOSITION = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1358,6 +1377,7 @@ _REQUESTINSERTURLS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1395,6 +1415,7 @@ _REQUESTREMOVESONGS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1425,6 +1446,7 @@ _REQUESTOPENPLAYLIST = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1455,6 +1477,7 @@ _REQUESTCLOSEPLAYLIST = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1485,6 +1508,7 @@ _RESPONSELYRICS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1529,6 +1553,7 @@ _LYRIC = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1573,6 +1598,7 @@ _REQUESTDOWNLOADSONGS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1652,6 +1678,7 @@ _RESPONSESONGFILECHUNK = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1710,6 +1737,7 @@ _RESPONSELIBRARYCHUNK = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1740,6 +1768,7 @@ _RESPONSESONGOFFER = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1758,7 +1787,7 @@ _REQUESTRATESONG = _descriptor.Descriptor(
     _descriptor.FieldDescriptor(
       name='rating', full_name='pb.remote.RequestRateSong.rating', index=0,
       number=1, type=2, cpp_type=6, label=1,
-      has_default_value=False, default_value=0,
+      has_default_value=False, default_value=float(0),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       options=None),
@@ -1770,6 +1799,7 @@ _REQUESTRATESONG = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1807,6 +1837,7 @@ _RESPONSEDOWNLOADTOTALSIZE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1837,6 +1868,7 @@ _REQUESTGLOBALSEARCH = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1895,6 +1927,7 @@ _RESPONSEGLOBALSEARCH = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1932,6 +1965,7 @@ _RESPONSETRANSCODERSTATUS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -1976,6 +2010,7 @@ _RESPONSEGLOBALSEARCHSTATUS = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
@@ -2230,6 +2265,7 @@ _MESSAGE = _descriptor.Descriptor(
   ],
   options=None,
   is_extendable=False,
+  syntax='proto2',
   extension_ranges=[],
   oneofs=[
   ],
