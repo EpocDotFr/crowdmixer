@@ -22,7 +22,36 @@
                 <div class="song btg pas">
                     <div>{{ song.title }}</div>
                     <small class="txtmuted">{% if not song.artist %}{{ _('Unknown artist') }}{% else %}{{ song.artist }}{% endif %}</small>
-                    <div class="txtright"><a href="{{ url_for('submit', song_id=song.id) }}" class="btn green">{% if config['MODE'] == 'Immediate' %}{{ _('Queue') }}{% elif config['MODE'] == 'Vote' %}{{ _('Vote') }}{% endif %}</a></div>
+                    <div class="txtright">
+                        {% if song.last_queued_at and (arrow.now().timestamp - song.last_queued_at.timestamp) <= config['BLOCK_TIME'] %}
+                            {% set btn_class = 'is-disabled' %}
+                            {% set btn_label = _('Queued %(last_queued_at)s', last_queued_at=song.last_queued_at.humanize(locale=g.CURRENT_LOCALE)) %}
+                        {% else %}
+                            {% if config['MODE'] == 'Vote' %}
+                                {{ song.votes }}/{{ config['VOTES_THRESHOLD'] }} {{ _('votes') }}
+                            {% endif %}
+
+                            {% if already_submitted_time and (arrow.now().timestamp - already_submitted_time.timestamp) <= config['REQUEST_LIMIT'] %}
+                                {% set btn_class = 'is-disabled' %}
+
+                                {% if config['MODE'] == 'Vote' %}
+                                    {% set btn_label = _('Vote') %}
+                                {% else %}
+                                    {% set btn_label = _('Queue') %}
+                                {% endif %}
+                            {% else %}
+                                {% set btn_class = 'green' %}
+
+                                {% if config['MODE'] == 'Vote' %}
+                                    {% set btn_label = '<i class="fa fa-chevron-right"></i> '|safe + _('Vote') %}
+                                {% else %}
+                                    {% set btn_label = '<i class="fa fa-chevron-right"></i> '|safe + _('Queue') %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+
+                        <a href="{{ url_for('submit', song_id=song.id) }}" class="btn {{ btn_class }}" {% if btn_class == 'is-disabled' %}onClick="return false;"{% endif %}>{{ btn_label }}</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

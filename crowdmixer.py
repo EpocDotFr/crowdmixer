@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for
+from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from flask_cache import Cache
 from sqlalchemy_utils import ArrowType
@@ -70,6 +70,7 @@ def home():
     songs = Song.query.search(search_term=request.args.get('q'), order_by_votes=app.config['MODE'] == 'Vote')
 
     now_playing = None
+    already_submitted_time = None
 
     if app.config['SHOW_CURRENT_PLAYING'] and get_current_audio_player_class().is_now_playing_supported():
         try:
@@ -77,28 +78,77 @@ def home():
         except Exception as e:
             flash(_('Error while getting the now playing song: {}'.format(e)), 'error')
 
-    return render_template('home.html', songs=songs, now_playing=now_playing)
+    if 'already_submitted_time' in session and session['already_submitted_time']:
+        already_submitted_time = arrow.get(session['already_submitted_time'])
+
+    return render_template('home.html', songs=songs, now_playing=now_playing, already_submitted_time=already_submitted_time)
 
 
 @app.route('/submit/<song_id>')
 def submit(song_id):
     song = Song.query.get(song_id)
 
+    already_submitted_time = None
+    queue_song = False
+
+    if 'already_submitted_time' in session and session['already_submitted_time']:
+        already_submitted_time = arrow.get(session['already_submitted_time'])
+
     if not song:
         flash(_('This song doesn\'t exist.'), 'error')
     elif not os.path.isfile(song.path):
-        flash(_('This song file doesn\'t seem to exist no more. Please choose another one.'), 'error')
+        flash(_('This song file doesn\'t seems to exist anymore. Please choose another one.'), 'error')
 
-        db.session.delete(song)
-        db.session.commit()
-    else:
         try:
-            audio_player = get_current_audio_player_instance()
-            audio_player.queue(song.path)
-
-            flash(_('Song successfully queued!'), 'success') # TODO
+            db.session.delete(song)
+            db.session.commit()
         except Exception as e:
-            flash(_('Error while queuing this song: {}'.format(e)), 'error') # TODO
+            flash(_('Error while deleting this song from the database: {}'.format(e)), 'error')
+    elif song.last_queued_at and (arrow.now().timestamp - song.last_queued_at.timestamp) <= app.config['BLOCK_TIME']:
+        flash(_('This song has already been queued %(last_queued_at)s. A song can be queued only one time every TODO.', last_queued_at=song.last_queued_at.humanize(locale=g.CURRENT_LOCALE)), 'error')
+    elif already_submitted_time and (arrow.now().timestamp - already_submitted_time.timestamp) <= app.config['REQUEST_LIMIT']:
+        if app.config['MODE'] == 'Vote':
+            action = _('voted for')
+            cannot = _('vote more than one time')
+        elif app.config['MODE'] == 'Immediate':
+            action = _('queued')
+            cannot = _('queue more than one')
+
+        flash(_('You already %(action)s a song %(already_submitted_time)s. You cannot %(cannot)s every TODO.', action=action, cannot=cannot, already_submitted_time=already_submitted_time.humanize(locale=g.CURRENT_LOCALE)), 'error')
+    else:
+        if app.config['MODE'] == 'Vote':
+            song.votes += 1
+
+            if song.votes == app.config['VOTES_THRESHOLD']:
+                song.votes = 0
+
+                queue_song = True
+            else:
+                session['already_submitted_time'] = arrow.now().format()
+
+                flash(_('Your vote for %(title)s from %(artist)s was successfuly saved! %(remaining_votes)i vote(s) is(are) remaining before this song is queued.', title=song.title, artist=song.artist, remaining_votes=app.config['VOTES_THRESHOLD'] - song.votes), 'success')
+        elif app.config['MODE'] == 'Immediate':
+            queue_song = True
+
+        if queue_song:
+            song.total_times_queued += 1
+            song.last_queued_at = arrow.now()
+
+            session['already_submitted_time'] = arrow.now().format()
+
+            try:
+                audio_player = get_current_audio_player_instance()
+                audio_player.queue(song.path)
+
+                flash(_('%(title)s from %(artist)s was successfully queued! It should be played shortly.', title=song.title, artist=song.artist), 'success')
+            except Exception as e:
+                flash(_('Error while queuing this song: {}'.format(e)), 'error')
+
+        try:
+            db.session.add(song)
+            db.session.commit()
+        except Exception as e:
+            flash(_('Error while updating data related to this song: {}'.format(e)), 'error')
 
     return redirect(url_for('home'))
 

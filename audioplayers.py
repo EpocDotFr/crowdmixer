@@ -1,7 +1,16 @@
 import subprocess
-import pyaimp
-import requests
 import os
+
+# Optional modules/packages
+try:
+    import requests
+except ImportError:
+    pass
+
+try:
+    import pyaimp
+except ImportError:
+    pass
 
 __all__ = [
     'Aimp',
