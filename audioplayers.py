@@ -108,6 +108,7 @@ class Clementine(AudioPlayer):
         super(Clementine, self).__init__(*args, **kwargs)
 
         self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.connect((self.config['ip'], self.config['port']))
 
     def _send_message(self, msg):
         if self.socket is not None:
@@ -122,7 +123,9 @@ class Clementine(AudioPlayer):
         else:
             logging.error('Socket is closed')
 
-    def _get_response(self):
+    def _get_response(self, msg_types):
+        msgs = []
+
         while True:
             chunk = self.socket.recv(4)
 
@@ -150,10 +153,12 @@ class Clementine(AudioPlayer):
 
                 logging.info('Got message {} from Clementine'.format(msg.type))
 
-                if msg.type == clementine_protobuf.CURRENT_METAINFO:
-                    self.socket.close()
+                if msg.type in msg_types:
+                    msgs.append(msg)
 
-                    return msg
+                    if len(msgs) == len(msg_types):
+                        self.socket.close()
+                        return msgs
             except Exception as e:
                 logging.error(e)
 
@@ -166,8 +171,6 @@ class Clementine(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        self.socket.connect((self.config['ip'], self.config['port']))
-
         msg = clementine_protobuf.Message()
         msg.type = clementine_protobuf.CONNECT
         msg.request_connect.auth_code = self.config['auth_code'] if self.config['auth_code'] else 0
@@ -176,23 +179,29 @@ class Clementine(AudioPlayer):
 
         self._send_message(msg)
 
-        msg = self._get_response()
+        info, metainfo = self._get_response([clementine_protobuf.INFO, clementine_protobuf.CURRENT_METAINFO])
+
+        if info.response_clementine_info.state != clementine_protobuf.Playing:
+            return None
 
         return {
-            'artist': msg.response_current_metadata.song_metadata.artist,
-            'title': msg.response_current_metadata.song_metadata.title,
-            'album': msg.response_current_metadata.song_metadata.album,
-            'filename': os.path.splitext(os.path.basename(msg.response_current_metadata.song_metadata.filename))[0]
+            'artist': metainfo.response_current_metadata.song_metadata.artist,
+            'title': metainfo.response_current_metadata.song_metadata.title,
+            'album': metainfo.response_current_metadata.song_metadata.album,
+            'filename': os.path.splitext(os.path.basename(metainfo.response_current_metadata.song_metadata.filename))[0]
         }
 
     def queue(self, file):
-        args = [
-            'clementine_path', # TODO Autodetect with psutil?
-            '--append',
-            file
-        ]
+        msg = clementine_protobuf.Message()
+        msg.type = clementine_protobuf.INSERT_URLS
+        msg.request_insert_urls.urls.append(file)
+        msg.request_insert_urls.play_now = False
+        msg.request_insert_urls.enqueue = True
 
-        self._run_process(args)
+        self._send_message(msg)
+        self.socket.close()
+
+        # msg = self._get_response(clementine_protobuf.CURRENT_METAINFO)
 
 
 class Foobar2000(AudioPlayer):
