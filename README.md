@@ -96,7 +96,7 @@ The following methods are used to control and retrieve information of an audio p
 | Name | Method used to add a song | Method used to get the currently playing song | Configuration value | Additional PyPI dependencies | Needs configuration |
 |------|---------------------------|-----------------------------------------------|---------------------|------------------------------|---------------------|
 | [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` | `pypiwin32` `pyaimp` | ❌ |
-| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` | ❌ |
+| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` |  | ❌ |
 | [Clementine](https://www.clementine-player.org/) | [CLI](https://github.com/clementine-player/Clementine/issues/4030#issuecomment-30595412) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | `Clementine` | `protobuf` | ✔ |
 | [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ | `Foobar2000` |  | ❌ |
 | [MediaMonkey](http://www.mediamonkey.com/) | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) | ❌ | `MediaMonkey` |  | ❌ |
