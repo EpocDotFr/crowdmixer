@@ -200,6 +200,7 @@ class Clementine(AudioPlayer):
 
         self._send_message(msg)
         self.socket.close()
+        # FIXME Clementine crashes when sending it this message
 
         # msg = self._get_response(clementine_protobuf.CURRENT_METAINFO)
 
