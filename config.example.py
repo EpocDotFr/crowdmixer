@@ -22,5 +22,9 @@ PLAYERS = {
         'port': 8080,
         'username': '',
         'password': ''
+    },
+    'Mpd': {
+        'ip': '127.0.0.1',
+        'port': 6600
     }
 }

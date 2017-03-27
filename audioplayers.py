@@ -16,6 +16,11 @@ try:
 except ImportError:
     pass
 
+try:
+    import musicpd
+except ImportError:
+    pass
+
 __all__ = [
     'Aimp',
     'Audacious',
@@ -157,7 +162,6 @@ class Clementine(AudioPlayer):
                     msgs.append(msg)
 
                     if len(msgs) == len(msg_types):
-                        self.socket.close()
                         return msgs
             except Exception as e:
                 logging.error(e)
@@ -182,6 +186,7 @@ class Clementine(AudioPlayer):
         info, metainfo = self._get_response([clementine_protobuf.INFO, clementine_protobuf.CURRENT_METAINFO])
 
         if info.response_clementine_info.state != clementine_protobuf.Playing:
+            self.socket.close()
             return None
 
         return {
@@ -265,6 +270,12 @@ class MusicBee(AudioPlayer):
 
 
 class Mpd(AudioPlayer):
+    def __init__(self, *args, **kwargs):
+        super(Clementine, self).__init__(*args, **kwargs)
+
+        self.client = musicpd.MPDClient()
+        self.client.connect(self.config['ip'], self.config['port'])
+
     @staticmethod
     def name():
         return 'Music Player Daemon'
@@ -274,16 +285,24 @@ class Mpd(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        pass # TODO
+        status = self.client.status()
+
+        if status.state != 'play': # TODO Make sure this work
+            self.client.disconnect()
+            return None
+
+        current_song = self.client.currentsong()
+
+        return {
+            'artist': current_song.artist,  # TODO Make sure this all work
+            'title': current_song.title,
+            'album': current_song.album,
+            'filename': os.path.splitext(os.path.basename(current_song.filename))[0]
+        }
 
     def queue(self, file):
-        args = [
-            'mpc_path', # TODO Autodetect with psutil?
-            'add',
-            file
-        ]
-
-        self._run_process(args)
+        self.client.add(file) # TODO Make sure this work
+        self.client.disconnect()
 
 
 class Rhythmbox(AudioPlayer):
@@ -370,6 +389,19 @@ class Winamp(AudioPlayer):
         ]
 
         self._run_process(args)
+
+
+class Wmp(AudioPlayer):
+    @staticmethod
+    def name():
+        return 'Windows Media Player'
+
+    @staticmethod
+    def is_now_playing_supported():
+        pass # TODO
+
+    def queue(self, file):
+        pass # TODO
 
 
 class Xmms2(AudioPlayer):

@@ -105,7 +105,7 @@ The following methods are used to control and retrieve information of an audio p
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ | `Rhythmbox` |  | ❌ |
 | [VLC](http://www.videolan.org/vlc/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | [Windows Messages?](http://forums.winamp.com/showthread.php?threadid=180297) | `Winamp` |  | ❌ |
-| [Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player) |  |  |  |  |  |
+| [Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player) | ? | ? | `Wmp` | ? | ? |
 | [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | `Xmms2` |  | ❌ |
 
 ## End words
