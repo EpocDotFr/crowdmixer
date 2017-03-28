@@ -334,7 +334,7 @@ class Vlc(AudioPlayer):
     def _query(self, method, resource, frmt, params=None):
         url = self.endpoint + resource + '.' + frmt
 
-        response = requests.request(method, url, auth=(self.config['username'], self.config['password']), params=params)
+        response = requests.request(method, url, auth=('', self.config['password']), params=params)
 
         response.raise_for_status()
 

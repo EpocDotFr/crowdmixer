@@ -44,9 +44,43 @@ More informations on the three above can be found [here](http://flask.pocoo.org/
   - `REQUEST_LIMIT` Define the minimum number of seconds a user have to wait between each submit
   - `SHOW_CURRENT_PLAYING` Enable or disable the display of the currently playing song (support may vary following the audio player used, more information in the **Supported audio players** section below)
   - `PLAYER_TO_USE` The audio player to use. Can be one of the ones in the table below, in the **Supported audio players** section
-  - `PLAYERS` Self-explanatory audio players-specific configuration values. Change them if your audio player of choice is requiring it (see the table below, in the **Supported audio players** section)
+  - `PLAYERS` Self-explanatory audio players-specific configuration values. Change them if your audio player of choice (`PLAYER_TO_USE`) is requiring it (see the table below, in the **Supported audio players** section)
 
 I'll let you search yourself about how to configure a web server along uWSGI.
+
+**Some audio players needs to be themselves configured**, you'll find the configuration instructions below according to
+your audio player of choice.
+
+### Clementine
+
+You'll have to enable the remote controlling feature of Clementine before to use CrowdMixer. To do so:
+
+  1. In the menu bar of Clementine, click **Tools** > **Settings...**
+  2. In the **Remote control** tab, check the **Use remote control** checkbox
+  3. At this point, you can either use the default parameters, or customize them. If so, don't forget to change the configuration values of Clementine accordingly in your `config.py`
+  4. Click on **OK**
+
+### Music Player Daemon
+
+MPD, by design and by default, always open a remote control TCP connection on `*:6600`. You can change this behavior in
+the `/etc/mpd.conf` configuration file (depending of your operating system). If so, don't forget to change the configuration
+values of MPD accordingly in your `config.py`.
+
+For more information, please read the MPD man page: `man mpd.conf` or read the [example configuration file](https://github.com/andrewrk/mpd/blob/master/doc/mpdconf.example).
+
+### VLC
+
+You'll have to enable the web interface feature of VLC before to use CrowdMixer. To do so:
+
+  1. In the menu bar of VLC, click **Tools** > **Settings...**
+  2. On the bottom left of the Settings window, click on **All** in the **Settings to display** box
+  3. In the left list box that has been shown, click on **Interface** > **Main interface**
+  4. Check the **Web** checkbox
+  5. In the left list box, click on **Interface** > **Main interface** > **Lua**
+  6. In the **Lua via HTTP** > **Password** textbox, enter a password that will be required to remote control VLC. **If you do not enter a password, remote control will not be possible for security reasons**
+  7. At this point, you can either save the settings, or customize them. For more information, please read the [VLC documentation](https://wiki.videolan.org/Documentation:Modules/http_intf/)
+
+Don't forget to change the configuration values of VLC according to your VLC settings in your `config.py`.
 
 ## Usage
 
@@ -89,13 +123,13 @@ indexer:
 
 ## Supported audio players
 
-CrowdMixer requires to be ran on the same computer that is running your prefered audio player.
+**CrowdMixer requires to be ran on the same computer that is running your prefered audio player**.
 
 The following methods are used to control and retrieve information of an audio player from CrowdMixer:
 
-| Name | Method used to add a song | Method used to get the currently playing song | Configuration value | Additional PyPI dependencies | Needs configuration |
-|------|---------------------------|-----------------------------------------------|---------------------|------------------------------|---------------------|
-| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` | `pypiwin32` `pyaimp` | ❌ |
+| Name | Method used to add a song | Method used to get the currently playing song | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py` |
+|------|---------------------------|-----------------------------------------------|---------------------|------------------------------|-----------------------------------------------|
+| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` | `pyaimp` | ❌ |
 | [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` |  | ❌ |
 | [Clementine](https://www.clementine-player.org/) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | `Clementine` | `protobuf` | ✔ |
 | [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ | `Foobar2000` |  | ❌ |
