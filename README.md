@@ -127,20 +127,20 @@ indexer:
 
 The following methods are used to control and retrieve information of an audio player from CrowdMixer:
 
-| Name | Method used to add a song | Method used to get the currently playing song | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py` |
-|------|---------------------------|-----------------------------------------------|---------------------|------------------------------|-----------------------------------------------|
-| [AIMP](https://www.aimp.ru/) | [CLI](http://www.aimp.ru/index.php?do=download&cat=sdk) | [Windows Messages](http://www.aimp.ru/index.php?do=download&cat=sdk) | `Aimp` | `pyaimp` | ❌ |
-| [Audacious](http://audacious-media-player.org/) | [CLI](https://www.mankier.com/1/audacious) | ❌ | `Audacious` |  | ❌ |
-| [Clementine](https://www.clementine-player.org/) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | [TCP](https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation) | `Clementine` | `protobuf` | ✔ |
-| [foobar2000](http://www.foobar2000.org/) | [CLI](http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide) | ❌ | `Foobar2000` |  | ❌ |
-| [MediaMonkey](http://www.mediamonkey.com/) | [CLI](http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey) | ❌ | `MediaMonkey` |  | ❌ |
-| [MusicBee](http://getmusicbee.com/) | [CLI](http://musicbee.wikia.com/wiki/Command_Line_Parameters) | ❌ | `MusicBee` |  | ❌ |
-| [Music Player Daemon](https://www.musicpd.org/) | [TCP](https://www.musicpd.org/doc/protocol/) | [TCP](https://www.musicpd.org/doc/protocol/) | `Mpd` | `python-musicpd` | ✔ |
-| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | [CLI](http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html) | ❌ | `Rhythmbox` |  | ❌ |
-| [VLC](http://www.videolan.org/vlc/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | [HTTP](https://wiki.videolan.org/VLC_HTTP_requests/) | `Vlc` | `requests` | ✔ |
-| [Winamp](http://www.winamp.com/) | [CLI](http://forums.winamp.com/showthread.php?threadid=180297) | [Windows Messages?](http://forums.winamp.com/showthread.php?threadid=180297) | `Winamp` |  | ❌ |
-| [Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player) | ? | ? | `Wmp` | ? | ? |
-| [XMMS2](https://xmms2.org/) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | [CLI](http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html) | `Xmms2` |  | ❌ |
+| Name | "Now playing" supported? | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py` |
+|------|--------------------------|---------------------|------------------------------|-----------------------------------------------|
+| [AIMP](https://www.aimp.ru/) | ✔ | `Aimp` | `pyaimp` | ❌ |
+| [Audacious](http://audacious-media-player.org/) | ? | `Audacious` |  | ❌ |
+| [Clementine](https://www.clementine-player.org/) | ✔ | `Clementine` | `protobuf` | ✔ |
+| [foobar2000](http://www.foobar2000.org/) | ? | `Foobar2000` |  | ❌ |
+| [MediaMonkey](http://www.mediamonkey.com/) | ? | `MediaMonkey` |  | ❌ |
+| [MusicBee](http://getmusicbee.com/) | ? | `MusicBee` |  | ❌ |
+| [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
+| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ? | `Rhythmbox` |  | ❌ |
+| [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
+| [Winamp](http://www.winamp.com/) | ? | `Winamp` |  | ❌ |
+| [Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player) | ? | `Wmp` | ? | ? |
+| [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` |  | ❌ |
 
 ## End words
 

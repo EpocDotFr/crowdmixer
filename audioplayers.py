@@ -59,6 +59,13 @@ class AudioPlayer:
 
 
 class Aimp(AudioPlayer):
+    """AIMP wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** Windows Messages
+
+    **Documentation:** http://www.aimp.ru/index.php?do=download&cat=sdk (inside the ``.chm`` file)
+    """
     def __init__(self, *args, **kwargs):
         super(Aimp, self).__init__(*args, **kwargs)
 
@@ -90,6 +97,13 @@ class Aimp(AudioPlayer):
 
 
 class Audacious(AudioPlayer):
+    """Audacious wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** https://www.mankier.com/1/audacious
+    """
     @staticmethod
     def name():
         return 'Audacious'
@@ -109,6 +123,13 @@ class Audacious(AudioPlayer):
 
 
 class Clementine(AudioPlayer):
+    """Clementine wrapper for CrowdMixer.
+
+    **Method used to add a song:** TCP
+    **Method used to get the currently playing song:** TCP
+
+    **Documentation:** https://github.com/clementine-player/Android-Remote/wiki/Developer-Documentation
+    """
     def __init__(self, *args, **kwargs):
         super(Clementine, self).__init__(*args, **kwargs)
 
@@ -203,14 +224,18 @@ class Clementine(AudioPlayer):
         msg.request_insert_urls.play_now = False
         msg.request_insert_urls.enqueue = True
 
-        self._send_message(msg)
+        self._send_message(msg) # FIXME Clementine crashes when sending it this message
         self.socket.close()
-        # FIXME Clementine crashes when sending it this message
-
-        # msg = self._get_response(clementine_protobuf.CURRENT_METAINFO)
 
 
 class Foobar2000(AudioPlayer):
+    """foobar2000 wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** http://wiki.hydrogenaud.io/index.php?title=Foobar2000:Commandline_Guide
+    """
     @staticmethod
     def name():
         return 'foobar2000'
@@ -231,6 +256,13 @@ class Foobar2000(AudioPlayer):
 
 
 class MediaMonkey(AudioPlayer):
+    """MediaMonkey wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** http://www.mediamonkey.com/support/index.php?/Knowledgebase/Article/View/44/2/command-line-startup-options-for-mediamonkey
+    """
     @staticmethod
     def name():
         return 'MediaMonkey'
@@ -251,6 +283,13 @@ class MediaMonkey(AudioPlayer):
 
 
 class MusicBee(AudioPlayer):
+    """MusicBee wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** http://musicbee.wikia.com/wiki/Command_Line_Parameters
+    """
     @staticmethod
     def name():
         return 'MusicBee'
@@ -270,6 +309,13 @@ class MusicBee(AudioPlayer):
 
 
 class Mpd(AudioPlayer):
+    """Music Player Daemon wrapper for CrowdMixer.
+
+    **Method used to add a song:** TCP
+    **Method used to get the currently playing song:** TCP
+
+    **Documentation:** https://www.musicpd.org/doc/protocol/
+    """
     def __init__(self, *args, **kwargs):
         super(Clementine, self).__init__(*args, **kwargs)
 
@@ -306,6 +352,13 @@ class Mpd(AudioPlayer):
 
 
 class Rhythmbox(AudioPlayer):
+    """Rhythmbox wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html
+    """
     @staticmethod
     def name():
         return 'Rhythmbox'
@@ -326,6 +379,13 @@ class Rhythmbox(AudioPlayer):
 
 
 class Vlc(AudioPlayer):
+    """VLC wrapper for CrowdMixer.
+
+    **Method used to add a song:** HTTP
+    **Method used to get the currently playing song:** HTTP
+
+    **Documentation:** https://wiki.videolan.org/VLC_HTTP_requests/
+    """
     def __init__(self, *args, **kwargs):
         super(Vlc, self).__init__(*args, **kwargs)
 
@@ -373,6 +433,13 @@ class Vlc(AudioPlayer):
 
 
 class Winamp(AudioPlayer):
+    """Winamp wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** http://forums.winamp.com/showthread.php?threadid=180297
+    """
     @staticmethod
     def name():
         return 'Winamp'
@@ -392,6 +459,8 @@ class Winamp(AudioPlayer):
 
 
 class Wmp(AudioPlayer):
+    """Windows Media Player wrapper for CrowdMixer.
+    """
     @staticmethod
     def name():
         return 'Windows Media Player'
@@ -405,6 +474,15 @@ class Wmp(AudioPlayer):
 
 
 class Xmms2(AudioPlayer):
+    """XMMS2 wrapper for CrowdMixer.
+
+    **Method used to add a song:** CLI
+    **Method used to get the currently playing song:** CLI
+
+    **Documentation:** http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html
+
+    Seems that TCP/IPC is also possible: https://xmms2.org/wiki/Developer_Corner
+    """
     @staticmethod
     def name():
         return 'XMMS2'
