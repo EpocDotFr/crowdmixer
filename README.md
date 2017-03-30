@@ -137,7 +137,7 @@ The following methods are used to control and retrieve information of an audio p
 | [Audacious](http://audacious-media-player.org/) | ? | `Audacious` | ? | ? |
 | [Clementine](https://www.clementine-player.org/) | ✔ | `Clementine` | `protobuf` | ✔ |
 | [foobar2000](http://www.foobar2000.org/) | ? | `Foobar2000` | ? | ? |
-| [iTunes](https://www.apple.com/itunes/) | ? | `Itunes` | ? | ? |
+| [iTunes](https://www.apple.com/itunes/) | ✔ | `Itunes` | `appscript` | ❌ |
 | [MediaMonkey](http://www.mediamonkey.com/) | ? | `MediaMonkey` | ? | ? |
 | [MusicBee](http://getmusicbee.com/) | ? | `MusicBee` | ? | ? |
 | [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
