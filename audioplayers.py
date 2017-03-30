@@ -255,6 +255,26 @@ class Foobar2000(AudioPlayer):
         self._run_process(args)
 
 
+class Itunes(AudioPlayer):
+    """iTunes wrapper for CrowdMixer.
+
+    **Method used to add a song:** ?
+    **Method used to get the currently playing song:** ?
+
+    **Documentation:** ?
+    """
+    @staticmethod
+    def name():
+        return 'iTunes'
+
+    @staticmethod
+    def is_now_playing_supported():
+        return False
+
+    def queue(self, file):
+        pass # TODO
+
+
 class MediaMonkey(AudioPlayer):
     """MediaMonkey wrapper for CrowdMixer.
 
