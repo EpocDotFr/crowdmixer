@@ -478,21 +478,6 @@ class Winamp(AudioPlayer):
         self._run_process(args)
 
 
-class Wmp(AudioPlayer):
-    """Windows Media Player wrapper for CrowdMixer.
-    """
-    @staticmethod
-    def name():
-        return 'Windows Media Player'
-
-    @staticmethod
-    def is_now_playing_supported():
-        pass # TODO
-
-    def queue(self, file):
-        pass # TODO
-
-
 class Xmms2(AudioPlayer):
     """XMMS2 wrapper for CrowdMixer.
 

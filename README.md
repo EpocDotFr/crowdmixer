@@ -144,7 +144,7 @@ The following methods are used to control and retrieve information of an audio p
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ? | `Rhythmbox` | ? | ? |
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | ? | `Winamp` | ? | ? |
-| [Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player) | ? | `Wmp` | ? | ? |
+| ~~[Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player)~~ |  |  |  |  |
 | [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
 
 ## End words
