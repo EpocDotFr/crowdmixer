@@ -476,12 +476,10 @@ class Wmp(AudioPlayer):
 class Xmms2(AudioPlayer):
     """XMMS2 wrapper for CrowdMixer.
 
-    **Method used to add a song:** CLI
-    **Method used to get the currently playing song:** CLI
+    **Method used to add a song:** TCP
+    **Method used to get the currently playing song:** TCP
 
-    **Documentation:** http://manpages.ubuntu.com/manpages/zesty/man1/xmms2.1.html
-
-    Seems that TCP/IPC is also possible: https://xmms2.org/wiki/Developer_Corner
+    **Documentation:** https://xmms2.org/wiki/XMMS2_IPC_Protocol
     """
     @staticmethod
     def name():

@@ -82,6 +82,10 @@ You'll have to enable the web interface feature of VLC before to use CrowdMixer.
 
 Don't forget to change the configuration values of VLC according to your VLC settings in your `config.py`.
 
+### XMMS2
+
+> TODO
+
 ## Usage
 
   - Standalone
@@ -140,7 +144,7 @@ The following methods are used to control and retrieve information of an audio p
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | ? | `Winamp` | ? | ❌ |
 | [Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player) | ? | `Wmp` | ? | ? |
-| [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ❌ |
+| [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
 
 ## End words
 
