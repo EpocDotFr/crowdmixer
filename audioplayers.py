@@ -211,8 +211,9 @@ class Clementine(AudioPlayer):
 
         info, metainfo = self._get_response([clementine_protobuf.INFO, clementine_protobuf.CURRENT_METAINFO])
 
+        self.socket.close()
+
         if info.response_clementine_info.state != clementine_protobuf.Playing:
-            self.socket.close()
             return None
 
         return {
@@ -387,6 +388,8 @@ class Mpd(AudioPlayer):
             return None
 
         current_song = self.client.currentsong()
+
+        self.client.disconnect()
 
         return {
             'artist': current_song.artist,  # TODO Make sure this all work
