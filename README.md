@@ -20,7 +20,7 @@ Let the crowd make its own mix without hassling you.
   3. **IMPORTANT:** Other dependencies are needed regarding the audio player you'll use. Please refer to the table in the **Supported audio players** section below and install them accordingly before continuing
   4. `export FLASK_APP=crowdmixer.py` (Windows users: `set FLASK_APP=crowdmixer.py`)
   5. `flask create_database` (WARNING: don't re-run this command unless you want to start from scratch, it will wipe out all the data)
-  6. `flask index` (this will index your songs, don't forget to set the `MUSIC_DIRS` configuration parameter before, read below)
+  6. `flask index` (this will index your songs, don't forget to set the `MUSIC_DIRS` configuration parameter before, read below. Run `flask index --help` for the full list of arguments)
 
 ## Configuration
 

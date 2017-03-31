@@ -14,6 +14,7 @@ import sys
 import arrow
 import os
 import audioplayers
+import click
 
 
 # -----------------------------------------------------------
@@ -211,8 +212,10 @@ def create_database():
 
 
 @app.cli.command()
-def index():
-    """Index all songs in the configured directories."""
+@click.option('--min_duration', default=None, help='Don\'t index songs with a duration greater than this value (format: MM(:SS))')
+@click.option('--max_duration', default=None, help='Don\'t index songs with a duration smaller than this value (format: MM(:SS))')
+def index(min_duration=None, max_duration=None):
+    """Index songs in the configured directories."""
     Song.query.delete()
     db.session.commit()
 
@@ -222,6 +225,9 @@ def index():
     app.logger.info('{} directories configured'.format(len(music_dirs)))
 
     songs = []
+
+    min_duration = parse_duration(min_duration)
+    max_duration = parse_duration(max_duration)
 
     start = time()
 
@@ -239,35 +245,46 @@ def index():
 
     for songs_chunk in list(chunks(songs, 100)):
         for song in songs_chunk:
-            song_tags = TinyTag.get(song)
+            try:
+                song_tags = TinyTag.get(song)
 
-            if song_tags.artist and not song_tags.albumartist or song_tags.artist and song_tags.albumartist:
-                artist = song_tags.artist
-            elif song_tags.albumartist and not song_tags.artist:
-                artist = song_tags.albumartist
-            else:
-                artist = None
+                if min_duration and song_tags.duration < min_duration:
+                    app.logger.info('Ignoring {} because duration is under the minimal required'.format(song))
+                    continue
 
-            if not artist and not song_tags.title:
-                title = os.path.splitext(os.path.basename(song))[0]
-            else:
-                title = song_tags.title
+                if max_duration and song_tags.duration > max_duration:
+                    app.logger.info('Ignoring {} because duration is above the maximal allowed'.format(song))
+                    continue
 
-            if not song_tags.album:
-                album = None
-            else:
-                album = song_tags.album
+                if song_tags.artist and not song_tags.albumartist or song_tags.artist and song_tags.albumartist:
+                    artist = song_tags.artist
+                elif song_tags.albumartist and not song_tags.artist:
+                    artist = song_tags.albumartist
+                else:
+                    artist = None
 
-            song_object = Song(
-                title=title,
-                artist=artist,
-                album=album,
-                path=song
-            )
+                if not artist and not song_tags.title:
+                    title = os.path.splitext(os.path.basename(song))[0]
+                else:
+                    title = song_tags.title
 
-            app.logger.info('{} - {} ({})'.format(artist, title, album))
+                if not song_tags.album:
+                    album = None
+                else:
+                    album = song_tags.album
 
-            db.session.add(song_object)
+                song_object = Song(
+                    title=title,
+                    artist=artist,
+                    album=album,
+                    path=song
+                )
+
+                app.logger.info('{} - {} ({})'.format(artist, title, album))
+
+                db.session.add(song_object)
+            except Exception as e:
+                app.logger.error('{}: {}'.format(song, e))
 
         db.session.commit()
 
@@ -359,3 +376,17 @@ def get_now_playing_song():
     audio_player = get_current_audio_player_instance()
 
     return audio_player.get_now_playing()
+
+
+def parse_duration(duration):
+    if not duration:
+        return None
+
+    duration = duration.split(':')
+
+    if len(duration) == 1:
+        return int(duration[0]) * 60 # Minutes
+    elif len(duration) == 2:
+        return (int(duration[0]) * 60) + duration[1] # Minutes + seconds
+    else:
+        return None
