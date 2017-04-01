@@ -1,7 +1,6 @@
 import subprocess
 import os
 import socket
-import clementine_protobuf
 import struct
 import logging
 
@@ -23,6 +22,11 @@ except ImportError:
 
 try:
     import appscript
+except ImportError:
+    pass
+
+try:
+    import clementine_protobuf
 except ImportError:
     pass
 
