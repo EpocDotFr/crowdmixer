@@ -35,6 +35,7 @@ __all__ = [
     'Audacious',
     'Clementine',
     'Foobar2000',
+    'Itunes',
     'MediaMonkey',
     'MusicBee',
     'Mpd',
@@ -274,7 +275,7 @@ class Itunes(AudioPlayer):
     **Documentation:** http://appscript.sourceforge.net/py-appscript/index.html
     """
     def __init__(self, *args, **kwargs):
-        super(Clementine, self).__init__(*args, **kwargs)
+        super(Itunes, self).__init__(*args, **kwargs)
 
         if not self.is_itunes_running():
             raise RuntimeError('iTunes is not running')
@@ -302,7 +303,7 @@ class Itunes(AudioPlayer):
             'artist': track.artist(),
             'title': track.name(),
             'album': track.album(),
-            'filename': track.path() # TODO
+            'filename': track.location()
         }
 
     def queue(self, file):
@@ -371,7 +372,7 @@ class Mpd(AudioPlayer):
     **Documentation:** https://www.musicpd.org/doc/protocol/
     """
     def __init__(self, *args, **kwargs):
-        super(Clementine, self).__init__(*args, **kwargs)
+        super(Mpd, self).__init__(*args, **kwargs)
 
         self.client = musicpd.MPDClient()
         self.client.connect(self.config['ip'], self.config['port'])
