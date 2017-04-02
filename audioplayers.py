@@ -303,11 +303,12 @@ class Itunes(AudioPlayer):
             'artist': track.artist(),
             'title': track.name(),
             'album': track.album(),
-            'filename': track.location()
+            'filename': track.location().path
         }
 
     def queue(self, file):
-        pass # TODO
+        # self.itunes.enqueue(file)
+        pass
 
 
 class MediaMonkey(AudioPlayer):
