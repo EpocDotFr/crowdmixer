@@ -2,25 +2,39 @@
 
 Let the crowd make its own mix without hassling you.
 
-> TODO Screenshot
+<p align="center">
+  <img src="https://raw.githubusercontent.com/EpocDotFr/crowdmixer/master/screenshot.png">
+</p>
+
+Think about a crowd-powered jukebox that uses your audio player of choice in the backend.
 
 ## Features
 
-> TODO
+  - Local, searchable music database created from your audio files
+  - Support 8 audio formats (see below for the list)
+  - Support 6 - and counting - audio players (see below for the list)
+  - Responsive (can be used on mobile devices)
+  - (Optional) Display the currently playing song
+  - Two queuing mode (vote or immediate)
+  - Ability to restrict songs submission
+  - Internationalized & localized in 2 languages:
+    - English (`en`)
+    - French (`fr`)
 
 ## Prerequisites
 
   - Should work on any Python 3.x version. Feel free to test with another Python version and give me feedback
   - A [uWSGI](https://uwsgi-docs.readthedocs.io/en/latest/)-capable web server (optional, but recommended)
+  - One of the supported audio players (see the **Supported audio players** section below)
 
 ## Installation
 
   1. Clone this repo somewhere
   2. `pip install -r requirements.txt`
-  3. **IMPORTANT:** Other dependencies are needed regarding the audio player you'll use. Please refer to the table in the **Supported audio players** section below and install them accordingly before continuing
+  3. **IMPORTANT:** Other dependencies are needed regarding the audio player you'll use. Please refer to the table in the **Supported audio players** section below and install them accordingly using `pip install <package>` before continuing
   4. `export FLASK_APP=crowdmixer.py` (Windows users: `set FLASK_APP=crowdmixer.py`)
   5. `flask create_database` (WARNING: don't re-run this command unless you want to start from scratch, it will wipe out all the data)
-  6. `flask index` (this will index your songs, don't forget to set the `MUSIC_DIRS` configuration parameter before, read below. Run `flask index --help` for the full list of arguments)
+  6. `flask index` (this will index your songs. Don't forget to set the `MUSIC_DIRS` configuration parameter before, read below. Run `flask index --help` for the full list of arguments)
 
 ## Configuration
 
@@ -36,12 +50,12 @@ More informations on the three above can be found [here](http://flask.pocoo.org/
 
   - `FORCE_LANGUAGE` Force the lang to be one of the supported ones (defaults to `None`: auto-detection from the `Accept-Language` HTTP header). See in the features section above for a list of available lang keys
   - `DEFAULT_LANGUAGE` Default language if it cannot be determined automatically. Not taken into account if `FORCE_LANGUAGE` is defined. See in the features section above for a list of available lang keys
-  - `MUSIC_DIRS` A list of directories absolute paths containing songs (read below for a list of supported formats)
+  - `MUSIC_DIRS` A list of absolute paths to directories containing songs (read below for the list of supported formats)
   - `NOW_PLAYING_CACHE_TIME` Number of seconds the "Now playing" information will be stored in the cache
-  - `MODE` Submit mode that should be used. Can be either `Immediate` (song queuing is immediate) or `Vote` (song is queued when a votes threshold is reached)
+  - `MODE` Submit mode that should be used. Can be either `Immediate` (song is queued immediately) or `Vote` (song is queued when a votes threshold is reached)
   - `VOTES_THRESHOLD` If `MODE` is equal to `Vote`: number of votes required to actually queue a song in the playlist
-  - `BLOCK_TIME` Define the number of seconds a song that have just been queued is unavailable to submit
-  - `REQUEST_LIMIT` Define the minimum number of seconds a user have to wait between each submit
+  - `BLOCK_TIME` Define the number of seconds a song that have just been queued is unavailable for submitting
+  - `REQUEST_LIMIT` Define the minimum number of seconds users have to wait between each submit
   - `SHOW_CURRENT_PLAYING` Enable or disable the display of the currently playing song (support may vary following the audio player used, more information in the **Supported audio players** section below)
   - `PLAYER_TO_USE` The audio player to use. Can be one of the ones in the table below, in the **Supported audio players** section
   - `PLAYERS` Self-explanatory audio players-specific configuration values. Change them if your audio player of choice (`PLAYER_TO_USE`) is requiring it (see the table below, in the **Supported audio players** section)
@@ -62,7 +76,7 @@ You'll have to enable the remote controlling feature of Clementine before to use
 
 ### Music Player Daemon
 
-MPD, by design and by default, always open a remote control TCP connection on `*:6600`. You can change this behavior in
+MPD, by design and by default, is only controllable via a TCP connection on `*:6600`. You can change this behavior in
 the `/etc/mpd.conf` configuration file (depending of your operating system). If so, don't forget to change the configuration
 values of MPD accordingly in your `config.py`.
 
@@ -124,6 +138,8 @@ indexer:
   - `.flac`
   - `.wma`
   - `.wav`
+
+Make sure your audio player of choice also support these, otherwise you'll get errors while queuing songs.
 
 ## Supported audio players
 
