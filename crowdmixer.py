@@ -269,12 +269,12 @@ def index(min_duration=None, max_duration=None):
 
                 if song_tags.artist and not song_tags.albumartist or song_tags.artist and song_tags.albumartist:
                     artist = song_tags.artist
-                elif song_tags.albumartist and not song_tags.artist:
+                elif not song_tags.artist and song_tags.albumartist:
                     artist = song_tags.albumartist
                 else:
                     artist = None
 
-                if not artist and not song_tags.title:
+                if not song_tags.title:
                     title = os.path.splitext(os.path.basename(song))[0]
                 else:
                     title = song_tags.title
