@@ -90,10 +90,10 @@ button:focus, .btn:focus {
     color: #333;
 }
 
-button.green,
-.btn.green {
-    background-color: #32932B;
-    border-color: #265F1E;
+button.primary,
+.btn.primary {
+    background-color: #f2b610;
+    border-color: #f39c12;
     color: #fff;
 }
 
@@ -174,7 +174,7 @@ header a:hover {
 }
 
 header .mixer {
-    color: #32932B;
+    color: #f39c12;
 }
 
 /************************************************************************
