@@ -149,14 +149,14 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | Name | "Now playing" supported? | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py`? |
 |------|--------------------------|---------------------|------------------------------|------------------------------------------------|
 | [AIMP](https://www.aimp.ru/) | ✔ | `Aimp` | `pyaimp` | ❌ |
-| [Audacious](http://audacious-media-player.org/) | ? | `Audacious` | ? | ? |
+| [Audacious](http://audacious-media-player.org/) | ❌ | `Audacious` | ? | ? |
 | [Clementine](https://www.clementine-player.org/) | ✔ | `Clementine` | `protobuf` | ✔ |
-| [foobar2000](http://www.foobar2000.org/) | ? | `Foobar2000` | ? | ? |
+| [foobar2000](http://www.foobar2000.org/) | ❌ | `Foobar2000` | ? | ? |
 | [iTunes](https://www.apple.com/itunes/) | ✔ | `Itunes` | `appscript` | ❌ |
-| [MediaMonkey](http://www.mediamonkey.com/) | ? | `MediaMonkey` | ? | ? |
-| [MusicBee](http://getmusicbee.com/) | ? | `MusicBee` | ? | ? |
+| [MediaMonkey](http://www.mediamonkey.com/) | ❌ | `MediaMonkey` | ? | ? |
+| [MusicBee](http://getmusicbee.com/) | ❌ | `MusicBee` | ? | ? |
 | [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
-| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ? | `Rhythmbox` | ? | ? |
+| [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ✔ | `Rhythmbox` | ? | ? |
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | ? | `Winamp` | ? | ? |
 | ~~[Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player)~~ |  |  |  |  |

@@ -413,7 +413,7 @@ class Rhythmbox(AudioPlayer):
     """Rhythmbox wrapper for CrowdMixer.
 
     **Method used to add a song:** CLI
-    **Method used to get the currently playing song:** ?
+    **Method used to get the currently playing song:** CLI
 
     **Documentation:** http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html
     """
@@ -449,8 +449,8 @@ class Vlc(AudioPlayer):
 
         self.endpoint = 'http://{}:{}/requests/'.format(self.config['ip'], self.config['port'])
 
-    def _query(self, method, resource, frmt, params=None):
-        url = self.endpoint + resource + '.' + frmt
+    def _query(self, method, resource, params=None):
+        url = self.endpoint + resource + '.json'
 
         response = requests.request(method, url, auth=('', self.config['password']), params=params)
 
@@ -467,7 +467,7 @@ class Vlc(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        status = self._query('GET', 'status', 'json')
+        status = self._query('GET', 'status')
 
         if status['state'] != 'playing':
             return None
@@ -487,7 +487,7 @@ class Vlc(AudioPlayer):
             'input': file
         }
 
-        self._query('GET', 'status', 'json', params=params)
+        self._query('GET', 'status', params=params)
 
 
 class Winamp(AudioPlayer):
@@ -522,7 +522,7 @@ class Xmms2(AudioPlayer):
     **Method used to add a song:** TCP
     **Method used to get the currently playing song:** TCP
 
-    **Documentation:** https://xmms2.org/wiki/XMMS2_IPC_Protocol
+    **Documentation:** https://doxygen.xmms2.org/clientlib/stable/xmmsclient-python/xmmsclient.html
     """
     @staticmethod
     def name():
