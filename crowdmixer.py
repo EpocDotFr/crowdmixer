@@ -128,7 +128,12 @@ def submit(song_id):
             else:
                 session['already_submitted_time'] = arrow.now().format()
 
-                flash(_('Your vote for <strong>%(title)s</strong> from <strong>%(artist)s</strong> was successfuly saved! <strong>%(remaining_votes)i</strong> vote(s) is(are) remaining before this song is queued.', title=song.title, artist=song.artist, remaining_votes=app.config['VOTES_THRESHOLD'] - song.votes), 'success')
+                if song.artist:
+                    from_artist = ' ' + _('from <strong>%(artist)s</strong>', artist=song.artist)
+                else:
+                    from_artist = ''
+
+                flash(_('Your vote for <strong>%(title)s</strong>%(from_artist)s was successfuly saved! <strong>%(remaining_votes)i</strong> vote(s) is(are) remaining before this song is queued.', title=song.title, from_artist=from_artist, remaining_votes=app.config['VOTES_THRESHOLD'] - song.votes), 'success')
         elif app.config['MODE'] == 'Immediate':
             queue_song = True
 
@@ -142,7 +147,12 @@ def submit(song_id):
                 audio_player = get_current_audio_player_instance()
                 audio_player.queue(song.path)
 
-                flash(_('<strong>%(title)s</strong> from <strong>%(artist)s</strong> was successfully queued! It should be played shortly.', title=song.title, artist=song.artist), 'success')
+                if song.artist:
+                    from_artist = ' ' + _('from <strong>%(artist)s</strong>', artist=song.artist)
+                else:
+                    from_artist = ''
+
+                flash(_('<strong>%(title)s</strong>%(from_artist)s was successfully queued! It should be played shortly.', title=song.title, from_artist=from_artist), 'success')
             except Exception as e:
                 flash(_('Error while queuing this song: %(error)s', error=e), 'error')
 

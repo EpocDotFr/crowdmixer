@@ -146,8 +146,6 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 
 **CrowdMixer requires to be ran on the same computer that is running your prefered audio player**.
 
-The following methods are used to control and retrieve information of an audio player from CrowdMixer:
-
 | Name | "Now playing" supported? | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py`? |
 |------|--------------------------|---------------------|------------------------------|------------------------------------------------|
 | [AIMP](https://www.aimp.ru/) | ✔ | `Aimp` | `pyaimp` | ❌ |
