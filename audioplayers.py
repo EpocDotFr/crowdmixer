@@ -50,8 +50,11 @@ class AudioPlayer:
     def __init__(self, config={}):
         self.config = config
 
-    def _run_process(self, args):
-        subprocess.run(args, check=True)
+    def _run_process(self, args, get_output=False):
+        if get_output:
+            return subprocess.run(args, check=True, stdout=subprocess.PIPE, universal_newlines=True).stdout
+        else:
+            subprocess.run(args, check=True)
 
     @staticmethod
     def name():
@@ -389,7 +392,7 @@ class Mpd(AudioPlayer):
     def get_now_playing(self):
         status = self.client.status()
 
-        if status.state != 'play': # TODO Make sure this work
+        if status.state != 'play':
             self.client.disconnect()
             return None
 
@@ -398,14 +401,14 @@ class Mpd(AudioPlayer):
         self.client.disconnect()
 
         return {
-            'artist': current_song.artist,  # TODO Make sure this all work
+            'artist': current_song.artist,
             'title': current_song.title,
             'album': current_song.album,
-            'filename': os.path.splitext(os.path.basename(current_song.filename))[0]
+            'filename': None
         }
 
     def queue(self, file):
-        self.client.add(file) # TODO Make sure this work
+        self.client.add(file)
         self.client.disconnect()
 
 
@@ -417,18 +420,46 @@ class Rhythmbox(AudioPlayer):
 
     **Documentation:** http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html
     """
+    def __init__(self, *args, **kwargs):
+        super(Vlc, self).__init__(*args, **kwargs)
+
+        self.exec = 'rhythmbox-client' # TODO Autodetect with psutil?
+
     @staticmethod
     def name():
         return 'Rhythmbox'
 
     @staticmethod
     def is_now_playing_supported():
-        return False
+        return True
+
+    def get_now_playing(self):
+        # TODO First check the playback status if it is playing
+
+        args = [
+            self.exec,
+            '--no-start',
+            '--no-present',
+            '--print-playing',
+            '--print-playing-format=%tt==%ta==%at'
+        ]
+
+        output = self._run_process(args, get_output=True)
+
+        title, artist, album = output.split('==', maxsplit=2)
+
+        return {
+            'artist': artist if artist else None,
+            'title': title if title else None,
+            'album': album if album else None,
+            'filename': None
+        }
 
     def queue(self, file):
         args = [
-            'rhythmbox_client_path', # TODO Autodetect with psutil?
+            self.exec,
             '--no-start',
+            '--no-present',
             '--enqueue',
             file
         ]
