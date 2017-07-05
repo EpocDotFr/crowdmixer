@@ -52,7 +52,7 @@ class AudioPlayer:
 
     def _run_process(self, args, get_output=False):
         if get_output:
-            return subprocess.run(args, check=True, stdout=subprocess.PIPE, universal_newlines=True).stdout
+            return subprocess.run(args, check=True, stdout=subprocess.PIPE, universal_newlines=True).stdout.strip()
         else:
             subprocess.run(args, check=True)
 
@@ -421,7 +421,7 @@ class Rhythmbox(AudioPlayer):
     **Documentation:** http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html
     """
     def __init__(self, *args, **kwargs):
-        super(Vlc, self).__init__(*args, **kwargs)
+        super(Rhythmbox, self).__init__(*args, **kwargs)
 
         self.exec = 'rhythmbox-client' # TODO Autodetect with psutil?
 
