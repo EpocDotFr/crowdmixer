@@ -49,7 +49,7 @@
                             {% endif %}
                         {% endif %}
 
-                        <div><a href="{{ url_for('submit', song_id=song.id) }}" class="btn {{ btn_class }}" {% if btn_class == 'is-disabled' %}onClick="return false;"{% endif %}>{{ btn_label }}</a></div>
+                        <div><a href="{{ url_for('submit', song_id=song.id, **request.args.to_dict()) }}" class="btn {{ btn_class }}" {% if btn_class == 'is-disabled' %}onClick="return false;"{% endif %}>{{ btn_label }}</a></div>
 
                         {% if show_votes_count %}
                             <div class="small txtcenter">{{ song.votes }}/{{ config['VOTES_THRESHOLD'] }} {{ _('votes') }}</div>

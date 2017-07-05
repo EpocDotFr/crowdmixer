@@ -162,7 +162,7 @@ def submit(song_id):
         except Exception as e:
             flash(_('Error while updating data related to this song: %(error)s', error=e), 'error')
 
-    return redirect(url_for('home'))
+    return redirect(url_for('home', **request.args.to_dict()))
 
 
 # -----------------------------------------------------------
