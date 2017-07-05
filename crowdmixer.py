@@ -69,7 +69,11 @@ for handler in app.logger.handlers:
 
 @app.route('/')
 def home():
-    songs = Song.query.search(search_term=request.args.get('q'), order_by_votes=app.config['MODE'] == 'Vote')
+    songs_paginated = Song.query.search_paginated(
+        search_term=request.args.get('q'),
+        order_by_votes=app.config['MODE'] == 'Vote',
+        page=request.args.get('page', default=1, type=int)
+    )
 
     now_playing = None
     already_submitted_time = None
@@ -83,7 +87,7 @@ def home():
     if 'already_submitted_time' in session and session['already_submitted_time']:
         already_submitted_time = arrow.get(session['already_submitted_time'])
 
-    return render_template('home.html', songs=songs, now_playing=now_playing, already_submitted_time=already_submitted_time)
+    return render_template('home.html', songs_paginated=songs_paginated, now_playing=now_playing, already_submitted_time=already_submitted_time)
 
 
 @app.route('/submit/<song_id>')
@@ -171,7 +175,7 @@ def submit(song_id):
 
 class Song(db.Model):
     class SongQuery(db.Query):
-        def search(self, search_term=None, order_by_votes=False):
+        def search_paginated(self, search_term=None, order_by_votes=False, page=1):
             q = self
 
             if order_by_votes:
@@ -183,7 +187,7 @@ class Song(db.Model):
             if search_term:
                 q = q.filter(or_(Song.title.like('%' + search_term + '%'), Song.artist.like('%' + search_term + '%'), Song.album.like('%' + search_term + '%')))
 
-            return q.all()
+            return q.paginate(page=page, per_page=app.config['SONGS_PER_PAGE'])
 
     __tablename__ = 'songs'
     query_class = SongQuery

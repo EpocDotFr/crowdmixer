@@ -58,6 +58,7 @@ More informations on the three above can be found [here](http://flask.pocoo.org/
   - `BLOCK_TIME` Define the number of seconds a song that have just been queued is unavailable for submitting
   - `REQUEST_LIMIT` Define the minimum number of seconds users have to wait between each submit
   - `SHOW_CURRENT_PLAYING` Enable or disable the display of the currently playing song (support may vary following the audio player used, more information in the **Supported audio players** section below)
+  - `SONGS_PER_PAGE` How many songs to display per page
   - `PLAYER_TO_USE` The audio player to use. Can be one of the ones in the table below, in the **Supported audio players** section
   - `PLAYERS` Self-explanatory audio players-specific configuration values. Change them if your audio player of choice (`PLAYER_TO_USE`) is requiring it (see the table below, in the **Supported audio players** section)
 

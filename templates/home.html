@@ -14,11 +14,11 @@
         </div>
     {% endif %}
 
-    <h2 class="pas man bggrey btg">{% if not request.args.q %}<i class="fa fa-book"></i> {{ _('Available songs') }}{% else %}<i class="fa fa-search"></i> {{ _('Search results') }}{% endif %} ({{ songs|length }})</h2>
+    <h2 class="pas man bggrey btg">{% if not request.args.q %}<i class="fa fa-book"></i> {{ _('Available songs') }}{% else %}<i class="fa fa-search"></i> {{ _('Search results') }}{% endif %} ({{ songs_paginated.total }})</h2>
 
-    {% if songs %}
+    {% if songs_paginated.total > 0 %}
         <div class="songs">
-            {% for song in songs %}
+            {% for song in songs_paginated.items %}
                 <div class="song btg pas">
                     <div class="fr">
                         {% set show_votes_count = False %}
@@ -61,6 +61,24 @@
                 </div>
             {% endfor %}
         </div>
+
+        {% if songs_paginated.pages > 1 %}
+            <div class="tbl pls pts prs mts btg">
+                <div class="txtleft prs w33">
+                    {% if songs_paginated.has_prev %}
+                        <a href="{{ url_for('home', q=request.args.get('q'), page=songs_paginated.prev_num) }}" class="btn primary"><i class="fa fa-arrow-circle-left"></i> {{ _('Previous') }}</a>
+                    {% endif %}
+                </div>
+
+                <div class="txtcenter w33">{{ _('Page %(current_page)i/%(total_page)i', current_page=songs_paginated.page, total_page=songs_paginated.pages) }}</div>
+
+                <div class="txtright pls w33">
+                    {% if songs_paginated.has_next %}
+                        <a href="{{ url_for('home', q=request.args.get('q'), page=songs_paginated.next_num) }}" class="btn primary"><i class="fa fa-arrow-circle-right"></i> {{ _('Next') }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        {% endif %}
     {% else %}
         <p class="alert error pas mas">{{ _('No song to display.') }}</p>
     {% endif %}
