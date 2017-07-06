@@ -2,7 +2,7 @@
 
 {% block content %}
     <form method="get" action="{{ url_for('home') }}" class="mas">
-        <input type="search" name="q" placeholder="{{ _('Type a title, an artist or an album') }}" required autocomplete="off" value="{{ request.args.q }}">
+        <input type="search" name="q" placeholder="{{ _('Search...') }}" required autocomplete="off" value="{{ request.args.q }}">
     </form>
 
     {% if now_playing %}
@@ -66,7 +66,7 @@
             <div class="tbl pls pts prs mts btg">
                 <div class="txtleft prs w33">
                     {% if songs_paginated.has_prev %}
-                        <a href="{{ url_for('home', q=request.args.get('q'), page=songs_paginated.prev_num) }}" class="btn primary"><i class="fa fa-arrow-circle-left"></i> {{ _('Previous') }}</a>
+                        <a href="{{ url_for('home', q=request.args.get('q'), p=songs_paginated.prev_num) }}" class="btn primary"><i class="fa fa-arrow-circle-left"></i> {{ _('Previous') }}</a>
                     {% endif %}
                 </div>
 
@@ -74,7 +74,7 @@
 
                 <div class="txtright pls w33">
                     {% if songs_paginated.has_next %}
-                        <a href="{{ url_for('home', q=request.args.get('q'), page=songs_paginated.next_num) }}" class="btn primary">{{ _('Next') }} <i class="fa fa-arrow-circle-right"></i></a>
+                        <a href="{{ url_for('home', q=request.args.get('q'), p=songs_paginated.next_num) }}" class="btn primary">{{ _('Next') }} <i class="fa fa-arrow-circle-right"></i></a>
                     {% endif %}
                 </div>
             </div>

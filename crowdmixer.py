@@ -72,7 +72,7 @@ def home():
     songs_paginated = Song.query.search_paginated(
         search_term=request.args.get('q'),
         order_by_votes=app.config['MODE'] == 'Vote',
-        page=request.args.get('page', default=1, type=int)
+        page=request.args.get('p', default=1, type=int)
     )
 
     now_playing = None

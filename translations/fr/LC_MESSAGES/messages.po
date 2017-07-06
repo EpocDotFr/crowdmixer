@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-07-05 13:26+0200\n"
-"PO-Revision-Date: 2017-07-05 13:26+0200\n"
+"POT-Creation-Date: 2017-07-06 15:48+0200\n"
+"PO-Revision-Date: 2017-07-06 15:48+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -26,21 +26,21 @@ msgstr ""
 "Erreur lors de la récupération des infos du morceau en cours de lecture : "
 "%(error)s"
 
-#: crowdmixer.py:104
+#: crowdmixer.py:105
 msgid "This song doesn't exist."
 msgstr "Ce morceau n'existe pas."
 
-#: crowdmixer.py:106
+#: crowdmixer.py:107
 msgid "This song file doesn't seems to exist anymore. Please choose another one."
 msgstr "Ce morceau ne semble plus exister. Veuillez en choisir un autre."
 
-#: crowdmixer.py:112
+#: crowdmixer.py:113
 #, python-format
 msgid "Error while deleting this song from the database: %(error)s"
 msgstr ""
 "Erreur lors de la suppression de ce morceau de la base de données : %(error)s"
 
-#: crowdmixer.py:114
+#: crowdmixer.py:115
 #, python-format
 msgid ""
 "This song has already been queued %(last_queued_at)s. A song can be queued "
@@ -49,23 +49,23 @@ msgstr ""
 "Ce morceau a déjà été ajouté %(last_queued_at)s. Un morceau ne peut être "
 "ajouté qu'une seule fois toutes les %(block_time)i minutes."
 
-#: crowdmixer.py:117
+#: crowdmixer.py:118
 msgid "voted for"
 msgstr "voté pour"
 
-#: crowdmixer.py:118
+#: crowdmixer.py:119
 msgid "vote more than one time"
 msgstr "voter pour un morceau"
 
-#: crowdmixer.py:120
+#: crowdmixer.py:121
 msgid "queued"
 msgstr "ajouté"
 
-#: crowdmixer.py:121
+#: crowdmixer.py:122
 msgid "queue more than one"
 msgstr "ajouter un morceau"
 
-#: crowdmixer.py:123
+#: crowdmixer.py:124
 #, python-format
 msgid ""
 "You already %(action)s a song %(already_submitted_time)s. You cannot "
@@ -74,12 +74,12 @@ msgstr ""
 "Vous avez déjà %(action)s un morceau %(already_submitted_time)s. Vous ne "
 "pouvez %(cannot)s que toutes les %(request_limit)i minutes."
 
-#: crowdmixer.py:136 crowdmixer.py:155
+#: crowdmixer.py:137 crowdmixer.py:156
 #, python-format
 msgid "from <strong>%(artist)s</strong>"
 msgstr "de <strong>%(artist)s</strong>"
 
-#: crowdmixer.py:140
+#: crowdmixer.py:141
 #, python-format
 msgid ""
 "Your vote for <strong>%(title)s</strong>%(from_artist)s was successfuly saved! "
@@ -90,7 +90,7 @@ msgstr ""
 "compte ! Il reste <strong>%(remaining_votes)i</strong> vote(s) avant que ce "
 "morceau ne soit ajouté."
 
-#: crowdmixer.py:159
+#: crowdmixer.py:160
 #, python-format
 msgid ""
 "<strong>%(title)s</strong>%(from_artist)s was successfully queued! It should "
@@ -99,19 +99,19 @@ msgstr ""
 "<strong>%(title)s</strong>%(from_artist)s a bien été ajouté ! Il devrait être "
 "joué sous peu."
 
-#: crowdmixer.py:161
+#: crowdmixer.py:166
 #, python-format
 msgid "Error while queuing this song: %(error)s"
 msgstr "Erreur lors de l'ajout de ce morceau : %(error)s"
 
-#: crowdmixer.py:167
+#: crowdmixer.py:173
 #, python-format
 msgid "Error while updating data related to this song: %(error)s"
 msgstr "Erreur lors de la mise à jour des données de ce morceau : %(error)s"
 
 #: templates/home.html:5
-msgid "Type a title, an artist or an album"
-msgstr "Tapez un titre, un artiste ou un album"
+msgid "Search..."
+msgstr "Rechercher..."
 
 #: templates/home.html:9
 msgid "Now playing"
