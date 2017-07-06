@@ -116,9 +116,17 @@ input,
 select,
 textarea {
     background-color: #FFF;
-    padding: 0.5rem 1rem;
     border: 0.1rem solid #AAA;
     border-radius: 0.5rem;
+}
+
+input,
+textarea {
+    padding: 0.5rem 1rem;
+}
+
+select {
+    padding: 0.2rem 1rem;
 }
 
 /************************************************************************

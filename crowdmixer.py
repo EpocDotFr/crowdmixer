@@ -1,14 +1,17 @@
 from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for, session
+from wtforms import StringField, SelectField
 from flask_sqlalchemy import SQLAlchemy
 from flask_cache import Cache
 from sqlalchemy_utils import ArrowType
 from sqlalchemy import or_
-from flask_babel import Babel, _
+from flask_babel import Babel, _, lazy_gettext as __
+from flask_wtf import FlaskForm
 from werkzeug.exceptions import HTTPException
 from tinytag import TinyTag
 from glob import glob
 from datetime import timedelta
 from time import time
+import wtforms.validators as validators
 import logging
 import sys
 import arrow
@@ -26,6 +29,7 @@ app.config.from_pyfile('config.py')
 
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///storage/data/db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['WTF_I18N_ENABLED'] = True
 
 app.config['LANGUAGES'] = {
     'en': 'English',
@@ -69,8 +73,18 @@ for handler in app.logger.handlers:
 
 @app.route('/')
 def home():
+    search_form = SearchForm(formdata=request.args, meta={'csrf': False})
+
+    search_term = search_form.q.default
+    where = search_form.w.default
+
+    if search_form.validate():
+        search_term = search_form.q.data
+        where = search_form.w.data
+
     songs_paginated = Song.query.search_paginated(
-        search_term=request.args.get('q'),
+        search_term=search_term,
+        where=where,
         order_by_votes=app.config['MODE'] == 'Vote',
         page=request.args.get('p', default=1, type=int)
     )
@@ -87,7 +101,7 @@ def home():
     if 'already_submitted_time' in session and session['already_submitted_time']:
         already_submitted_time = arrow.get(session['already_submitted_time'])
 
-    return render_template('home.html', songs_paginated=songs_paginated, now_playing=now_playing, already_submitted_time=already_submitted_time)
+    return render_template('home.html', songs_paginated=songs_paginated, now_playing=now_playing, already_submitted_time=already_submitted_time, search_form=search_form)
 
 
 @app.route('/submit/<song_id>')
@@ -181,7 +195,7 @@ def submit(song_id):
 
 class Song(db.Model):
     class SongQuery(db.Query):
-        def search_paginated(self, search_term=None, order_by_votes=False, page=1):
+        def search_paginated(self, search_term=None, where='a', order_by_votes=False, page=1):
             q = self
 
             if order_by_votes:
@@ -191,7 +205,16 @@ class Song(db.Model):
             q = q.order_by(Song.artist.asc())
 
             if search_term:
-                q = q.filter(or_(Song.title.like('%' + search_term + '%'), Song.artist.like('%' + search_term + '%'), Song.album.like('%' + search_term + '%')))
+                if where == 'ar':
+                    fil = Song.artist.like('%' + search_term + '%')
+                elif where == 'al':
+                    fil = Song.album.like('%' + search_term + '%')
+                elif where == 't':
+                    fil = Song.title.like('%' + search_term + '%')
+                elif where == 'a':
+                    fil = or_(Song.artist.like('%' + search_term + '%'), Song.album.like('%' + search_term + '%'), Song.title.like('%' + search_term + '%'))
+
+                q = q.filter(fil)
 
             return q.paginate(page=page, per_page=app.config['SONGS_PER_PAGE'])
 
@@ -220,6 +243,21 @@ class Song(db.Model):
     def __repr__(self):
         return '<Song> #{} : {}'.format(self.id, self.title)
 
+
+# -----------------------------------------------------------
+# Forms
+
+
+class SearchForm(FlaskForm):
+    where = [
+        ('a', __('All')),
+        ('t', __('Title')),
+        ('ar', __('Artist')),
+        ('al', __('Album'))
+    ]
+
+    q = StringField(__('Search term'), [validators.DataRequired()], default=None)
+    w = SelectField(__('Where to search'), choices=where, default='a')
 
 # -----------------------------------------------------------
 # CLI commands

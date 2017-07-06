@@ -2,6 +2,7 @@ flask
 Flask-SQLAlchemy
 Flask-Babel
 Flask-Cache
+Flask-WTF
 arrow
 SQLAlchemy
 sqlalchemy-utils
