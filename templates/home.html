@@ -74,7 +74,7 @@
 
                 <div class="txtright pls w33">
                     {% if songs_paginated.has_next %}
-                        <a href="{{ url_for('home', q=request.args.get('q'), page=songs_paginated.next_num) }}" class="btn primary"><i class="fa fa-arrow-circle-right"></i> {{ _('Next') }}</a>
+                        <a href="{{ url_for('home', q=request.args.get('q'), page=songs_paginated.next_num) }}" class="btn primary">{{ _('Next') }} <i class="fa fa-arrow-circle-right"></i></a>
                     {% endif %}
                 </div>
             </div>
