@@ -162,7 +162,7 @@ class Clementine(AudioPlayer):
         else:
             logging.error('Socket is closed')
 
-    def _get_response(self, msg_types):
+    def _get_response(self, msg_types=[]):
         msgs = []
 
         while True:
@@ -192,13 +192,24 @@ class Clementine(AudioPlayer):
 
                 logging.info('Got message {} from Clementine'.format(msg.type))
 
-                if msg.type in msg_types:
+                if not msg_types:
+                    return
+                elif msg.type in msg_types:
                     msgs.append(msg)
 
                     if len(msgs) == len(msg_types):
                         return msgs
             except Exception as e:
                 logging.error(e)
+
+    def _connect(self):
+        msg = clementine_protobuf.Message()
+        msg.type = clementine_protobuf.CONNECT
+        msg.request_connect.auth_code = self.config['auth_code'] if self.config['auth_code'] else 0
+        msg.request_connect.send_playlist_songs = False
+        msg.request_connect.downloader = False
+
+        self._send_message(msg)
 
     @staticmethod
     def name():
@@ -209,13 +220,7 @@ class Clementine(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        msg = clementine_protobuf.Message()
-        msg.type = clementine_protobuf.CONNECT
-        msg.request_connect.auth_code = self.config['auth_code'] if self.config['auth_code'] else 0
-        msg.request_connect.send_playlist_songs = False
-        msg.request_connect.downloader = False
-
-        self._send_message(msg)
+        self._connect()
 
         info, metainfo = self._get_response([clementine_protobuf.INFO, clementine_protobuf.CURRENT_METAINFO])
 
@@ -232,13 +237,18 @@ class Clementine(AudioPlayer):
         }
 
     def queue(self, file):
+        self._connect()
+        self._get_response() # We don't care about the responses here, so just pull them without doing anything
+
         msg = clementine_protobuf.Message()
         msg.type = clementine_protobuf.INSERT_URLS
         msg.request_insert_urls.urls.append(file)
         msg.request_insert_urls.play_now = False
         msg.request_insert_urls.enqueue = True
 
-        self._send_message(msg) # FIXME Clementine crashes when sending it this message
+        self._send_message(msg)
+        self._get_response() # We don't care about the responses here, so just pull them without doing anything
+
         self.socket.close()
 
 

@@ -96,6 +96,7 @@ def submit(song_id):
 
     already_submitted_time = None
     queue_song = False
+    update_db = False
 
     if 'already_submitted_time' in session and session['already_submitted_time']:
         already_submitted_time = arrow.get(session['already_submitted_time'])
@@ -138,14 +139,14 @@ def submit(song_id):
                     from_artist = ''
 
                 flash(_('Your vote for <strong>%(title)s</strong>%(from_artist)s was successfuly saved! <strong>%(remaining_votes)i</strong> vote(s) is(are) remaining before this song is queued.', title=song.title, from_artist=from_artist, remaining_votes=app.config['VOTES_THRESHOLD'] - song.votes), 'success')
+
+            update_db = True
         elif app.config['MODE'] == 'Immediate':
             queue_song = True
 
         if queue_song:
             song.total_times_queued += 1
             song.last_queued_at = arrow.now()
-
-            session['already_submitted_time'] = arrow.now().format()
 
             try:
                 audio_player = get_current_audio_player_instance()
@@ -157,14 +158,19 @@ def submit(song_id):
                     from_artist = ''
 
                 flash(_('<strong>%(title)s</strong>%(from_artist)s was successfully queued! It should be played shortly.', title=song.title, from_artist=from_artist), 'success')
+
+                session['already_submitted_time'] = arrow.now().format()
+
+                update_db = True
             except Exception as e:
                 flash(_('Error while queuing this song: %(error)s', error=e), 'error')
 
-        try:
-            db.session.add(song)
-            db.session.commit()
-        except Exception as e:
-            flash(_('Error while updating data related to this song: %(error)s', error=e), 'error')
+        if update_db:
+            try:
+                db.session.add(song)
+                db.session.commit()
+            except Exception as e:
+                flash(_('Error while updating data related to this song: %(error)s', error=e), 'error')
 
     return redirect(url_for('home', **request.args.to_dict()))
 
