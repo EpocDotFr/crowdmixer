@@ -162,7 +162,7 @@ class Clementine(AudioPlayer):
         else:
             logging.error('Socket is closed')
 
-    def _get_response(self, msg_types=[]):
+    def _get_response(self, msg_types):
         msgs = []
 
         while True:
@@ -192,9 +192,7 @@ class Clementine(AudioPlayer):
 
                 logging.info('Got message {} from Clementine'.format(msg.type))
 
-                if not msg_types:
-                    return
-                elif msg.type in msg_types:
+                if msg.type in msg_types:
                     msgs.append(msg)
 
                     if len(msgs) == len(msg_types):
@@ -238,7 +236,8 @@ class Clementine(AudioPlayer):
 
     def queue(self, file):
         self._connect()
-        self._get_response() # We don't care about the responses here, so just pull them without doing anything
+
+        _, _ = self._get_response([clementine_protobuf.INFO, clementine_protobuf.CURRENT_METAINFO]) # We don't care about the responses here, so just pull them without doing anything
 
         msg = clementine_protobuf.Message()
         msg.type = clementine_protobuf.INSERT_URLS
@@ -247,7 +246,6 @@ class Clementine(AudioPlayer):
         msg.request_insert_urls.enqueue = True
 
         self._send_message(msg)
-        self._get_response() # We don't care about the responses here, so just pull them without doing anything
 
         self.socket.close()
 
