@@ -10,7 +10,7 @@
 
         <div class="song btg pas">
             <div>{% if not now_playing.title and not now_playing.artist %}{{ now_playing.filename }}{% else %}{{ now_playing.title }}{% endif %}</div>
-            <small class="txtmuted">{% if not now_playing.artist %}{{ _('Unknown artist') }}{% else %}{{ now_playing.artist }}{% endif %}</small>
+            <div class="small txtmuted">{% if not now_playing.artist %}{{ _('Unknown artist') }}{% else %}{{ now_playing.artist }}{% endif %}</div>
         </div>
     {% endif %}
 
