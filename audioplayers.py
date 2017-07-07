@@ -442,19 +442,24 @@ class Rhythmbox(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        # TODO First check the playback status if it is playing
+        playing_format_sep = '=='
+
+        playing_format = playing_format_sep.join(['%tt', '%ta', '%at'])
 
         args = [
             self.exec,
             '--no-start',
             '--no-present',
             '--print-playing',
-            '--print-playing-format=%tt==%ta==%at'
+            '--print-playing-format=' + playing_format
         ]
 
         output = self._run_process(args, get_output=True)
 
-        title, artist, album = output.split('==', maxsplit=2)
+        if not output.replace(playing_format_sep, ''): # Nothing is playing
+            return None
+
+        title, artist, album = output.split(playing_format_sep, maxsplit=2)
 
         return {
             'artist': artist if artist else None,
