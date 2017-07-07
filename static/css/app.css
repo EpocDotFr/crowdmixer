@@ -71,7 +71,7 @@ h2 {
 a,
 a:visited {
     text-decoration: underline;
-    color: #32932B;
+    color: #f39c12;
 }
 
 a:hover,
@@ -177,6 +177,18 @@ form textarea {
 
 .songs > .song:last-child {
     padding-bottom: 0;
+}
+
+.song .txtmuted a,
+.song .txtmuted a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+.song .txtmuted a:hover,
+.song .txtmuted a:focus {
+    color: inherit;
+    text-decoration: underline;
 }
 
 /************************************************************************
