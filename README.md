@@ -159,7 +159,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ✔ | `Rhythmbox` | | ❌ |
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
-| [Winamp](http://www.winamp.com/) | ? | `Winamp` | ? | ? |
+| [Winamp](http://www.winamp.com/) | ? | `Winamp` | `psutil` | ❌ |
 | ~~[Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player)~~ |  |  |  |  |
 | [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
 

@@ -1,3 +1,4 @@
+from flask_babel import _
 import subprocess
 import os
 import socket
@@ -30,6 +31,11 @@ try:
 except ImportError:
     pass
 
+try:
+    import psutil
+except ImportError:
+    pass
+
 __all__ = [
     'Aimp',
     'Audacious',
@@ -55,6 +61,22 @@ class AudioPlayer:
             return subprocess.run(args, check=True, stdout=subprocess.PIPE, universal_newlines=True).stdout.strip()
         else:
             subprocess.run(args, check=True)
+
+    def _get_executable_path(self, proc_name):
+        path = None
+
+        for proc in psutil.process_iter():
+            try:
+                if proc_name in proc.name():
+                    path = proc.exe()
+                    break
+            except psutil.NoSuchProcess:
+                pass
+
+        if not path:
+            raise Exception(_('%(name)s doesn\'t seems to be running.', name=self.name()))
+
+        return path
 
     @staticmethod
     def name():
@@ -318,6 +340,7 @@ class Itunes(AudioPlayer):
         }
 
     def queue(self, file):
+        # TODO
         # self.itunes.enqueue(file)
         pass
 
@@ -426,12 +449,16 @@ class Rhythmbox(AudioPlayer):
     **Method used to add a song:** CLI
     **Method used to get the currently playing song:** CLI
 
-    **Documentation:** http://manpages.ubuntu.com/manpages/trusty/man1/rhythmbox-client.1.html
+    **Documentation:** http://manpages.ubuntu.com/manpages/zesty/en/man1/rhythmbox-client.1.html
     """
     def __init__(self, *args, **kwargs):
         super(Rhythmbox, self).__init__(*args, **kwargs)
 
-        self.exec = 'rhythmbox-client' # TODO Autodetect with psutil?
+        self.common_args = [
+            'rhythmbox-client'
+            '--no-start',
+            '--no-present'
+        ]
 
     @staticmethod
     def name():
@@ -446,13 +473,10 @@ class Rhythmbox(AudioPlayer):
 
         playing_format = playing_format_sep.join(['%tt', '%ta', '%at'])
 
-        args = [
-            self.exec,
-            '--no-start',
-            '--no-present',
+        args = self.common_args.extend([
             '--print-playing',
             '--print-playing-format=' + playing_format
-        ]
+        ])
 
         output = self._run_process(args, get_output=True)
 
@@ -469,13 +493,10 @@ class Rhythmbox(AudioPlayer):
         }
 
     def queue(self, file):
-        args = [
-            self.exec,
-            '--no-start',
-            '--no-present',
+        args = self.common_args.extend([
             '--enqueue',
             file
-        ]
+        ])
 
         self._run_process(args)
 
@@ -551,8 +572,10 @@ class Winamp(AudioPlayer):
         return False
 
     def queue(self, file):
+        winamp_path = self._get_executable_path('winamp')
+
         args = [
-            'winamp_path', # TODO Autodetect with psutil?
+            winamp_path,
             '/ADD',
             file
         ]

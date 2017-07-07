@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PROJECT VERSION\n"
 "Report-Msgid-Bugs-To: EMAIL@ADDRESS\n"
-"POT-Creation-Date: 2017-07-06 17:18+0200\n"
-"PO-Revision-Date: 2017-07-06 17:19+0200\n"
+"POT-Creation-Date: 2017-07-07 13:42+0200\n"
+"PO-Revision-Date: 2017-07-07 13:42+0200\n"
 "Last-Translator: \n"
 "Language: fr\n"
 "Language-Team: fr <LL@li.org>\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: Babel 2.4.0\n"
 "X-Generator: Poedit 2.0.2\n"
+
+#: audioplayers.py:77
+#, python-format
+msgid "%(name)s doesn't seems to be running."
+msgstr "%(name)s ne semble pas être lancé."
 
 #: crowdmixer.py:99
 #, python-format
