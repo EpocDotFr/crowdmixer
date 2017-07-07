@@ -154,7 +154,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [Clementine](https://www.clementine-player.org/) | ✔ | `Clementine` | `protobuf` | ✔ |
 | [foobar2000](http://www.foobar2000.org/) | ❌ | `Foobar2000` | `psutil` | ❌ |
 | [iTunes](https://www.apple.com/itunes/) | ✔ | `Itunes` | `appscript` | ❌ |
-| [MediaMonkey](http://www.mediamonkey.com/) | ❌ | `MediaMonkey` | ? | ? |
+| [MediaMonkey](http://www.mediamonkey.com/) | ❌ | `MediaMonkey` | `psutil` | ❌ |
 | [MusicBee](http://getmusicbee.com/) | ❌ | `MusicBee` | `psutil` | ❌ |
 | [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ✔ | `Rhythmbox` | | ❌ |

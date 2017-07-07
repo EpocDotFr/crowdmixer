@@ -364,8 +364,10 @@ class MediaMonkey(AudioPlayer):
         return False
 
     def queue(self, file):
+        mediamonkey_path = self._get_executable_path('MediaMonkey')
+
         args = [
-            'mediamonkey_path', # TODO Autodetect with psutil?
+            mediamonkey_path,
             '/NoSplash',
             '/Add',
             file
