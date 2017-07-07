@@ -289,8 +289,10 @@ class Foobar2000(AudioPlayer):
         return False
 
     def queue(self, file):
+        foobar2000_path = self._get_executable_path('foobar2000')
+
         args = [
-            'foobar2000_path', # TODO Autodetect with psutil?
+            foobar2000_path,
             '/immediate',
             '/add',
             file
