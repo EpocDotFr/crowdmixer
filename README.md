@@ -155,7 +155,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [foobar2000](http://www.foobar2000.org/) | ❌ | `Foobar2000` | `psutil` | ❌ |
 | [iTunes](https://www.apple.com/itunes/) | ✔ | `Itunes` | `appscript` | ❌ |
 | [MediaMonkey](http://www.mediamonkey.com/) | ❌ | `MediaMonkey` | ? | ? |
-| [MusicBee](http://getmusicbee.com/) | ❌ | `MusicBee` | ? | ? |
+| [MusicBee](http://getmusicbee.com/) | ❌ | `MusicBee` | `psutil` | ❌ |
 | [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ✔ | `Rhythmbox` | | ❌ |
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |

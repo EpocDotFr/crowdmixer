@@ -391,8 +391,10 @@ class MusicBee(AudioPlayer):
         return False
 
     def queue(self, file):
+        musicbee_path = self._get_executable_path('MusicBee')
+
         args = [
-            'musicbee_path', # TODO Autodetect with psutil?
+            musicbee_path,
             '/QueueLast',
             file
         ]
