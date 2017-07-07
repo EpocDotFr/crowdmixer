@@ -148,8 +148,10 @@ class Audacious(AudioPlayer):
         return False
 
     def queue(self, file):
+        audacious_path = self._get_executable_path('audacious')
+
         args = [
-            'audacious_path', # TODO Autodetect with psutil?
+            audacious_path,
             '--enqueue',
             file
         ]

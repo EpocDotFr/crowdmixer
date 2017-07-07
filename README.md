@@ -150,7 +150,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | Name | "Now playing" supported? | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py`? |
 |------|--------------------------|---------------------|------------------------------|------------------------------------------------|
 | [AIMP](https://www.aimp.ru/) | ✔ | `Aimp` | `pyaimp` | ❌ |
-| [Audacious](http://audacious-media-player.org/) | ❌ | `Audacious` | ? | ? |
+| [Audacious](http://audacious-media-player.org/) | ❌ | `Audacious` | `psutil` | ❌ |
 | [Clementine](https://www.clementine-player.org/) | ✔ | `Clementine` | `protobuf` | ✔ |
 | [foobar2000](http://www.foobar2000.org/) | ❌ | `Foobar2000` | `psutil` | ❌ |
 | [iTunes](https://www.apple.com/itunes/) | ✔ | `Itunes` | `appscript` | ❌ |
