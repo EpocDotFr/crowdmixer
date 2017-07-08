@@ -12,7 +12,7 @@ Think about a crowd-powered jukebox that uses your audio player of choice in the
 
   - Local, searchable music database created from your audio files
   - Support 8 audio formats (see below for the list)
-  - Support 6 - and counting - audio players (see below for the list)
+  - Support 12 audio players (see below for the list)
   - Responsive (can be used on mobile devices)
   - (Optional) Display the currently playing song
   - Two queuing mode (vote or immediate)
@@ -160,8 +160,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ✔ | `Rhythmbox` | | ❌ |
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | ❌ | `Winamp` | `psutil` | ❌ |
-| ~~[Windows Media Player](https://en.wikipedia.org/wiki/Windows_Media_Player)~~ |  |  |  |  |
-| [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
+| (WIP) [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
 
 ## End words
 
