@@ -125,10 +125,15 @@ You'll probably have to hack with this application to make it work with one of t
 
 ## How it works
 
-This project is built on [Flask](http://flask.pocoo.org/) (Python) for the backend which is using a small [SQLite](https://en.wikipedia.org/wiki/SQLite)
-database to persist data. The `flask index` command is used to index the songs with the help of the [tinytag](https://github.com/devsnd/tinytag) package.
+This project is built on [Flask](http://flask.pocoo.org/) (Python) for the backend which is using a small
+[SQLite](https://en.wikipedia.org/wiki/SQLite) database to persist data. The `flask index` command is used
+to index the songs with the help of the [tinytag](https://github.com/devsnd/tinytag) package. Those songs
+can then be browsed and submitted for playing using the web interface provided by Flask.
 
-Several methods are used to control and retrieve information of an audio player, read below for more information.
+For more information about indexing, see the `index()` function in the `crowdmixer.py` file.
+
+For more information about methods used to retrieve the currently playing song and to queue songs, see
+the `audioplayers.py` file.
 
 ## Supported audio file formats
 
@@ -161,6 +166,10 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | ❌ | `Winamp` | `psutil` | ❌ |
 | (WIP) [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
+
+The following audio players cannot be supported by CrowdMixer:
+
+  - Windows Media Player
 
 ## End words
 
