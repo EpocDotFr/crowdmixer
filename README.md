@@ -16,7 +16,7 @@ Think about a crowd-powered jukebox that uses your audio player of choice in the
   - Responsive (can be used on mobile devices)
   - (Optional) Display the currently playing song
   - Two queuing mode (vote or immediate)
-  - Ability to restrict songs submission
+  - Time-based song submission restrictions
   - Internationalized & localized in 2 languages:
     - English (`en`)
     - French (`fr`)
