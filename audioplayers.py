@@ -36,6 +36,11 @@ try:
 except ImportError:
     pass
 
+try:
+    import xmmsclient
+except ImportError:
+    pass
+
 __all__ = [
     'Aimp',
     'Audacious',
@@ -599,6 +604,21 @@ class Xmms2(AudioPlayer):
 
     **Documentation:** https://doxygen.xmms2.org/clientlib/stable/xmmsclient-python/xmmsclient.html
     """
+    def __init__(self, *args, **kwargs):
+        super(Xmms2, self).__init__(*args, **kwargs)
+
+        self.client = xmmsclient.XMMS('crowdmixer')
+        self.client.connect(os.getenv('XMMS_PATH'))
+
+    def _get_result(self, result):
+        result.wait()
+
+        if result.iserror():
+            self.client.quit()
+            raise Exception(result.get_error())
+
+        return result.value()
+
     @staticmethod
     def name():
         return 'XMMS2'
@@ -608,14 +628,24 @@ class Xmms2(AudioPlayer):
         return True
 
     def get_now_playing(self):
-        pass # TODO
+        current_song_id = self._get_result(self.client.playback_current_id())
+
+        if current_song_id == 0: # Nothing is playing
+            self.client.quit()
+            return None
+
+        current_song = self._get_result(self.client.medialib_get_info(current_song_id))
+
+        self.client.quit()
+
+        return {
+            'artist': current_song['artist'] if 'artist' in current_song else None,
+            'title': current_song['title'] if 'title' in current_song else None,
+            'album': current_song['album'] if 'album' in current_song else None,
+            'filename': os.path.splitext(os.path.basename(current_song['url']))[0] if 'url' in current_song else None
+        }
 
     def queue(self, file):
-        args = [
-            'xmms2_path', # TODO Autodetect with psutil?
-            'add',
-            '--file',
-            file
-        ]
+        self._get_result(self.client.playlist_add_url(file))
 
-        self._run_process(args)
+        self.client.quit()

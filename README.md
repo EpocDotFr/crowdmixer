@@ -98,10 +98,6 @@ You'll have to enable the web interface feature of VLC before to use CrowdMixer.
 
 Don't forget to change the configuration values of VLC according to your VLC settings in your `config.py`.
 
-### XMMS2
-
-> TODO
-
 ## Usage
 
   - Standalone
@@ -165,7 +161,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [Rhythmbox](https://wiki.gnome.org/Apps/Rhythmbox) | ✔ | `Rhythmbox` | | ❌ |
 | [VLC](http://www.videolan.org/vlc/) | ✔ | `Vlc` | `requests` | ✔ |
 | [Winamp](http://www.winamp.com/) | ❌ | `Winamp` | `psutil` | ❌ |
-| (WIP) [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | ? | ✔ |
+| [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | `xmmsclient` | ❌ |
 
 The following audio players cannot be supported by CrowdMixer:
 
