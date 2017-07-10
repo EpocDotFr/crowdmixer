@@ -12,7 +12,7 @@ Think about a crowd-powered jukebox that uses your audio player of choice in the
 
   - Local, searchable music database created from your audio files
   - Support 8 audio formats (see below for the list)
-  - Support 12 audio players (see below for the list)
+  - Support 11 audio players (see below for the list)
   - Responsive (can be used on mobile devices)
   - (Optional) Display the currently playing song
   - Two queuing mode (vote or immediate)
