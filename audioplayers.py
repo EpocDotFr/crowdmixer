@@ -22,11 +22,6 @@ except ImportError:
     pass
 
 try:
-    import appscript
-except ImportError:
-    pass
-
-try:
     import clementine_protobuf
 except ImportError:
     pass
@@ -46,7 +41,6 @@ __all__ = [
     'Audacious',
     'Clementine',
     'Foobar2000',
-    'Itunes',
     'MediaMonkey',
     'MusicBee',
     'Mpd',
@@ -306,52 +300,6 @@ class Foobar2000(AudioPlayer):
         ]
 
         self._run_process(args)
-
-
-class Itunes(AudioPlayer):
-    """iTunes wrapper for CrowdMixer.
-
-    **Method used to add a song:** AppleScript
-    **Method used to get the currently playing song:** AppleScript
-
-    **Documentation:** http://appscript.sourceforge.net/py-appscript/index.html
-    """
-    def __init__(self, *args, **kwargs):
-        super(Itunes, self).__init__(*args, **kwargs)
-
-        if not self.is_itunes_running():
-            raise RuntimeError('iTunes is not running')
-
-        self.itunes = appscript.app('iTunes')
-
-    def is_itunes_running(self):
-        return appscript.app('System Events').processes[appscript.its.name == 'iTunes'].count() == 1
-
-    @staticmethod
-    def name():
-        return 'iTunes'
-
-    @staticmethod
-    def is_now_playing_supported():
-        return True
-
-    def get_now_playing(self):
-        if not self.itunes.player_state.get() == appscript.k.playing:
-            return None
-
-        track = self.itunes.current_track.get()
-
-        return {
-            'artist': track.artist(),
-            'title': track.name(),
-            'album': track.album(),
-            'filename': track.location().path
-        }
-
-    def queue(self, file):
-        # TODO
-        # self.itunes.enqueue(file)
-        pass
 
 
 class MediaMonkey(AudioPlayer):

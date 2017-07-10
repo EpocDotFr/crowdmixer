@@ -154,7 +154,6 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [Audacious](http://audacious-media-player.org/) | ❌ | `Audacious` | `psutil` | ❌ |
 | [Clementine](https://www.clementine-player.org/) | ✔ | `Clementine` | `protobuf` | ✔ |
 | [foobar2000](http://www.foobar2000.org/) | ❌ | `Foobar2000` | `psutil` | ❌ |
-| [iTunes](https://www.apple.com/itunes/) | ✔ | `Itunes` | `appscript` | ❌ |
 | [MediaMonkey](http://www.mediamonkey.com/) | ❌ | `MediaMonkey` | `psutil` | ❌ |
 | [MusicBee](http://getmusicbee.com/) | ❌ | `MusicBee` | `psutil` | ❌ |
 | [Music Player Daemon](https://www.musicpd.org/) | ✔ | `Mpd` | `python-musicpd` | ✔ |
@@ -166,6 +165,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 The following audio players cannot be supported by CrowdMixer:
 
   - Windows Media Player
+  - iTunes
 
 ## End words
 
