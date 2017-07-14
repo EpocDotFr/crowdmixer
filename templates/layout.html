@@ -10,7 +10,7 @@
     <title>{% block meta_title %}{% endblock %}{% if self.meta_title() | trim %} • {% endif %}CrowdMixer</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/alsacreations/KNACSS/6.1.0/css/knacss.css">
+    <link rel="stylesheet" href="https://cdn.rawgit.com/alsacreations/KNACSS/6.1.2/css/knacss.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
 
     {% block jsfiles %} {% endblock %}
@@ -18,7 +18,7 @@
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='favicon.png') }}" />
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" />
 </head>
-<body class="man pan">    
+<body class="man pan">
     <div class="center page blg brg bbg">
         <header class="pas mbs bggrey bbg big">
             <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}"> Crowd<span class="mixer">Mixer</span></a>
