@@ -430,7 +430,7 @@ def get_current_audio_player_instance():
     return getattr(audioplayers, name)(config)
 
 
-@cache.cached(timeout=app.config['NOW_PLAYING_CACHE_TIME'])
+@cache.cached(timeout=app.config['NOW_PLAYING_CACHE_TIME'], key_prefix='now_playing_song')
 def get_now_playing_song():
     audio_player = get_current_audio_player_instance()
 
