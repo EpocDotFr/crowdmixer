@@ -1,7 +1,7 @@
 from flask import Flask, render_template, make_response, g, request, flash, redirect, url_for, session
 from wtforms import StringField, SelectField
 from flask_sqlalchemy import SQLAlchemy
-from flask_cache import Cache
+from flask_caching import Cache
 from sqlalchemy_utils import ArrowType
 from sqlalchemy import or_
 from flask_babel import Babel, _, lazy_gettext as __
