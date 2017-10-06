@@ -27,6 +27,9 @@ import click
 app = Flask(__name__, static_url_path='')
 app.config.from_pyfile('config.py')
 
+app.config['CACHE_TYPE'] = 'filesystem'
+app.config['CACHE_DIR'] = 'storage/cache'
+app.config['CACHE_THRESHOLD'] = 100
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///storage/data/db.sqlite'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['WTF_I18N_ENABLED'] = True
@@ -43,9 +46,6 @@ app.config['SUPPORTED_AUDIO_FORMATS'] = [
     'wma',
     'wav'
 ]
-
-app.config['CACHE_TYPE'] = 'filesystem'
-app.config['CACHE_DIR'] = 'storage/cache'
 
 app.jinja_env.globals.update(arrow=arrow)
 
