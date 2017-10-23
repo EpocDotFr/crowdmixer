@@ -13,13 +13,12 @@ textarea {
     color: #AAA;
 }
 
-.page {
-    max-width: 1024px;
-}
-
 .bggrey {
     background-color: #F3F3F3;
 }
+
+/************************************************************************
+ * Border styles */
 
 .btg {
     border-top: 0.1rem solid #DDD;
@@ -79,6 +78,7 @@ a:focus {
  * Buttons */
 
 button,
+input[type="button"][type="submit"],
 .btn,
 .btn:visited {
     border-radius: 0.5rem;
@@ -90,8 +90,9 @@ button,
     color: #32932B;
 }
 
-button:hover, .btn:hover,
-button:focus, .btn:focus {
+button:hover, button:focus,
+.btn:hover, .btn:focus,
+input[type="button"][type="submit"]:hover, input[type="button"][type="submit"]:focus {
     background-color: #DDD;
     outline: none;
     color: #333;
@@ -107,21 +108,25 @@ button.primary,
 /************************************************************************
  * Inputs */
 
-input,
+button,
+input[type="text"],
+optgroup,
+select,
+textarea,
+.btn {
+    line-height: 1.5;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+input[type="text"],
 select,
 textarea {
     background-color: #FFF;
     border: 0.1rem solid #AAA;
     border-radius: 0.5rem;
-}
-
-input,
-textarea {
-    padding: 0.5rem 1rem;
-}
-
-select {
-    padding: 0.2rem 1rem;
 }
 
 /************************************************************************
@@ -215,7 +220,7 @@ footer a:visited {
 /************************************************************************
  * Breakpoints */
 
-@media (max-width: 767px) {
+@media (max-width: 1140px) {
     .page {
         border-left: none;
         border-right: none;
