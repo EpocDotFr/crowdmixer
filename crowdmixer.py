@@ -231,15 +231,6 @@ class Song(db.Model):
     total_times_queued = db.Column(db.Integer, default=0)
     votes = db.Column(db.Integer, default=0)
 
-    def __init__(self, title=None, artist=None, album=None, path=None, last_queued_at=None, total_times_queued=0, votes=0):
-        self.title = title
-        self.artist = artist
-        self.album = album
-        self.path = path
-        self.last_queued_at = last_queued_at
-        self.total_times_queued = total_times_queued
-        self.votes = votes
-
     def __repr__(self):
         return '<Song> #{} : {}'.format(self.id, self.title)
 
