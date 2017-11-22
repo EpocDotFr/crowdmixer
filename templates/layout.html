@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="noindex,nofollow,noarchive"/>
 
-    <title>{% block meta_title %}{% endblock %}{% if self.meta_title() | trim %} • {% endif %}CrowdMixer</title>
+    <title>{% block meta_title %}{% endblock %}{% if self.meta_title() | trim %} • {% endif %}{{ config['TITLE'] }}</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.rawgit.com/alsacreations/KNACSS/6.1.2/css/knacss.css">
@@ -21,7 +21,7 @@
 <body class="man pan">
     <div class="w1140p center page blg brg bbg">
         <header class="pas mbs bggrey bbg big">
-            <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}"> Crowd<span class="mixer">Mixer</span></a>
+            <a href="{{ url_for('home') }}"><img src="{{ url_for('static', filename='images/logo.png') }}"> {{ config['TITLE'] }}</a>
         </header>
 
         {% with flash_messages = get_flashed_messages(with_categories=true) %}

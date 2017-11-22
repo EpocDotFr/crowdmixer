@@ -27,6 +27,9 @@ import click
 app = Flask(__name__, static_url_path='')
 app.config.from_pyfile('config.py')
 
+if not app.config['TITLE']:
+    app.config['TITLE'] = 'CrowdMixer'
+
 app.config['CACHE_TYPE'] = 'filesystem'
 app.config['CACHE_DIR'] = 'storage/cache'
 app.config['CACHE_THRESHOLD'] = 100
