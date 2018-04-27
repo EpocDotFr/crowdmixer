@@ -1,6 +1,5 @@
 SECRET_KEY = 'secretkeyhere'
-DEBUG = False
-LOGGER_HANDLER_POLICY = 'production'
+ENV = 'production'
 FORCE_LANGUAGE = None
 DEFAULT_LANGUAGE = 'en'
 TITLE = None
