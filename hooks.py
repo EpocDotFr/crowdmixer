@@ -5,7 +5,7 @@ from crowdmixer import app, babel
 
 @app.before_request
 def set_locale():
-    if request.endpoint != 'static' and not hasattr(g, 'CURRENT_LOCALE'):
+    if not hasattr(g, 'CURRENT_LOCALE'):
         if app.config['FORCE_LANGUAGE']:
             g.CURRENT_LOCALE = app.config['FORCE_LANGUAGE']
         else:
