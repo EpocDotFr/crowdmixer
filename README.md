@@ -45,7 +45,7 @@ Available configuration parameters are:
 
   - `SECRET_KEY` Set this to a complex random value
 
-More informations on the three above can be found [here](http://flask.pocoo.org/docs/0.12/config/#builtin-configuration-values).
+More informations about Flask config values can be found [here](http://flask.pocoo.org/docs/1.0/config/#builtin-configuration-values).
 
   - `TITLE` If set to a string, will be used to replace the default app title (which is "CrowdMixer")
   - `FORCE_LANGUAGE` Force the lang to be one of the supported ones (defaults to `None`: auto-detection from the `Accept-Language` HTTP header). See in the features section above for a list of available lang keys
