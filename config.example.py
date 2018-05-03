@@ -1,5 +1,4 @@
 SECRET_KEY = 'secretkeyhere'
-ENV = 'production'
 FORCE_LANGUAGE = None
 DEFAULT_LANGUAGE = 'en'
 TITLE = None
