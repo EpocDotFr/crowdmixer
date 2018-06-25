@@ -6,7 +6,7 @@ Let the crowd make its own mix without hassling you.
   <img src="https://raw.githubusercontent.com/EpocDotFr/crowdmixer/master/screenshot.png">
 </p>
 
-Think about a crowd-powered jukebox that uses your audio player of choice in the backend.
+Think about a web-based, crowd-powered jukebox that uses your audio player of choice in background.
 
 ## Features
 
@@ -120,12 +120,12 @@ You'll probably have to hack with this application to make it work with one of t
 
 ## How it works
 
-This project is built on [Flask](http://flask.pocoo.org/) (Python) for the backend which is using a small
+This project is built on [Flask](http://flask.pocoo.org/) (Python) for the backend which is using an
 [SQLite](https://en.wikipedia.org/wiki/SQLite) database to persist data. The `flask index` command is used
 to index the songs with the help of the [tinytag](https://github.com/devsnd/tinytag) package. Those songs
 can then be browsed and submitted for playing using the web interface provided by Flask.
 
-For more information about indexing, see the `index()` function in the `crowdmixer.py` file.
+For more information about indexing, see the `index()` function in the `commands.py` file.
 
 For more information about methods used to retrieve the currently playing song and to queue songs, see
 the `audioplayers.py` file.
@@ -145,7 +145,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 
 ## Supported audio players
 
-**CrowdMixer requires to be ran on the same computer that is running your prefered audio player**.
+**CrowdMixer requires to be ran on the same computer that is running your audio player of choice**.
 
 | Name | "Now playing" supported? | Configuration value | Additional PyPI dependencies | Needs additional configuration in `config.py`? |
 |------|--------------------------|---------------------|------------------------------|------------------------------------------------|
@@ -161,7 +161,7 @@ Make sure your audio player of choice also support these, otherwise you'll get e
 | [Winamp](http://www.winamp.com/) | ❌ | `Winamp` | `psutil` | ❌ |
 | [XMMS2](https://xmms2.org/) | ✔ | `Xmms2` | `xmmsclient` | ❌ |
 
-The following audio players cannot be supported by CrowdMixer:
+The following audio players cannot be supported by CrowdMixer for technical reasons:
 
   - Windows Media Player
   - iTunes
