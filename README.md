@@ -50,6 +50,7 @@ More informations about Flask config values can be found [here](http://flask.poc
   - `TITLE` If set to a string, will be used to replace the default app title (which is "CrowdMixer")
   - `FORCE_LANGUAGE` Force the lang to be one of the supported ones (defaults to `None`: auto-detection from the `Accept-Language` HTTP header). See in the features section above for a list of available lang keys
   - `DEFAULT_LANGUAGE` Default language if it cannot be determined automatically. Not taken into account if `FORCE_LANGUAGE` is defined. See in the features section above for a list of available lang keys
+  - `CACHE_THRESHOLD` The maximum number of items the cache will store before it starts deleting some (see [here](https://pythonhosted.org/Flask-Cache/#configuring-flask-cache) for more configuration parameters related to Flask-Cache)
   - `MUSIC_DIRS` A list of absolute paths to directories containing songs (read below for the list of supported formats)
   - `NOW_PLAYING_CACHE_TIME` Number of seconds the "Now playing" information will be stored in the cache
   - `MODE` Submit mode that should be used. Can be either `Immediate` (song is queued immediately) or `Vote` (song is queued when a votes threshold is reached)
