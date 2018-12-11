@@ -142,6 +142,11 @@ form textarea {
     width: 100%;
 }
 
+select {
+    -webkit-appearance: menulist;
+    -moz-appearance: menulist;
+}
+
 /************************************************************************
  * Alerts */
 
