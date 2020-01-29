@@ -10,7 +10,7 @@
     <title>{% block meta_title %}{% endblock %}{% if self.meta_title() | trim %} • {% endif %}{{ config['TITLE'] }}</title>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://cdn.rawgit.com/alsacreations/KNACSS/6.1.2/css/knacss.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/alsacreations/KNACSS@6.1.2/css/knacss.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/app.css') }}">
 
     {% block jsfiles %} {% endblock %}
